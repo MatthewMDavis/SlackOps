@@ -1,0 +1,10 @@
+<h1><%= @article.title %></h1>
+
+<p>
+  <%= @article.text %>
+</p>
+<div>
+  <%= link_to '< Back to Blog Index', articles_path %>
+   | 
+  <%= link_to 'Edit this article', edit_article_path %>
+</div>
