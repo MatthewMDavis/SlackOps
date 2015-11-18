@@ -22,9 +22,10 @@ RSpec.describe Article, type: :model do
   context 'when retrieving records' do
     let! (:early_article) { FactoryGirl.create(:article, created_at: 1.day.ago) }
     let! (:later_article) {  FactoryGirl.create(:article, created_at: 1.hour.ago) }
-    it 'returns the articles in reverse chron order' do
 
+    it 'returns the articles in reverse chron order' do
       search_results = Article.all
+
       expect(search_results.to_a).to eq([later_article, early_article])
     end
   end
