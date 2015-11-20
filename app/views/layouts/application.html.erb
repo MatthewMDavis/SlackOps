@@ -7,10 +7,10 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <div class= "container">
+  <div class="container" id="container">
     <div id="user_nav">
       <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.email %></strong>.
+        Logged in as <strong><%= current_user.username %></strong> (<%= current_user.email %>)
         <%= link_to 'Edit profile', edit_user_registration_path %> |
         <%= link_to "Log out", destroy_user_session_path, method: :delete %>
       <% else %>

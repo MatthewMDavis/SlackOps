@@ -4,8 +4,13 @@
   <%= devise_error_messages! %>
 
   <div class="field">
-    <%= f.label :email %><br />
+    <%= f.label :email %><i> For authentication only. Will not appear with your comments.</i><br />
     <%= f.email_field :email, autofocus: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :username %><i> Appears with your comments. 2-24 characters.</i><br />
+    <%= f.text_field :username %>
   </div>
 
   <div class="field">
