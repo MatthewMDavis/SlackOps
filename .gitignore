@@ -20,3 +20,4 @@
 
 # Ignore .envrc
 /.envrc
+/config/application.yml

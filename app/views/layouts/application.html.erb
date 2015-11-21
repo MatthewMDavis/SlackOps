@@ -11,11 +11,17 @@
     <div id="user_nav">
       <% if user_signed_in? %>
         Logged in as <strong><%= current_user.username %></strong> (<%= current_user.email %>)
-        <%= link_to 'Edit profile', edit_user_registration_path %> |
+        <% unless current_user.provider %>
+          <%= link_to 'Edit profile', edit_user_registration_path %> |
+        <% end %>
         <%= link_to "Log out", destroy_user_session_path, method: :delete %>
+        <% if current_user.image %>
+          <img src='<%= current_user.image %>' alt="<%= current_user.username %> avatar"/>
+        <% end %>
       <% else %>
         <%= link_to "Sign up", new_user_registration_path %> |
-        <%= link_to "Log in", new_user_session_path %>
+        <%= link_to "Log in", new_user_session_path %> | 
+        <%= link_to "Log in with Facebook", user_omniauth_authorize_path(:facebook) %>
       <% end %>
     </div>
     <% flash.each do |message_type, message| %>

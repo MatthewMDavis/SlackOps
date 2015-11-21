@@ -1,0 +1,3 @@
+<% request.env['omniauth.auth'].each do |key, val| %>
+  <%= key %> => <%= val %><br />
+<% end %>
