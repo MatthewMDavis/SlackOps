@@ -15,13 +15,13 @@ RSpec.feature describe "devise authentication", :devise do
 
     context "with authentication" do
       it 'has a logout link' do
-        user = FactoryGirl.create(:user, :named)
+        user = FactoryGirl.create(:user)
         login(user.email, user.password)
         expect(page).to have_link('Log out')
       end
 
       it 'shows the user is logged in' do
-        user = FactoryGirl.create(:user, :named)
+        user = FactoryGirl.create(:user)
         login(user.email, user.password)
         expect(page).to have_content("Logged in as #{user.username}")
       end
@@ -47,7 +47,7 @@ RSpec.feature describe "devise authentication", :devise do
     end
     scenario "for a user with a username" do
       visit new_user_session_path
-      user = FactoryGirl.create(:user, :named)
+      user = FactoryGirl.create(:user)
       fill_in('Email', with: user.email)
       fill_in('Password', with: user.password)
       click_button('Log in')
