@@ -48,6 +48,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
+    capybara-webkit (1.7.1)
+      capybara (>= 2.3.0, < 2.6.0)
+      json
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -222,6 +225,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   capybara
+  capybara-webkit
   coffee-rails (~> 4.1.0)
   devise
   factory_girl_rails
