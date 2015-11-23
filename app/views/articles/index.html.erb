@@ -1,13 +1,14 @@
-<h1>Blog Index</h1>
-<%= link_to 'Write a New Article', new_article_path %>
-<%= @articles.each do |art| %>
-  <h2>
-    <%= art.title %>
-  </h2>
-  <p>
-    <%= art.text %>
-  </p>
-  <p>
-    <%= link_to 'Go to article', article_path(art) %>
-  </p>
-<% end %>
+<div id="body_column">
+  <h1>Matt's Blog Articles</h1>
+  <%= @articles.each do |art| %>
+    <h2>
+      <%= art.title %>
+    </h2>
+    <p>
+      <%= art.text %>
+    </p>
+    <p>
+      <%= link_to 'Go to article', article_path(art) %>
+    </p>
+  <% end %>
+</div>

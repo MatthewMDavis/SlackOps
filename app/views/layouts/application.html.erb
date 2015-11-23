@@ -8,6 +8,16 @@
 </head>
 <body>
   <div class="container" id="container">
+    <% if (current_user.admin? || current_user.editor?) %>
+      <div id="editor_tools">
+        <%= link_to 'Write a New Article', new_article_path %>
+      </div>
+    <% end %>
+    <% if current_user.admin? %>
+      <div id="admin_tools">
+        <%= link_to 'Manage Blog Users', users_path %>
+      </div>
+    <% end %>
     <div id="user_nav">
       <% if user_signed_in? %>
         Logged in as <strong><%= current_user.username %></strong> (<%= current_user.email %>)
@@ -15,7 +25,7 @@
           <%= link_to 'Edit profile', edit_user_registration_path %> |
         <% end %>
         <%= link_to "Log out", destroy_user_session_path, method: :delete, id: "log_out" %>
-        <% if current_user.image %>
+        <% if current_user.image? %>
           <img src='<%= current_user.image %>' alt="<%= current_user.username %> avatar"/>
         <% end %>
       <% else %>

@@ -5,6 +5,7 @@ FactoryGirl.define do
     sequence(:username) { |n| "my_username#{n}" }
 
     trait :admin do
+      role 'admin'
     end
   end
 

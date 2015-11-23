@@ -81,4 +81,24 @@ form .field, form .actions {
 
 #user_nav {
   float: right;
+  background-color: #ccc;
+  padding: 10px 10px;
+}
+
+#editor_tools {
+  float: left;
+  background-color: #ccc;
+  padding: 10px 10px;
+}
+
+#admin_tools {
+  float: left;
+  padding: 10px 10px;
+  background-color: #ccc;
+  margin-left: 25px;
+}
+
+.body_column {
+  margin-top: 50px;
+  margin-bottom: 75px;
 }
