@@ -8,35 +8,14 @@
 </head>
 <body>
   <div class="container" id="container">
-    <% if (current_user.admin? || current_user.editor?) %>
-      <div id="editor_tools">
-        <%= link_to 'Write a New Article', new_article_path %>
-      </div>
+    <% if user_signed_in? %>
+      <%= render "partials/reg_user_toolbar" %>
+    <% else %>
+      <%= render "partials/anon_user_toolbar" %>
     <% end %>
-    <% if current_user.admin? %>
-      <div id="admin_tools">
-        <%= link_to 'Manage Blog Users', users_path %>
-      </div>
-    <% end %>
-    <div id="user_nav">
-      <% if user_signed_in? %>
-        Logged in as <strong><%= current_user.username %></strong> (<%= current_user.email %>)
-        <% unless current_user.provider %>
-          <%= link_to 'Edit profile', edit_user_registration_path %> |
-        <% end %>
-        <%= link_to "Log out", destroy_user_session_path, method: :delete, id: "log_out" %>
-        <% if current_user.image? %>
-          <img src='<%= current_user.image %>' alt="<%= current_user.username %> avatar"/>
-        <% end %>
-      <% else %>
-        <%= link_to "Sign up", new_user_registration_path %> |
-        <%= link_to "Log in", new_user_session_path %> |
-        <%= link_to "Log in with Facebook", user_omniauth_authorize_path(:facebook), id: "log_in" %>
-      <% end %>
-    </div>
-    <% flash.each do |message_type, message| %>
-      <div id="flash_<%= message_type %>" class="flash_<%= message_type %>"><%= message %></div>
-    <% end %>
+    <%# <% flash.each do |message_type, message| %1> %>
+    <%#   <div id="flash_<%= message_type %1>" class="flash_<%= message_type %1>"><%= message %1></div> %>
+    <%# <% end %1> %>
     <%= yield %>
   </div>
 </body>
