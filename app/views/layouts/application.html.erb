@@ -13,9 +13,9 @@
     <% else %>
       <%= render "partials/anon_user_toolbar" %>
     <% end %>
-    <%# <% flash.each do |message_type, message| %1> %>
-    <%#   <div id="flash_<%= message_type %1>" class="flash_<%= message_type %1>"><%= message %1></div> %>
-    <%# <% end %1> %>
+    <% flash.each do |message_type, message| %>
+      <div id="flash_<%= message_type %>" class="flash_<%= message_type %>"><%= message %></div>
+    <% end %>
     <%= yield %>
   </div>
 </body>

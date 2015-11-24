@@ -1,0 +1,10 @@
+<h3>
+  <%= art.title %>
+</h3>
+By <%= link_to "#{art.author}", user_path(art.user) %>
+<p>
+  <%= art.text %>
+</p>
+<p>
+  <%= link_to 'Go to article', article_path(art) %>
+</p>

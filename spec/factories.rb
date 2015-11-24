@@ -1,4 +1,9 @@
-FactoryGirl.define do
+FactoryGirl.define do  factory :comment do
+    user nil
+article nil
+body "MyText"
+  end
+
   factory :user do
     sequence(:email) { |n| "username-#{n}@foobar.com" }
     sequence(:password) { |n| "password#{n}" }

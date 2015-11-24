@@ -1,2 +1,6 @@
 <h1><%= @user.username %></h1>
 <p>Email: <%= @user.email %></p>
+<% if @user.articles.any? %>
+  <h2>Articles by <%= @user.username %></h2>
+  <%= render @user.articles %>
+<% end %>

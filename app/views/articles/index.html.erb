@@ -1,14 +1,4 @@
 <div id="body_column">
   <h1>Matt's Blog Articles</h1>
-  <%= @articles.each do |art| %>
-    <h2>
-      <%= art.title %>
-    </h2>
-    <p>
-      <%= art.text %>
-    </p>
-    <p>
-      <%= link_to 'Go to article', article_path(art) %>
-    </p>
-  <% end %>
+  <%= render @articles %>
 </div>
