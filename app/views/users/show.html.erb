@@ -4,3 +4,7 @@
   <h2>Articles by <%= @user.username %></h2>
   <%= render @user.articles %>
 <% end %>
+<% if@user.comments.any? %>
+  <h2>Comments by <%= @user.username %></h2>
+  <%= render @user.comments %>
+<% end %>

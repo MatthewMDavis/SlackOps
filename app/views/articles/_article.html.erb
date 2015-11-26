@@ -1,9 +1,12 @@
 <h3>
   <%= article.title %>
 </h3>
-By <%= link_to "#{article.author}", user_path(article.user) %>
+<span class="byline">By <%= link_to "#{article.author}", user_path(article.user) %></span>
+<span class="timestamp">Posted
+  <%= time_ago_in_words(article.created_at) %> ago.
+</span>
 <p>
-  <%= article.text %>
+  <%= markdown(truncate(article.text, length: 1000)) %>
 </p>
 <p>
   <%= link_to 'Go to article', article_path(article) %>

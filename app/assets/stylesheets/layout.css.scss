@@ -12,6 +12,13 @@ a {
   color: #0000FF;
 }
 
+h1 {
+  margin-top: 75px;
+  border-style: none;
+  border-bottom-style: dashed;
+  border-bottom-width: 1px;
+  border-bottom-color: ccc;
+}
 .clear {
   clear: both;
   height: 0;
@@ -100,4 +107,19 @@ form .field, form .actions {
 .body_column {
   margin-top: 50px;
   margin-bottom: 75px;
+}
+
+.byline {
+  font-size: small;
+  font-weight: bold;
+}
+
+.timestamp {
+  font-size: small;
+}
+
+.comment_body {
+  padding-top: 25px;
+  border-style: dashed none none none;
+  border-width: 1px;
 }
