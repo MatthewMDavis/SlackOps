@@ -1,0 +1,15 @@
+<li class="dropdown hidden-xs">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Logged in as <strong><%= current_user.username %></strong> (<%= current_user.email %>) <span class="caret"></span></a>
+  <ul class="dropdown-menu">
+    <% unless current_user.provider? %>
+      <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
+      <li role="separator" class="divider"></li>
+    <% end %>
+    <li><%= link_to "Log out", destroy_user_session_path, method: :delete, id: "log_out" %></li>
+  </ul>
+</li>
+<li>
+  <% if current_user.image? %>
+    <img class="hidden-xs hidden-sm" src='<%= current_user.image %>' alt="<%= current_user.username %> avatar"/>
+  <% end %>
+</li>

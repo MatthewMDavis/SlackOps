@@ -1,0 +1,9 @@
+<% if current_user.admin? || current_user.editor? %>
+    <li><%= link_to "Write a new article", new_article_path %></li>
+<% end %>
+<% if current_user.admin? %>
+  <%# <li class="active"><span class="sr-only">(current)</span> %>
+    <li>
+      <%= link_to "Manage blog users", users_path %>
+    </li>
+<% end %>

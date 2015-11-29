@@ -1,0 +1,5 @@
+<% if current_user.admin? || current_user.editor? %>
+  <span id="editor_tools">
+    <%= link_to "Write a new article", new_article_path %>
+  </span>
+<% end %>

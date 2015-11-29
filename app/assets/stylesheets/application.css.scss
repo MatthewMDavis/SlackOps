@@ -1,6 +1,25 @@
+@import "bootstrap-sprockets";
+// @import "autoprefixer";
+@import "bootstrap";
+
 .navbar {
-  height: 52px;
-  padding-top: 1px;
+  height: 55px;
+  padding-top: 2px;
+}
+
+// .spacer_column {
+//   @extend .col-sm-1;
+//   @extend .col-md-2;
+//   @extend .col-lg-3;
+// }
+
+.content_column {
+  @extend .col-sm-offset-1;
+  @extend .col-sm-10;
+  @extend .col-md-offset-2;
+  @extend .col-md-8;
+  @extend .col-lg-offset-3;
+  @extend .col-lg-6;
 }
 
 @media only screen and (min-width : 768px) {
