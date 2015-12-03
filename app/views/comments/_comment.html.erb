@@ -1,2 +1,10 @@
-<p class="comment_body"><%= comment.body %><br />
-  <div class="timestamp">By <%= link_to comment.commenter, user_path(comment.user) %> <%= comment.created_at %> </div></p>
+<div class="comment_body"><%= sanitize(comment.body).html_safe %></div>
+<div class="timestamp">By <%= link_to comment.commenter, user_path(comment.user) %> <%= comment.created_at %>
+<span>
+  <% if cur_user_owns?(comment) %>
+    <%= link_to "Delete comment", [comment.article, comment],
+      method: :delete,
+      data: { confirm: 'Are you sure?' }  %>
+  <% end %>
+</span>
+</div>

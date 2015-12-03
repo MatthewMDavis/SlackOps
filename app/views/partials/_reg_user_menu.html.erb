@@ -9,7 +9,5 @@
   </ul>
 </li>
 <li>
-  <% if current_user.image? %>
-    <img class="hidden-xs hidden-sm" src='<%= current_user.image %>' alt="<%= current_user.username %> avatar"/>
-  <% end %>
+    <img class="hidden-xs hidden-sm" src='<%= current_user.image || gravatar_for(current_user, 50) %>' alt="<%= current_user.username %> avatar"/>
 </li>

@@ -1,29 +1,31 @@
 <h1><%= @article.title %></h1>
 
 <p>
-  <%= markdown(@article.text) %>
+  <%= @article.text.html_safe %>
 </p>
-<div>
+<div id="article_nav">
   <%= link_to '< Back to Blog Index', articles_path %>
   <% if user_signed_in? && current_user.admin? %>
     |
     <%= link_to 'Edit this article', edit_article_path %>
   <% end %>
-
-  <h2>Comments</h2>
-  <%= render @article.comments %>
-  <% if user_signed_in? %>
+</div>
+<br clear = "all" />
+<h2>Comments</h2>
+<%= render @article.comments %>
+<% if user_signed_in? %>
   <%= form_for([@article, @article.comments.build]) do |f| %>
     <%= f.hidden_field(:user_id, :value => current_user.id) %>
     <div>
       <%= f.label :comment  %><br />
-      <%= f.text_area :body, rows: "7", :class => "form-control" %>
+      <%= f.text_area :body, rows: "7", class: "wysihtml5-cmt form-control"%>
     </div>
     <br />
     <%= f.submit :class => "btn btn-primary" %><br />
     <div class="byline">Posting as <%= current_user.username %></div>
   <% end %>
   <% else %>
-    <%= link_to 'Log in', new_user_session_path %> or <%= link_to 'Sign up', new_user_registration_path %> to leave a comment.
+    <div>
+      <%= link_to 'Log in', new_user_session_path %> or <%= link_to 'Sign up', new_user_registration_path %> to leave a comment.
+    </div>
   <% end %>
-</div>

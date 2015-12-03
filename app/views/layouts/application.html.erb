@@ -8,7 +8,6 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
-  </head>
   <body>
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container-fluid">
@@ -51,5 +50,24 @@
         </div>
       </div>
     </div>
+
+    <script type="text/javascript" charset="utf-8">
+      $(document).on('page:load', function(){
+          window['rangy'].initialized = false
+      })
+
+      $(document).ready(function(){
+
+        $('.wysihtml5-cmt').each(function(i, elem) {
+          $(elem).wysihtml5({'toolbar': {'font-styles': false, 'emphasis': {'small': false}, 'image': false}});
+        });
+
+        $('.wysihtml5-ed').each(function(i, elem) {
+          $(elem).wysihtml5({'toolbar': {'font-styles': false, 'emphasis': {'small': false}, }});
+        });
+
+      })
+    </script>
+  </head>
   </body>
 </html>

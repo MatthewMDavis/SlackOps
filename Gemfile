@@ -18,6 +18,8 @@ gem 'coffee-rails', '~> 4.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+# JScript WYSIWYG editor
+gem 'bootstrap-wysihtml5-rails'
 
 # Implement markdown parsing; it's a blog, fergawdsake
 gem 'redcarpet'

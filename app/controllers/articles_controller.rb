@@ -7,6 +7,7 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    store_location_for(:user, article_path(@article))
   end
 
   def new

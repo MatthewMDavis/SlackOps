@@ -1,6 +1,6 @@
 @import "bootstrap-sprockets";
-// @import "autoprefixer";
 @import "bootstrap";
+@import "bootstrap-wysihtml5/bootstrap3-wysihtml5";
 
 .navbar {
   height: 55px;
@@ -12,7 +12,6 @@
 //   @extend .col-md-2;
 //   @extend .col-lg-3;
 // }
-
 .content_column {
   @extend .col-sm-offset-1;
   @extend .col-sm-10;
@@ -20,6 +19,25 @@
   @extend .col-md-8;
   @extend .col-lg-offset-3;
   @extend .col-lg-6;
+  img {
+    float: right;
+    width: 33%;
+  }
+  form {
+margin-top: 35px;
+  }
+}
+
+#article_nav {
+  width: 50%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.comment_body {
+  margin-top: 35px;
+  margin-bottom: 12px;
 }
 
 @media only screen and (min-width : 768px) {

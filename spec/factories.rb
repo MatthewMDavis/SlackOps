@@ -17,5 +17,6 @@ body "MyText"
   factory :article do
     sequence(:title) { |n| "Article #{n}" }
     sequence(:text) { |n| "Body for article #{n}" }
+    sequence(:user) { FactoryGirl.create(:user) }
   end
 end
