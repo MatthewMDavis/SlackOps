@@ -78,6 +78,56 @@ RSpec.feature describe "devise authentication", :devise do
 
   end
 
+  context "when viewing comments" do
+      let(:article) {   FactoryGirl.create(:article) }
+      let(:user1) { FactoryGirl.create(:user) }
+
+    scenario "A user has a delete link for her comments" do
+      Comment.create(user_id: user1.id, article_id: article.id, body: "test content")
+      login_as(user1)
+      visit article_path(article)
+
+      expect(page).to have_content("Delete comment")
+    end
+
+    scenario "A user's delete link removes the comment from the database" do
+      Comment.create(user_id: user1.id, article_id: article.id, body: "test content")
+      login_as(user1)
+      visit article_path(article)
+
+      expect { click_link 'Delete comment' }.to change(Comment, :count).by(-1)
+    end
+
+    scenario "A user has no delete link for other user comments" do
+      Comment.create(user_id: user1.id, article_id: article.id, body: "test content")
+      user2 = FactoryGirl.create(:user)
+      login_as(user2)
+      visit article_path(article)
+
+      expect(page).to_not have_content("Delete comment")
+    end
+
+    scenario "An admin user has a delete link for user comments" do
+      Comment.create(user_id: user1.id, article_id: article.id, body: "test content")
+      admin = FactoryGirl.create(:user, :admin)
+      login_as(admin)
+      visit article_path(article)
+
+      expect(page).to have_content("Delete comment")
+    end
+
+    scenario "An editor has a delete link for comments on her article" do
+      editor = FactoryGirl.create(:user, :editor)
+      new_article = Article.create(user_id: editor.id, title: "A title", text: "some text")
+      Comment.create(user_id: user1.id, article_id: new_article.id, body: "test content")
+
+      login_as(editor)
+      visit article_path(new_article)
+
+      expect(page).to have_link("Delete comment")
+    end
+  end
+
   context "from an article page" do
     scenario "Devise login returns to article page" do
       article = FactoryGirl.create(:article)

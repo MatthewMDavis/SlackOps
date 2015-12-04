@@ -1,5 +1,5 @@
 module CommentsHelper
-  def cur_user_owns?(comment)
-    comment.user == current_user
+  def cur_user_owns?(record)
+    record.user == current_user
   end
 end

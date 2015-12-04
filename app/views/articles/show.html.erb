@@ -1,19 +1,17 @@
 <h1><%= @article.title %></h1>
 
 <p>
-  <%= @article.text.html_safe %>
+  <%= sanitize(@article.text) %>
 </p>
 <div id="article_nav">
   <%= link_to '< Back to Blog Index', articles_path %>
-  <% if user_signed_in? && current_user.admin? %>
-    |
+  <% if user_signed_in? && current_user.owns?(@article) %> | 
     <%= link_to 'Edit this article', edit_article_path %>
   <% end %>
 </div>
-<br clear = "all" />
-<h2>Comments</h2>
-<%= render @article.comments %>
-<% if user_signed_in? %>
+  <h2>Comments</h2>
+  <%= render @article.comments %>
+  <% if user_signed_in? %>
   <%= form_for([@article, @article.comments.build]) do |f| %>
     <%= f.hidden_field(:user_id, :value => current_user.id) %>
     <div>

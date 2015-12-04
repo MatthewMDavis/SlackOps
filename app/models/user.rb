@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :omniauthable, :omniauth_providers => [:facebook]
   validates :username, presence: true, length: { minimum: 2, maximum: 24 }, uniqueness: true
 
-
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.email = auth.info.email
@@ -21,5 +20,9 @@ class User < ActiveRecord::Base
       user.username = auth.info.name   # assuming the user model has a name
       user.image = auth.info.image # assuming the user model has an image
     end
+  end
+
+  def owns?(record)
+    self.admin? || record.user == self
   end
 end

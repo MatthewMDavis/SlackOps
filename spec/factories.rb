@@ -9,6 +9,10 @@ body "MyText"
     sequence(:password) { |n| "password#{n}" }
     sequence(:username) { |n| "my_username#{n}" }
 
+    trait :editor do
+      role 'editor'
+    end
+
     trait :admin do
       role 'admin'
     end
