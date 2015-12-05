@@ -11,14 +11,4 @@ RSpec.describe Comment, type: :model do
     end
   end
 
-  describe "with html in the body" do
-    it "strips out non-whitelisted tag" do
-      commenter = FactoryGirl.create(:user)
-      article = FactoryGirl.create(:article)
-      html_comment = Comment.new(user_id: commenter, article_id: article, body: '<script>code</script>')
-
-      html_comment.save
-      expect(html_comment.body).to eq('code')
-    end
-  end
 end
