@@ -3,7 +3,7 @@ class ArticlePolicy
 
   def initialize(current_user, model)
     @current_user = current_user
-    @model = model
+    @article = model
   end
 
   def new?
@@ -11,11 +11,11 @@ class ArticlePolicy
   end
 
   def edit?
-    @current_user.admin? || @current_user.editor?
+    @current_user.owns?(@article)
   end
 
   def destroy?
-    @current_user.admin? || @current_user.editor?
+    @current_user.owns?(@article)
   end
 
   def create?
@@ -23,6 +23,6 @@ class ArticlePolicy
   end
 
   def update?
-    @current_user.admin? || @current_user.editor?
+    @current_user.owns?(@article)
   end
 end

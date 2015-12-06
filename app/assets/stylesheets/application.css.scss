@@ -23,9 +23,9 @@
     float: right;
     width: 33%;
   }
-  form {
-margin-top: 35px;
-  }
+  // form {
+// margin-top: 35px;
+  // }
 }
 
 #article_nav {
@@ -47,6 +47,9 @@ margin-top: 35px;
     }
 }
 
+td {
+  vertical-align: middle
+}
 img {
   margin: auto 2px;
 }

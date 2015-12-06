@@ -9,7 +9,7 @@ Rails.application.routes.draw do
 
   get 'users/' => 'users#index'
   get 'users/:id' => 'users#show', as: :user
-  
+  patch 'users/:id' => 'users#update'  
 
   resources :articles do
     resources :comments
