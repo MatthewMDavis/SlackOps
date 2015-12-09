@@ -6,6 +6,7 @@ $(document).on "page:change", ->
   $("#comment-open").click (event) ->
     event.preventDefault()
     $("#comments-section").fadeToggle()
-    $("#comment_body").focus()
-
-
+    if ($("#comment_body").length)
+      $("#comment_body").focus()
+    else
+      $("#comment_login").focus()

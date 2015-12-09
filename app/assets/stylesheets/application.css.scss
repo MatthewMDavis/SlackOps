@@ -58,19 +58,19 @@ img {
   margin: auto 2px;
 }
 
-#flash_notice, #flash_error, #flash_alert {
+.notice, .error, .alert {
   padding: 5px 8px;
   margin: 10px 10px;
   clear: both;
   text-align: center;
 }
 
-#flash_notice {
+.notice {
   background-color: #CFC;
   border: solid 1px #6C6;
 }
 
-#flash_error, #flash_alert {
+.error {
   background-color: #FCC;
   border: solid 1px #C66;
 }

@@ -14,20 +14,21 @@
   <ol id="comments-list">
     <%= render @article.comments %>
   </ol>
-  <div id="comments-submission">
-    <% if user_signed_in? %>
+  <% if user_signed_in? %>
+    <div id="comments-submission">
       <%= form_for [@article, @article.comments.build], remote: true do |f| %>
         <%= f.hidden_field(:user_id, :value => current_user.id) %>
-        <div>
-          <%= f.label :comment  %><br />
-          <%= f.text_area :body, rows: "7", placeholder: "Post a comment...", class: "form-control" %>
-        </div>
+        <%= f.label :comment  %><br />
+        <%= f.text_area :body, rows: "7", placeholder: "Post a comment...", class: "form-control" %>
         <br />
         <%= f.submit :class => "btn btn-primary" %><br />
         <div class="byline">Posting as <%= current_user.username %></div>
       <% end %>
+    </div>
     <% else %>
-      <%= link_to 'Log in', new_user_session_path %> or <%= link_to 'Sign up', new_user_registration_path %> to leave a comment.
+      <div id="comments-submission">
+      <%= link_to 'Log in', new_user_session_path, id: 'comment_login' %> or <%= link_to 'Sign up', new_user_registration_path %> to leave a comment.
+    </div>
     <% end %>
   </div>
 </section>

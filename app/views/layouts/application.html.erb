@@ -43,9 +43,7 @@
     <div id="container" class="container-fluid">
       <div class="row">
         <div class="centered content_column">
-          <% flash.each do |message_type, message| %>
-            <span id="flash_<%= message_type %>" class="flash_<%= message_type %>"><%= message %></span>
-          <% end %>
+          <%= flash_messages %>
           <%= yield %> 
         </div>
       </div>
