@@ -5,15 +5,18 @@
 </p>
 <div id="article_nav">
   <%= link_to '< Back to Blog Index', articles_path %>
-  <% if user_signed_in? && current_user.owns?(@article) %> | 
+  <% if user_signed_in? && current_user.owns?(@article) %> |
     <%= link_to 'Edit this article', edit_article_path %>
   <% end %>
 </div>
 <%= link_to "Comments", "#", class: "comment-header", id: "comment-open" %>
 <section id="comments-section">
-  <ol id="comments-list">
-    <%= render @article.comments %>
-  </ol>
+  <%= react_component('CommentsList',
+                      render(template: 'articles/comments.json.jbuilder'),
+                      { prerender: params[:noprerender].nil? }) %>
+  <%# <ol id="comments-list"> %>
+  <%#   <%= render @article.comments %1> %>
+  <%# </ol> %>
   <% if user_signed_in? %>
     <div id="comments-submission">
       <%= form_for [@article, @article.comments.build], remote: true do |f| %>

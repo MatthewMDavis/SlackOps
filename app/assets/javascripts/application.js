@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require react
+//= require react_ujs
 //= require bootstrap-sprockets
 //= require_tree .
-//= require bootstrap-wysihtml5
-//= require bootstrap-wysihtml5/locales/en-US

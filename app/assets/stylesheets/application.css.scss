@@ -14,7 +14,6 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
-@import "bootstrap-wysihtml5/bootstrap3-wysihtml5";
 
 .content_column {
   @extend .col-sm-offset-1;
@@ -39,7 +38,7 @@
   margin-right: auto;
 }
 
-.comment_body {
+.comment-body {
   margin-top: 35px;
   margin-bottom: 12px;
 }
