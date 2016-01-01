@@ -9,14 +9,11 @@
     <%= link_to 'Edit this article', edit_article_path %>
   <% end %>
 </div>
-<%= link_to "Comments", "#", class: "comment-header", id: "comment-open" %>
+<h2>Comments</h2>
 <section id="comments-section">
-  <%= react_component('CommentsList',
+  <%= react_component('CommentsBox',
                       render(template: 'articles/comments.json.jbuilder'),
                       { prerender: params[:noprerender].nil? }) %>
-  <%# <ol id="comments-list"> %>
-  <%#   <%= render @article.comments %1> %>
-  <%# </ol> %>
   <% if user_signed_in? %>
     <div id="comments-submission">
       <%= form_for [@article, @article.comments.build], remote: true do |f| %>
