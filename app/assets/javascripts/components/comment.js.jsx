@@ -1,6 +1,6 @@
-var Comment = React.createClass({
+class Comment extends React.Component{
 
-  render: function() {
+  render() {
     return (
       <div className="comment">
         <CommentBody comment={this.props.comment} />
@@ -8,25 +8,24 @@ var Comment = React.createClass({
       </div>
     );
   }
-});
+}
 
-var CommentBody = React.createClass({
-  render: function() {
+class CommentBody extends React.Component{
+  render() {
     return (
       <div className="comment-body">
         <span dangerouslySetInnerHTML={{__html: this.props.comment.body}} />
       </div>
     );
   }
-});
+}
 
-var CommentByline = React.createClass({
-  render: function() {
+class CommentByline extends React.Component{
+  render() {
     return (
       <div className="comment-byline">
-        By {this.props.comment.commenter} at {this.props.comment.created_at}
+        By {this.props.comment.commenter} -- {this.props.comment.timestamp}
       </div>
     );
   }
-});
-
+}

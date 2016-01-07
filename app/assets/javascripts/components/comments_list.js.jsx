@@ -1,6 +1,9 @@
-var CommentsList = React.createClass ({
-  render: function() {
-    var comments = this.props.comments.map(function(comment) {
+class CommentsList extends React.Component{
+  constructor() {
+    super();
+  }
+  render() {
+    let comments = this.props.comments.map(function(comment) {
       return <Comment key={comment.id} comment={comment} />;
     });
 
@@ -10,4 +13,4 @@ var CommentsList = React.createClass ({
       </div>
     );
   }
-});
+}

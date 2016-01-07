@@ -7,6 +7,10 @@ class ArticlesController < ApplicationController
 
   def show
     @article = Article.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json { render json: @article }
+    end
     store_location_for(:user, article_path(@article))
   end
 

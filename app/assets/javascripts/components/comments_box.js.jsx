@@ -1,11 +1,12 @@
-var CommentsBox = React.createClass ({
-  getInitialState: function() {
-    var initialComments = this.props.comments;
-    return { comments: initialComments };
-  },
+class CommentsBox extends React.Component {
+  constructor(props) {
+    super(props);
+    initialComments = this.props;
+    this.state = initialComments;
+  }
 
-  render: function() {
+  render() {
     return <CommentsList comments={this.state.comments} />;
   }
 
-});
+}

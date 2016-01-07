@@ -12,9 +12,9 @@
 <h2>Comments</h2>
 <section id="comments-section">
   <%= react_component('CommentsBox',
-                      render(template: 'articles/comments.json.jbuilder'),
-                      { prerender: params[:noprerender].nil? }) %>
-  <% if user_signed_in? %>
+                      { comments: json_for(@article.comments) },
+                      { prerender: params[:noprerender].nil? } ) %>
+                    <% if user_signed_in? %>erb
     <div id="comments-submission">
       <%= form_for [@article, @article.comments.build], remote: true do |f| %>
         <%= f.hidden_field(:user_id, :value => current_user.id) %>
@@ -32,3 +32,6 @@
     <% end %>
   </div>
 </section>
+<div id="comm" class="name">
+
+</div>

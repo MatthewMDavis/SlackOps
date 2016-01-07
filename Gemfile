@@ -22,6 +22,12 @@ gem 'react-rails', '~> 1.0'
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 
+source 'https://rails-assets.org' do
+  gem 'rails-assets-pluralize'
+  gem 'rails-assets-es6-promise'
+  gem 'rails-assets-fetch'
+end
+
 # Implement markdown parsing; it's a blog, fergawdsake
 gem 'redcarpet'
 gem 'coderay'
@@ -29,11 +35,15 @@ gem 'coderay'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-gem 'jbuilder', '~> 2.0'
+# gem 'jbuilder', '~> 2.0'
+
+# Substitute ActiveModel::Serializer for jbuilder
+gem 'active_model_serializers'
+
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
-# Use devise authentication with alternate facebook login
+# Use devise authentication with alternate facebook login/Pundit authorization
 gem 'devise'
 gem 'omniauth-facebook'
 gem 'pundit'
@@ -41,8 +51,8 @@ gem 'pundit'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use thin as the app server
-gem 'thin'
+# Use puma as the app server
+gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -66,4 +76,3 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'pry-rails'
 end
-
