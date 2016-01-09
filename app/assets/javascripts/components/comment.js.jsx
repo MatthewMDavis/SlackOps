@@ -24,7 +24,8 @@ class CommentByline extends React.Component{
   render() {
     return (
       <div className="comment-byline">
-        By {this.props.comment.commenter} -- {this.props.comment.timestamp}
+      By <a href={this.props.comment.commenter_url}>{this.props.comment.commenter}</a>
+        -- {this.props.comment.timestamp}
       </div>
     );
   }

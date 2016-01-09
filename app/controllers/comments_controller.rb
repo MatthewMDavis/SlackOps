@@ -5,7 +5,7 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to article_path(@article) }
-      format.js #default handling, i.e. render comments/create.js.erb
+      format.json { render json: @article.comments }
     end
   end
 
@@ -16,6 +16,14 @@ class CommentsController < ApplicationController
     redirect_to request.referrer
   end
 
+  def index
+    @article = Article.find(params[:article_id])
+    @comments = @article.comments
+
+    respond_to do |format|
+      format.json { render json: @comments }
+    end
+  end
   private
 
   def comment_params

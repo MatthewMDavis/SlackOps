@@ -3,13 +3,14 @@ class CommentsList extends React.Component{
     super();
   }
   render() {
-    let comments = this.props.comments.map(function(comment) {
+    const { comments } = this.props;
+    const renderComments = comments.map(comment=>{
       return <Comment key={comment.id} comment={comment} />;
     });
 
     return (
       <div className="comments">
-        {comments}
+        {renderComments}
       </div>
     );
   }
