@@ -9,12 +9,11 @@
     <%= link_to 'Edit this article', edit_article_path %>
   <% end %>
 </div>
-<h2>Comments</h2>
-<section id="comments-section">
+<div id="comments-section">
   <%= react_component('CommentsBox',
                       { comments: comments_list_json(@article.comments),
                          user: user_json(current_user) || false,
                          article_id: @article.id },
                       { prerender: params[:noprerender].nil? } ) %>
 
-</section>
+</div>

@@ -16,7 +16,7 @@ class CommentsBox extends React.Component {
       }
     };
 
-    post(`/articles/12/comments`, payload)
+    post(`/articles/${this.props.article_id}/comments`, payload)
       .then(json=>{
         this.fetchComments();
       });
@@ -44,6 +44,7 @@ class CommentsBox extends React.Component {
     const { comments, user } = this.state;
     return (
       <div className="commentsBox">
+        <h3>Comments</h3>
         <CommentsList comments={comments} />
         <CommentForm user={user} onComment={this.commentSubmit}/>
       </div>
