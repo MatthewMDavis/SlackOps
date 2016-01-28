@@ -76,3 +76,7 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'pry-rails'
 end
+
+# For Heroku deployment
+gem 'rails_12factor', group: :production
+gem 'puma', group: :production

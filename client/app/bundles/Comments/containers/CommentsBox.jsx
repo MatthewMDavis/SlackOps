@@ -1,7 +1,7 @@
 import React from 'react';
 import CommentsList from '../components/CommentsList';
 import CommentForm from '../components/CommentForm';
-import LoginForm from '../components/LoginForm'
+import LoginForm from '../components/LoginForm';
 
 export default class CommentsBox extends React.Component {
   constructor(props) {
@@ -11,6 +11,34 @@ export default class CommentsBox extends React.Component {
     this.commentSubmit = this.commentSubmit.bind(this)
   }
 
+
+  componentDidMount() {
+    this.interval = setInterval(this.fetchComments, 20 * 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
+  loginSubmit(email, pwd, csrf_token) {
+
+    const payload = {
+      user: {
+        id: email,
+        password: pwd
+      }
+    };
+    // alert('User email:' + email);
+    post('/users/login', payload, 
+         {headers: {
+         'X-CSRF-Token': csrf_token
+         }}
+        )
+      .then(json=>{
+        alert(json);
+      });
+
+  }
   commentSubmit(text) {
 
     const payload = {
@@ -21,19 +49,11 @@ export default class CommentsBox extends React.Component {
       }
     };
 
-    post(`/articles/12/comments`, payload)
+    post(`/articles/${this.props.article_id}/comments`, payload)
       .then(json=>{
         this.fetchComments();
       });
 
-  }
-
-  componentDidMount() {
-    this.interval = setInterval(this.fetchComments, 20 * 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.interval);
   }
 
   fetchComments() {
@@ -49,8 +69,10 @@ export default class CommentsBox extends React.Component {
     const { comments, user } = this.state;
     return (
       <div className="commentsBox">
+        <h3>Comments</h3>
         <CommentsList comments={comments} />
         <CommentForm user={user} onComment={this.commentSubmit}/>
+        <LoginForm user={user} onLogin={this.loginSubmit} />
       </div>
     );
   }

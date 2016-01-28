@@ -1,4 +1,6 @@
-class CommentsList extends React.Component{
+import Comment from '../components/Comment'
+
+export default class CommentsList extends React.Component{
   constructor() {
     super();
   }
