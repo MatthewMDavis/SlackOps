@@ -2,7 +2,7 @@ export default class Comment extends React.Component{
 
   render() {
     return (
-      <div className="comment">
+      <div>
         <CommentBody comment={this.props.comment} />
         <CommentByline comment={this.props.comment} />
       </div>

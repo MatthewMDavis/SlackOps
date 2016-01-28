@@ -17,7 +17,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer', platforms: :ruby
 
 # Enable React.js in the views and prerendering of dynamic content
-gem 'react-rails', '~> 1.0'
+gem 'react_on_rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -50,9 +50,6 @@ gem 'pundit'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-
-# Use puma as the app server
-gem 'puma'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

@@ -7,6 +7,15 @@
   padding-bottom: 20px;
 }
 
+.comment-enter {
+  background-color: #ffeebb;
+}
+
+.comment-enter.comment-enter-active {
+  background-color: white;
+  transition: background-color 1000ms ease-in;
+}
+
 .comment-header {
   font-weight: bold;
 }
