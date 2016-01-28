@@ -134,6 +134,7 @@ GEM
       slop (~> 3.4)
     pry-rails (0.3.4)
       pry (>= 0.9.10)
+    puma (2.15.3)
     pundit (1.0.1)
       activesupport (>= 3.0.0)
     rack (1.6.4)
@@ -174,11 +175,11 @@ GEM
     rainbow (2.1.0)
     rake (10.4.2)
     rdoc (4.2.0)
-    react_on_rails (2.0.2)
+    react_on_rails (2.1.1)
       connection_pool
       execjs (~> 2.5)
       rails (>= 3.2)
-      rainbow (~> 2.0)
+      rainbow (~> 2.1)
     redcarpet (3.3.3)
     ref (2.0.0)
     responders (2.1.0)
@@ -262,10 +263,14 @@ DEPENDENCIES
   omniauth-facebook
   pg
   pry-rails
+  puma
   pundit
   rails (= 4.2.4)
+  rails-assets-es6-promise!
+  rails-assets-fetch!
+  rails-assets-pluralize!
   rails_12factor
-  react_on_rails
+  react_on_rails (~> 2.1.0)
   redcarpet
   rspec-rails (~> 3.0)
   sass-rails (~> 5.0)

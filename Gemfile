@@ -17,7 +17,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer', platforms: :ruby
 
 # Enable React.js in the views and prerendering of dynamic content
-gem 'react_on_rails'
+gem 'react_on_rails', '~> 2.1.0'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
