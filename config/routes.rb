@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   #     end
   #
   #     collection do
-  #       get 'sold'
+  #       get 'sold'fatal: unable to access 'https://github.com/Homebrew/homebrew.git/': The requested URL returned error: 500
   #     end
   #   end
 

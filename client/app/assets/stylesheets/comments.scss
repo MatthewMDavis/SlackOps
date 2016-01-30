@@ -1,0 +1,25 @@
+// Place all the styles related to the Comments controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#comment-form {
+  padding-top: 35px;
+  padding-bottom: 20px;
+}
+
+.comment-enter {
+  background-color: #ffeebb;
+}
+
+.comment-enter.comment-enter-active {
+  background-color: white;
+  transition: background-color 1000ms ease-in;
+}
+
+.comment-header {
+  font-weight: bold;
+}
+
+.comment-byline {
+  font-size: smaller;
+}

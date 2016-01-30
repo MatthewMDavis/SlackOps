@@ -29,5 +29,8 @@
     "url": "https://github.com/shakacode/react-webpack-rails-tutorial/issues"
   },
   "homepage": "https://github.com/shakacode/react-webpack-rails-tutorial",
-  "dependencies": {}
+  "dependencies": {},
+  "devDependencies": {
+    "react-addons-css-transition-group": "^0.14.7"
+  }
 }

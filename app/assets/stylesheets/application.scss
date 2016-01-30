@@ -8,8 +8,8 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- 
- 
+
+
  */
 
 @import "bootstrap-sprockets";
@@ -26,9 +26,6 @@
     float: right;
     width: 33%;
   }
-  // form {
-// margin-top: 35px;
-  // }
 }
 
 #article_nav {
@@ -92,7 +89,7 @@ $rails: true;
 // These scss files are located under client/assets/stylesheets
 // (which has been added to the Rails asset pipeline search path in config/application.rb).
 @import 'bootstrap-custom';
-
+@import 'comments';
 // This must come after all the boostrap styles are loaded so that these styles can override those.
 @import 'post-bootstrap';
 

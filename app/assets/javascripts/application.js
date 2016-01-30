@@ -24,3 +24,7 @@
 // NB: bootstrap-sprockets depends on generated/vendor-bundle for jQuery.
 //= require bootstrap-sprockets
 
+
+// bootstrap-sprockets depends on generated/vendor-bundle for jQuery.
+//= require bootstrap-sprockets
+

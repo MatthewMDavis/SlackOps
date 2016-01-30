@@ -6,7 +6,10 @@ var WebpackDevServer = require('webpack-dev-server');
 var jade = require('jade');
 var config = require('./webpack.client.hot.config');
 
-var server = new WebpackDevServer(webpack(config), {
+const PORT = 4000;
+const compiler = webpack(config);
+
+var server = new WebpackDevServer(compiler, {
   publicPath: config.output.publicPath,
   hot: true,
   historyApiFallback: true,
@@ -49,16 +52,21 @@ var server = new WebpackDevServer(webpack(config), {
 
 var initialName = 'Stranger';
 
-server.app.use('/', function routePath(req, res) {
+server.app.use('/', (req, res) => {
   var locals = {
     props: JSON.stringify(initialName),
   };
-  var layout = process.cwd() + '/index.jade';
+  var layout = `${process.cwd()}/index.jade`;
   var html = jade.compileFile(layout, { pretty: true })(locals);
   res.send(html);
 });
 
-server.listen(4000, 'localhost', function onListen(err) {
-  if (err) console.log(err);
-  console.log('Listening at localhost:4000...');
+server.listen(PORT, 'localhost', err => {
+  if (err) console.error(err);
+  console.log(
+    '=> 🔥  Webpack development server is running on port ' + PORT
+  );
+});
+compiler.plugin('done', () => {
+  process.stdout.write('Webpack: Done compiling assets!\n');
 });

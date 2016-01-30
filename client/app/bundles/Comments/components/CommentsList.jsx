@@ -1,6 +1,6 @@
 import React from 'react';
-import Comment from '../components/Comment.jsx';
-
+import Comment from '../components/Comment';
+import ReactCSSTransitionGroup from 'react/lib/ReactCSSTransitionGroup'
 export default class CommentsList extends React.Component{
   constructor(props) {
     super(props);
@@ -14,12 +14,13 @@ export default class CommentsList extends React.Component{
               </div>
       );
     });
-
+    const CSSTransitionGroup = require('react-addons-css-transition-group')
     return (
       <div className="comments-list">
-        <React.addons.CSSTransitionGroup transitionName="comment" transitionEnterTimeout={1000} transitionLeaveTimeout={300} >
+        <ReactCSSTransitionGroup transitionName="comment" transitionEnterTimeout={1000} transitionLeaveTimeout={300} >
           {renderComments}
-        </React.addons.CSSTransitionGroup>
+        </ReactCSSTransitionGroup>
+
       </div>
     );
   }

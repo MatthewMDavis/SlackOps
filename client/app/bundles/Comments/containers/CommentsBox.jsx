@@ -1,14 +1,18 @@
 import React from 'react';
 import CommentsList from '../components/CommentsList';
+import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
 import LoginForm from '../components/LoginForm';
+import { get, post } from '../../../lib/fetch_helpers';
 
 export default class CommentsBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { comments, user, article_id } = this.props;
-    this.fetchComments = this.fetchComments.bind(this)
-    this.commentSubmit = this.commentSubmit.bind(this)
+    this.state = { comments: props.comments,
+                    user: props.user,
+                    article_id: props.article_id };
+    this.fetchComments = this.fetchComments.bind(this);
+    this.commentSubmit = this.commentSubmit.bind(this);
   }
 
 
@@ -29,7 +33,7 @@ export default class CommentsBox extends React.Component {
       }
     };
     // alert('User email:' + email);
-    post('/users/login', payload, 
+    post('/users/login', payload,
          {headers: {
          'X-CSRF-Token': csrf_token
          }}
