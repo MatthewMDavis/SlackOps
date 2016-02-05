@@ -20,7 +20,7 @@ export default class CommentsList extends React.Component{
         <ReactCSSTransitionGroup transitionName="comment" transitionEnterTimeout={1000} transitionLeaveTimeout={300} >
           {renderComments}
         </ReactCSSTransitionGroup>
-
+        <br />
       </div>
     );
   }

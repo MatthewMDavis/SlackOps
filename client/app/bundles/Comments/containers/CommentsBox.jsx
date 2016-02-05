@@ -2,7 +2,6 @@ import React from 'react';
 import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
-import LoginForm from '../components/LoginForm';
 import LoginModal from '../components/LoginModal';
 import { get, post } from '../../../lib/fetch_helpers';
 
@@ -71,12 +70,18 @@ export default class CommentsBox extends React.Component {
 
 
   render() {
+    const ContextualForm = this.state.user ?
+      <CommentForm user={user} onComment={this.commentSubmit}/>
+      :
+      <LoginModal onLogin={this.loginSubmit} />;
+
     const { comments, user } = this.state;
+
     return (
       <div className="commentsBox">
         <h3>Comments</h3>
         <CommentsList comments={comments} />
-        <CommentForm user={user} onComment={this.commentSubmit}/>
+        {ContextualForm}
       </div>
     );
   }
