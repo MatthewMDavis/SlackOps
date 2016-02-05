@@ -1,4 +1,5 @@
 import React from 'react';
+import LoginModal from '../components/LoginModal'
 export default class CommentForm extends React.Component {
   constructor(props) {
     super(props);
@@ -17,9 +18,12 @@ handleSubmit() {
       <br/>
       <button className="btn btn-primary pull-right" onClick={this.handleSubmit}>Submit</button>
       <br />
+      <p>Posting as {this.props.user.username}. Logout.</p>
     </div>
     :
-    <h4>Please login to comment on this article</h4>;
+      <div>
+        <LoginModal />
+      </div>
 
   return (
     <div id="comment-form">

@@ -3,6 +3,7 @@ import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
 import LoginForm from '../components/LoginForm';
+import LoginModal from '../components/LoginModal';
 import { get, post } from '../../../lib/fetch_helpers';
 
 export default class CommentsBox extends React.Component {
@@ -76,7 +77,6 @@ export default class CommentsBox extends React.Component {
         <h3>Comments</h3>
         <CommentsList comments={comments} />
         <CommentForm user={user} onComment={this.commentSubmit}/>
-        <LoginForm user={user} onLogin={this.loginSubmit} />
       </div>
     );
   }

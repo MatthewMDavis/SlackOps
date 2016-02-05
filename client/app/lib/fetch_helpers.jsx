@@ -37,3 +37,25 @@ function _fetch(url, options) {
     });
 }
 
+export function getHeaders(url, options={}) {
+
+  const defaultOptions = {
+    headers: {
+      'Accept':       'application/json',
+      'Content-Type': 'application/json'
+    }
+  };
+
+  return _fetchHeaders(url, Object.assign({}, defaultOptions, options));
+}
+function _fetchHeaders(url, options) {
+  return fetch(url, options)
+    .then(response=>{
+      // console.log(response);
+      return response;
+    })
+    .catch(err=>{
+      console.log('There was an error processing your request');
+      console.log(err);
+    });
+}
