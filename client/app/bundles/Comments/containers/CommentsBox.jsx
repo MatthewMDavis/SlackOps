@@ -1,8 +1,8 @@
 import React from 'react';
+import { Button, ButtonInput, ButtonToolbar, Input, Modal } from 'react-bootstrap';
 import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
-import LoginModal from '../components/LoginModal';
 import { get, post } from '../../../lib/fetch_helpers';
 
 export default class CommentsBox extends React.Component {
@@ -10,12 +10,18 @@ export default class CommentsBox extends React.Component {
     super(props);
     this.state = { comments: props.comments,
                     user: props.user,
-                    article_id: props.article_id };
+                    article_id: props.article_id,
+                    showModal: false
+    };
     this.fetchComments = this.fetchComments.bind(this);
     this.commentSubmit = this.commentSubmit.bind(this);
+    this.setState = this.setState.bind(this);
+    this.close = this.close.bind(this);
+    this.open = this.open.bind(this);
+    this.handleModalSubmit = this.handleModalSubmit.bind(this);
   }
 
-
+  // Set up polling for new comments
   componentDidMount() {
     this.interval = setInterval(this.fetchComments, 20 * 1000);
   }
@@ -24,25 +30,49 @@ export default class CommentsBox extends React.Component {
     clearInterval(this.interval);
   }
 
-  loginSubmit(email, pwd, csrf_token) {
+  // handling the modal login window
+  close() {
+    this.setState({ showModal: false });
+  }
+
+  open() {
+    this.setState({ showModal: true });
+  }
+  handleModalSubmit(e) {
+    e.preventDefault();
+    let email = this.refs.email.getValue();
+    let pwd = this.refs.pwd.getValue();
+    this.loginSubmit(email, pwd);
+  }
+
+  // Process AJAX login
+  loginSubmit(email, pwd) {
 
     const payload = {
       user: {
-        id: email,
-        password: pwd
+        email: email,
+        password: pwd,
       }
     };
-    // alert('User email:' + email);
-    post('/users/login', payload,
-         {headers: {
-         'X-CSRF-Token': csrf_token
-         }}
-        )
+
+    post('/users/login', payload, {})
       .then(json=>{
         alert(json);
+        console.log(json);
+        this.setState({ user:
+                      {id: json.id,
+                        url: json.url,
+                        username: json.username},
+                       showModal: false });
+      })
+      .catch(ex=>{
+        alert(ex);
+        console.log(ex);
       });
 
   }
+
+  // AJAX comment submission
   commentSubmit(text) {
 
     const payload = {
@@ -70,18 +100,39 @@ export default class CommentsBox extends React.Component {
 
 
   render() {
-    const ContextualForm = this.state.user ?
-      <CommentForm user={user} onComment={this.commentSubmit}/>
-      :
-      <LoginModal onLogin={this.loginSubmit} />;
 
-    const { comments, user } = this.state;
+    let { comments, user } = this.state;
+    let ContextForm = user ?
+      <CommentForm user={this.state.user} onComment={this.commentSubmit}/>
+        :
+          <div>
+            <h4>Log In if you would like to leave your own comments.</h4>
+
+            <Button bsStyle="link" onClick={this.open}>
+              Log in
+            </Button>
+          </div>
+        ;
+
 
     return (
       <div className="commentsBox">
         <h3>Comments</h3>
         <CommentsList comments={comments} />
-        {ContextualForm}
+        {ContextForm}
+        <Modal show={this.state.showModal} onHide={this.close}>
+          <Modal.Header closeButton>
+            <Modal.Title>Log In</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h4>Form Here</h4>
+            <form>
+              <Input type="email" label="Email Address" ref="email" placeholder="Enter email" />
+              <Input type="password" label="Password" ref="pwd" />
+              <ButtonInput value="Login" bsStyle="primary" onClick={this.handleModalSubmit} />
+            </form>
+          </Modal.Body>
+        </Modal>
       </div>
     );
   }

@@ -11,7 +11,6 @@ class ArticlesController < ApplicationController
       format.html
       format.json { render json: @article }
     end
-    store_location_for(:user, article_path(@article))
   end
 
   def new

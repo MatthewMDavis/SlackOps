@@ -16,7 +16,8 @@ export function post(url, payload, options) {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: {
-      'X-CSRF-Token':  document.getElementsByName("csrf-token")[0].content,
+      // 'X-CSRF-Token':  document.getElementsByName("csrf-token")[0].content,
+      'X-CSRF-Token':  window._token,
       'Accept':       'application/json',
       'Content-Type': 'application/json'
     },
