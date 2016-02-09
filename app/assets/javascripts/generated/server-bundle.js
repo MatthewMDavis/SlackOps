@@ -26530,7 +26530,7 @@
 
 	var _CommentForm2 = _interopRequireDefault(_CommentForm);
 
-	var _fetch_helpers = __webpack_require__(658);
+	var _fetch_helpers = __webpack_require__(657);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26610,9 +26610,10 @@
 	        }
 	      };
 
-	      (0, _fetch_helpers.post)('/users/login', payload, {}).then(function (json) {
-	        alert(json);
-	        console.log(json);
+	      (0, _fetch_helpers.post)('/users/login', payload, {}).then(function (response) {
+	        window._token = response.headers.get('X-CSRF-Token');
+	        return response.json();
+	      }).then(function (json) {
 	        _this2.setState({ user: { id: json.id,
 	            url: json.url,
 	            username: json.username },
@@ -26638,7 +26639,9 @@
 	        }
 	      };
 
-	      (0, _fetch_helpers.post)('/articles/' + this.props.article_id + '/comments', payload).then(function (json) {
+	      (0, _fetch_helpers.post)('/articles/' + this.props.article_id + '/comments', payload).then(function (response) {
+	        return response.json();
+	      }).then(function (json) {
 	        _this3.fetchComments();
 	      });
 	    }
@@ -26647,7 +26650,9 @@
 	    value: function fetchComments() {
 	      var _this4 = this;
 
-	      (0, _fetch_helpers.get)('/articles/' + this.props.article_id + '/comments').then(function (json) {
+	      (0, _fetch_helpers.get)('/articles/' + this.props.article_id + '/comments').then(function (response) {
+	        return response.json();
+	      }).then(function (json) {
 	        _this4.setState({ comments: json });
 	      });
 	    }
@@ -44509,8 +44514,7 @@
 	exports.default = CommentForm;
 
 /***/ },
-/* 657 */,
-/* 658 */
+/* 657 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -44553,7 +44557,7 @@
 
 	function _fetch(url, options) {
 	  return fetch(url, options).then(function (response) {
-	    return response.json();
+	    return response;
 	  }).catch(function (err) {
 	    console.log('There was an error processing your request');
 	    console.log(err);

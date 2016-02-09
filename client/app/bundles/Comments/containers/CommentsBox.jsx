@@ -56,9 +56,11 @@ export default class CommentsBox extends React.Component {
     };
 
     post('/users/login', payload, {})
+    .then(response=> {
+      window._token = response.headers.get('X-CSRF-Token');
+      return response.json();
+    })
       .then(json=>{
-        alert(json);
-        console.log(json);
         this.setState({ user:
                       {id: json.id,
                         url: json.url,
@@ -84,6 +86,9 @@ export default class CommentsBox extends React.Component {
     };
 
     post(`/articles/${this.props.article_id}/comments`, payload)
+      .then(response=>{
+        return response.json();
+      })
       .then(json=>{
         this.fetchComments();
       });
@@ -92,6 +97,9 @@ export default class CommentsBox extends React.Component {
 
   fetchComments() {
     get(`/articles/${this.props.article_id}/comments`)
+      .then(response=>{
+        return response.json();
+      })
       .then(json=>{
         this.setState({ comments: json });
       });

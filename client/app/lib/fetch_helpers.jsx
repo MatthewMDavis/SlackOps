@@ -30,7 +30,7 @@ export function post(url, payload, options) {
 function _fetch(url, options) {
   return fetch(url, options)
     .then(response=>{
-      return response.json();
+      return response;
     })
     .catch(err=>{
       console.log('There was an error processing your request');
