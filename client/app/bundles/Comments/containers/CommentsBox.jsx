@@ -3,15 +3,16 @@ import { Button, ButtonInput, ButtonToolbar, Input, Modal } from 'react-bootstra
 import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
-import { get, post } from '../../../lib/fetch_helpers';
+import axios from 'axios';
+// import { get, post } from '../../../lib/fetch_helpers';
 
 export default class CommentsBox extends React.Component {
   constructor(props) {
     super(props);
     this.state = { comments: props.comments,
-                    user: props.user,
-                    article_id: props.article_id,
-                    showModal: false
+      user: props.user,
+      article_id: props.article_id,
+      showModal: false
     };
     this.fetchComments = this.fetchComments.bind(this);
     this.commentSubmit = this.commentSubmit.bind(this);
@@ -19,7 +20,35 @@ export default class CommentsBox extends React.Component {
     this.close = this.close.bind(this);
     this.open = this.open.bind(this);
     this.handleModalSubmit = this.handleModalSubmit.bind(this);
+    // this.connect = axios.create(
+    //   {
+    //     headers: {
+    //       'Accept':       'application/json',
+    //       'Content-Type': 'application/json'
+    //     }
+    //   }
+    // )
+
   }
+
+  // get(url, options) {
+  //   connect = axios.create(
+  //     {
+  //       headers: {
+  //         'Accept':       'application/json',
+  //         'Content-Type': 'application/json'
+  //       }
+  //     }
+  //   )
+  //   return connect.get(url, options)
+  //   .then(response=>{
+  //     return response;
+  //   })
+  //   .catch(err=>{
+  //     console.log('There was an error processing your request');
+  //     console.log(err);
+  //   });
+  // }
 
   // Set up polling for new comments
   componentDidMount() {
@@ -45,6 +74,7 @@ export default class CommentsBox extends React.Component {
     this.loginSubmit(email, pwd);
   }
 
+
   // Process AJAX login
   loginSubmit(email, pwd) {
 
@@ -55,22 +85,46 @@ export default class CommentsBox extends React.Component {
       }
     };
 
-    post('/users/login', payload, {})
-    .then(response=> {
-      window._token = response.headers.get('X-CSRF-Token');
-      return response.json();
+
+    axios.post('/users/login', payload, {
+        headers: {
+          'Accept':       'application/json',
+          'Content-Type': 'application/json'
+        }
     })
-      .then(json=>{
+    .then(response=> {
+      console.log(response.data);
+      return response.data;
+    })
+      .then(data=>{
         this.setState({ user:
-                      {id: json.id,
-                        url: json.url,
-                        username: json.username},
+                      {id: data.id,
+                        url: data.url,
+                        username: data.username},
                        showModal: false });
       })
       .catch(ex=>{
         alert(ex);
         console.log(ex);
       });
+
+    // post('/users/login', payload, {})
+    // .then(response=> {
+    //   window._token = response.headers.get('X-CSRF-Token');
+    //   console.log(window._token);
+    //   return response.json();
+    // })
+    //   .then(json=>{
+    //     this.setState({ user:
+    //                   {id: json.id,
+    //                     url: json.url,
+    //                     username: json.username},
+    //                    showModal: false });
+    //   })
+    //   .catch(ex=>{
+    //     alert(ex);
+    //     console.log(ex);
+    //   });
 
   }
 
@@ -85,24 +139,32 @@ export default class CommentsBox extends React.Component {
       }
     };
 
-    post(`/articles/${this.props.article_id}/comments`, payload)
-      .then(response=>{
-        return response.json();
+    axios.post(
+      `/articles/${this.props.article_id}/comments`,
+      payload,
+      { headers:
+        {
+          'Accept':       'application/json',
+          'Content-Type': 'application/json'
+        }
       })
-      .then(json=>{
-        this.fetchComments();
-      });
-
+    .then(response=>{
+      this.setState({ comments: response.data })
+    });
   }
 
   fetchComments() {
-    get(`/articles/${this.props.article_id}/comments`)
-      .then(response=>{
-        return response.json();
-      })
-      .then(json=>{
-        this.setState({ comments: json });
-      });
+    axios.get(`/articles/${this.props.article_id}/comments`,
+              { headers:
+                {
+                  'Accept':       'application/json',
+                  'Content-Type': 'application/json'
+                }
+              }
+             )
+             .then(response=>{
+               this.setState({ comments: response.data })
+             });
   }
 
 

@@ -1,11 +1,11 @@
 class Users::SessionsController < Devise::SessionsController
-  after_filter :set_csrf_header, only: [:new, :create]
+  after_filter :set_csrf_header, only: [:create, :destroy]
 
   respond_to :json
 
   protected
 
   def set_csrf_header
-    response.headers['X-CSRF-Token'] = form_authenticity_token
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
 end
