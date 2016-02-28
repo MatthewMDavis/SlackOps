@@ -56,6 +56,7 @@ RSpec.configure do |config|
   config.include ControllerHelpers, :type => :controller
   config.include Features::SessionHelpers, :type => :feature
   config.include Warden::Test::Helpers
+  ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config)
   config.before :suite do
     Warden.test_mode!
   end

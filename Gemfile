@@ -17,7 +17,7 @@ gem 'coffee-rails', '~> 4.1.0'
 gem 'therubyracer', platforms: :ruby
 
 # Enable React.js in the views and prerendering of dynamic content
-gem 'react_on_rails', '~> 2.1.0'
+gem 'react_on_rails', '~> 3.0.5'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
@@ -44,7 +44,8 @@ gem 'active_model_serializers'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use devise authentication with alternate facebook login/Pundit authorization
-gem 'devise'
+# and token authentication to allow sensible AJAX request processing
+gem 'devise_token_auth'
 gem 'omniauth-facebook'
 gem 'pundit'
 

@@ -47,6 +47,7 @@
     "babel-types": "^6.4.5",
     "es5-shim": "^4.5.0",
     "expose-loader": "^0.7.1",
+    "history": "^1.17.0",
     "imports-loader": "^0.6.5",
     "jquery": "^2.2.0",
     "jquery-ujs": "^1.1.0-1",
@@ -56,6 +57,7 @@
     "react-bootstrap": "^0.28.2",
     "react-dom": "^0.14.6",
     "react-on-rails": "2.1.1",
+    "redux-auth": "0.0.2",
     "webpack": "^1.12.12"
   },
   "devDependencies": {

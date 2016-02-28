@@ -3,8 +3,13 @@ export default class CommentForm extends React.Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-
+    this.handleLogout = this.handleLogout.bind(this);
   }
+
+  handleLogout() {
+    this.props.onLogout();
+  }
+
 handleSubmit() {
   this.props.onComment(this.refs.description.value);
   this.refs.description.value = '';
@@ -18,7 +23,12 @@ handleSubmit() {
       <br/>
       <button className="btn btn-primary pull-right" onClick={this.handleSubmit}>Submit</button>
       <br />
-      Posting as {this.props.user.username}. Logout.
+      <div>
+        Posting as {this.props.user.username}.
+        <button className="btn btn-link" onClick={this.handleLogout()}>
+          Logout
+        </button>
+      </div>
     </form>
     </div>
   );

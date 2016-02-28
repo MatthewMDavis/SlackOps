@@ -3,7 +3,6 @@ import { Button, ButtonInput, ButtonToolbar, Input, Modal } from 'react-bootstra
 import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
-import { get, post } from '../../../lib/fetch_helpers';
 
 export default class CommentsBox extends React.Component {
   constructor(props) {
@@ -13,89 +12,106 @@ export default class CommentsBox extends React.Component {
                     article_id: props.article_id,
                     showModal: false
     };
-    this.fetchComments = this.fetchComments.bind(this);
-    this.commentSubmit = this.commentSubmit.bind(this);
-    this.setState = this.setState.bind(this);
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
-    this.handleModalSubmit = this.handleModalSubmit.bind(this);
+    // this.fetchComments = this.fetchComments.bind(this);
+    // this.commentSubmit = this.commentSubmit.bind(this);
+    // this.setState = this.setState.bind(this);
+    // this.close = this.close.bind(this);
+    // this.open = this.open.bind(this);
+    // this.handleModalSubmit = this.handleModalSubmit.bind(this);
   }
 
   // Set up polling for new comments
-  componentDidMount() {
-    this.interval = setInterval(this.fetchComments, 20 * 1000);
-  }
+  // componentDidMount() {
+  //   this.interval = setInterval(this.fetchComments, 20 * 1000);
+  // }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
+  // componentWillUnmount() {
+  //   clearInterval(this.interval);
+  // }
 
-  // handling the modal login window
-  close() {
-    this.setState({ showModal: false });
-  }
+  // // handling the modal login window
+  // close() {
+  //   this.setState({ showModal: false });
+  // }
 
-  open() {
-    this.setState({ showModal: true });
-  }
-  handleModalSubmit(e) {
-    e.preventDefault();
-    let email = this.refs.email.getValue();
-    let pwd = this.refs.pwd.getValue();
-    this.loginSubmit(email, pwd);
-  }
+  // open() {
+  //   this.setState({ showModal: true });
+  // }
+  // handleModalSubmit(e) {
+  //   e.preventDefault();
+  //   let email = this.refs.email.getValue();
+  //   let pwd = this.refs.pwd.getValue();
+  //   this.loginSubmit(email, pwd);
+  // }
 
-  // Process AJAX login
-  loginSubmit(email, pwd) {
+  // // Process AJAX login
+  // loginSubmit(email, pwd) {
 
-    const payload = {
-      user: {
-        email: email,
-        password: pwd,
-      }
-    };
+  //   const payload = {
+  //     email: email,
+  //     password: pwd,
 
-    post('/users/login', payload, {})
-      .then(json=>{
-        alert(json);
-        console.log(json);
-        this.setState({ user:
-                      {id: json.id,
-                        url: json.url,
-                        username: json.username},
-                       showModal: false });
-      })
-      .catch(ex=>{
-        alert(ex);
-        console.log(ex);
-      });
+  //   };
 
-  }
+
+  //   axios.post('/auth/sign_in', payload, {
+  //       headers: {
+  //         'Accept':       'application/json',
+  //         'Content-Type': 'application/json'
+  //       }
+  //   })
+  //   .then(response=> {
+  //     console.log(response.headers);
+  //     return response.data;
+  //   })
+  //     .then(data=>{
+  //       this.setState({ user:
+  //                     {id: data.id,
+  //                       url: data.url,
+  //                       username: data.username},
+  //                      showModal: false });
+  //     })
+  //     .catch(ex=>{
+  //       alert(ex.data.errors);
+  //       console.log(ex);
+  //     });
+
+  // }
 
   // AJAX comment submission
-  commentSubmit(text) {
+  // commentSubmit(text) {
 
-    const payload = {
-      comment: {
-        article_id: this.state.article_id,
-        user_id: this.state.user.id,
-        body: text
-      }
-    };
+  //   const payload = {
+  //     comment: {
+  //       article_id: this.state.article_id,
+  //       user_id: this.state.user.id,
+  //       body: text
+  //     }
+  //   };
 
-    post(`/articles/${this.props.article_id}/comments`, payload)
-      .then(json=>{
-        this.fetchComments();
-      });
+  //   axios.post(`/articles/${this.props.article_id}/comments`, payload, {
+  //       headers: {
+  //         'Accept':       'application/json',
+  //         'Content-Type': 'application/json'
+  //       }
+  //   })
+  //     .then(json=>{
+  //       this.fetchComments();
+  //     });
 
-  }
+  // }
 
-  fetchComments() {
-    get(`/articles/${this.props.article_id}/comments`)
-      .then(json=>{
-        this.setState({ comments: json });
-      });
-  }
+  // fetchComments() {
+  //   axios.get(`/articles/${this.props.article_id}/comments`, {
+  //     headers: {
+  //       'Accept':       'application/json',
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+  //   .then(response=>{
+  //     this.setState({ comments: response.data });
+  //   });
+  // }
 
 
 

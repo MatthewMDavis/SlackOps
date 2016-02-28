@@ -10,7 +10,7 @@
   <% end %>
 </div>
   <%= react_component('CommentsBox',
-                      { comments: comments_list_json(@article.comments),
+                      props: { comments: comments_list_json(@article.comments),
                          user: user_json(current_user) || false,
-                         article_id: @article.id },
-                      { prerender: params[:noprerender].nil? } ) %>
+                         article_id: @article.id }
+                      ) %>
