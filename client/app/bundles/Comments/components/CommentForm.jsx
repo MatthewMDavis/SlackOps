@@ -1,4 +1,5 @@
 import React from 'react';
+
 export default class CommentForm extends React.Component {
   constructor(props) {
     super(props);
@@ -6,14 +7,17 @@ export default class CommentForm extends React.Component {
     this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleLogout() {
+  handleLogout(e) {
+    e.preventDefault();
     this.props.onLogout();
   }
 
-handleSubmit() {
-  this.props.onComment(this.refs.description.value);
-  this.refs.description.value = '';
-}
+  handleSubmit(e) {
+    e.preventDefault();
+    this.props.onComment(this.refs.description.value);
+    this.refs.description.value = '';
+  }
+
   render() {
   return (
     <div id="comment-form">
@@ -25,7 +29,7 @@ handleSubmit() {
       <br />
       <div>
         Posting as {this.props.user.username}.
-        <button className="btn btn-link" onClick={this.handleLogout()}>
+        <button className="btn btn-link" onClick={this.handleLogout}>
           Logout
         </button>
       </div>

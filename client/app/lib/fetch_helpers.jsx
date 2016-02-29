@@ -10,13 +10,12 @@ export function get(url, options={}) {
   return _fetch(url, Object.assign({}, defaultOptions, options));
 }
 
-export function post(url, payload, options) {
+export function post(url, payload, options={}) {
 
   const defaultOptions = {
     method: 'POST',
     body: JSON.stringify(payload),
     headers: {
-      'X-CSRF-Token':  window._token,
       'Accept':       'application/json',
       'Content-Type': 'application/json'
     },
@@ -26,7 +25,7 @@ export function post(url, payload, options) {
   return _fetch(url, Object.assign({}, defaultOptions, options));
 }
 
-export function delete(url, options={}) {
+export function destroy(url, options={}) {
 
   const defaultOptions = {
     method: 'DELETE',
@@ -42,7 +41,7 @@ export function delete(url, options={}) {
 function _fetch(url, options) {
   return fetch(url, options)
     .then(response=>{
-      return response.json();
+      return response;
     })
     .catch(err=>{
       console.log('There was an error processing your request');

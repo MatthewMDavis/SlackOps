@@ -1,15 +1,27 @@
 class Users::SessionsController < Devise::SessionsController
-  after_filter :set_csrf_header, only: [:new, :create]
+  skip_before_filter :verify_signed_out_user
 
   respond_to :json
 
-  protected
-
-  def set_csrf_header
-    response.headers['X-CSRF-Token'] = form_authenticity_token
+  def create
+    resource = warden.authenticate!(auth_options)
+    sign_in(resource_name, resource)
+    yield resource if block_given?
+    if request.format.json?
+      render json: resource
+    else
+      respond_with resource, location: after_sign_in_path_for(resource)
+    end
   end
 
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.for(:account_update) << :session
-  # end
+  # DELETE /users/logout
+  def destroy
+    puts "DELETE /users/logout"
+
+    return render :json => {:user => false}
+  end
+
+  def failure
+    return render :json => {:success => false, :errors => ["Login failed."]}
+  end
 end

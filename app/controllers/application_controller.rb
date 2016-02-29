@@ -1,14 +1,8 @@
 class ApplicationController < ActionController::Base
-  include DeviseTokenAuth::Concerns::SetUserByToken
   include Pundit
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :clean_session_parameter, if: :devise_controller?
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
-
-  # protect_from_forgery with: :exception
-
-  # protect_from_forgery with: :null_session, if: Proc.new { |c| c.request.format == 'application/json' }
 
   protected
 
@@ -19,13 +13,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:account_update) << :username
   end
 
-  def clean_session_parameter
-    params.delete :session
-  end
 
-  def verified_request?
-    super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
-  end
 
   private
 

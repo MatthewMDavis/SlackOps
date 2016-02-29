@@ -8,9 +8,9 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <% unless params[:nojs] %>
       <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-      <%= javascript_tag "window._token = '#{form_authenticity_token}'" %>
+      <%# <%= javascript_tag "window._token = '#{form_authenticity_token}'" %1> %>
     <% end %>
-    <%= csrf_meta_tags %>
+    <%# <%= csrf_meta_tags %1> %>
 
   <body>
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -34,13 +34,13 @@
               <%= render "partials/admin_tools" %>
             <% end %>
           </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <% if user_signed_in? %>
-              <%= render "partials/reg_user_menu" %>
-            <% else %>
-              <%= render "partials/anon_user_menu" %>
-            <% end %>
-          </ul>
+          <%# <ul class="nav navbar-nav navbar-right"> %>
+          <%#   <% if user_signed_in? %1> %>
+          <%#     <%= render "partials/reg_user_menu" %1> %>
+          <%#   <% else %1> %>
+          <%#     <%= render "partials/anon_user_menu" %1> %>
+          <%#   <% end %1> %>
+          <%# </ul> %>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
