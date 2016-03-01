@@ -3,7 +3,8 @@ import { Button, ButtonInput, ButtonToolbar, Input, Modal } from 'react-bootstra
 import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
-import { get, post, destroy } from '../../../lib/fetch_helpers';
+// import { get, post, destroy } from '../../../lib/fetch_helpers';
+import axios from 'axios';
 
 export default class CommentsBox extends React.Component {
   constructor(props) {
@@ -82,33 +83,73 @@ export default class CommentsBox extends React.Component {
   loginSubmit(email, pwd) {
 
     const payload = {
-      user: {
-        email: email,
-        password: pwd,
-        remember_me: 1
-      }
+      email: email,
+      password: pwd,
+      remember_me: 1
     };
 
-    post('/users/login', payload)
-    .then(response=> {
-      return response.json();
+
+    axios.post('/users/login', payload, {
+        headers: {
+          'Accept':       'application/json',
+          'Content-Type': 'application/json'
+        }
     })
-    .then(json=>{
-      this.setState({ user: json, showModal: false })
+    .then(response=> {
+      return response.data;
+    })
+    .then(data=>{
+      this.setState({ user:
+                    {id: data.id,
+                      url: data.url,
+                      username: data.username},
+                      showModal: false });
     })
     .catch(ex=>{
-      alert(ex);
+      alert(ex.data.errors);
       console.log(ex);
     });
   }
 
+  // AJAX comment submission
+  commentSubmit(text) {
+
+    const payload = {
+      comment: {
+        article_id: this.state.article_id,
+        user_id: this.state.user.id,
+        body: text
+      }
+    };
+
+    axios.post(
+      `/articles/${this.props.article_id}/comments`,
+      payload,
+      { headers:
+        {
+          'Accept':       'application/json',
+          'Content-Type': 'application/json'
+        }
+      })
+    .then(response=>{
+      this.setState({ comments: response.data })
+    });
+  }
+
   submitLogout() {
-    destroy('/users/logout')
+    axios.delete('/users/logout',
+      { headers:
+        {
+          'Accept':       'application/json',
+          'Content-Type': 'application/json'
+        }
+      }
+                )
     .then(response=> {
-      return response.json();
+      return response.data;
     })
-    .then(json=> {
-      this.setState({user: json.user});
+    .then(data=> {
+      this.setState({user: data.user});
     })
   }
 
