@@ -24,4 +24,8 @@ class Users::SessionsController < Devise::SessionsController
   def failure
     return render :json => {:success => false, :errors => ["Login failed."]}
   end
+
+  # def configure_sign_in_params
+  #   devise_parameter_sanitizer.for(:account_update) << :session
+  # end
 end
