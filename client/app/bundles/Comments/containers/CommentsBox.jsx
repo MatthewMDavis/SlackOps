@@ -85,7 +85,7 @@ export default class CommentsBox extends React.Component {
     const payload = {
       email: email,
       password: pwd,
-      remember_me: 1
+      // remember_me: 1
     };
 
 

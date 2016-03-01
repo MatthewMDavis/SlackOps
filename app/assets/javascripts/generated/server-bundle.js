@@ -26637,10 +26637,10 @@
 
 	      var payload = {
 	        email: email,
-	        password: pwd,
-	        remember_me: 1
+	        password: pwd
 	      };
 
+	      // remember_me: 1
 	      _axios2.default.post('/users/login', payload, {
 	        headers: {
 	          'Accept': 'application/json',
