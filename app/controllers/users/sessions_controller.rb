@@ -3,6 +3,12 @@ class Users::SessionsController < Devise::SessionsController
 
   after_filter :set_csrf_headers, only: [:create, :destroy]
 
+  def respond_to_on_destroy
+    puts "DELETE /resource/sign_out"
+    respond_to do |format|
+      format.json { return render :json => {:success => true} }
+    end
+  end
   protected
 
   def set_csrf_headers

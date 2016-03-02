@@ -26669,11 +26669,19 @@
 	  }, {
 	    key: 'submitLogout',
 	    value: function submitLogout() {
+	      var _this5 = this;
+
 	      _axios2.default.delete('/users/logout', {
 	        headers: {
 	          'Accept': 'application/json',
 	          'Content-Type': 'application/json'
 	        }
+	      }).then(function (response) {
+	        if (response.data.success) {
+	          _this5.setState({ user: null });
+	        }
+	      }).catch(function (ex) {
+	        console.log(response.status);
 	      });
 	    }
 	    // AJAX comment submission
@@ -26681,7 +26689,7 @@
 	  }, {
 	    key: 'commentSubmit',
 	    value: function commentSubmit(text) {
-	      var _this5 = this;
+	      var _this6 = this;
 
 	      var payload = {
 	        comment: {
@@ -26696,20 +26704,20 @@
 	          'Content-Type': 'application/json'
 	        }
 	      }).then(function (response) {
-	        _this5.setState({ comments: response.data });
+	        _this6.setState({ comments: response.data });
 	      });
 	    }
 	  }, {
 	    key: 'fetchComments',
 	    value: function fetchComments() {
-	      var _this6 = this;
+	      var _this7 = this;
 
 	      _axios2.default.get('/articles/' + this.props.article_id + '/comments', { headers: {
 	          'Accept': 'application/json',
 	          'Content-Type': 'application/json'
 	        }
 	      }).then(function (response) {
-	        _this6.setState({ comments: response.data });
+	        _this7.setState({ comments: response.data });
 	      });
 	    }
 	  }, {

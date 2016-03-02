@@ -123,8 +123,15 @@ export default class CommentsBox extends React.Component {
         'Accept':       'application/json',
         'Content-Type': 'application/json'
       }
-    },
-                );
+    })
+    .then(response=>{
+      if (response.data.success) {
+        this.setState({ user: null });
+      }
+    })
+    .catch(ex=>{
+      console.log(response.status);
+    });
   }
   // AJAX comment submission
   commentSubmit(text) {
