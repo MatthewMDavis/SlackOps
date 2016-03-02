@@ -25,6 +25,7 @@ export function post(url, payload, options={}) {
   return _fetch(url, Object.assign({}, defaultOptions, options));
 }
 
+<<<<<<< Updated upstream
 export function destroy(url, options={}) {
 
   const defaultOptions = {
@@ -38,6 +39,8 @@ export function destroy(url, options={}) {
   return _fetch(url, Object.assign({}, defaultOptions, options));
 }
 
+=======
+>>>>>>> Stashed changes
 function _fetch(url, options) {
   return fetch(url, options)
     .then(response=>{

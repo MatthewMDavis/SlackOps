@@ -1,34 +1,18 @@
 class Users::SessionsController < Devise::SessionsController
-  skip_before_filter :verify_signed_out_user
-
   respond_to :json
 
-  def create
-    resource = warden.authenticate!(auth_options)
-    sign_in(resource_name, resource)
-    yield resource if block_given?
-    if request.format.json?
-      render json: resource
-    else
-      respond_with resource, location: after_sign_in_path_for(resource)
+  after_filter :set_csrf_headers, only: [:create, :destroy]
+
+  def respond_to_on_destroy
+    puts "DELETE /resource/sign_out"
+    respond_to do |format|
+      format.json { return render :json => {:success => true} }
     end
   end
+  protected
 
-  # DELETE /users/logout
-  def destroy
-    puts "DELETE /users/logout"
-
-    return render :json => {:user => false}
+  def set_csrf_headers
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
   end
 
-<<<<<<< Updated upstream
-  def failure
-    return render :json => {:success => false, :errors => ["Login failed."]}
-  end
-
-=======
->>>>>>> Stashed changes
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.for(:account_update) << :session
-  # end
 end

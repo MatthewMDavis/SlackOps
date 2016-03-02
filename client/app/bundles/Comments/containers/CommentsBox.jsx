@@ -3,7 +3,6 @@ import { Button, ButtonInput, ButtonToolbar, Input, Modal } from 'react-bootstra
 import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
-// import { get, post, destroy } from '../../../lib/fetch_helpers';
 import axios from 'axios';
 
 export default class CommentsBox extends React.Component {
@@ -34,32 +33,9 @@ export default class CommentsBox extends React.Component {
   //   clearInterval(this.interval);
   // }
 
-  commentSubmit(text) {
-
-    const payload = {
-      comment: {
-        article_id: this.state.article_id,
-        user_id: this.state.user.id,
-        body: text
-      }
-    };
-
-    post(`/articles/${this.props.article_id}/comments`, payload)
-      .then(json=>{
-        this.fetchComments();
-      });
-
-  }
-
-  fetchComments() {
-    get(`/articles/${this.props.article_id}/comments`)
-    .then(response=>{
-      return response.json();
-    })
-    .then(json=> {
-      this.setState({ comments: json });
-    });
-  }
+  // componentWillUnmount() {
+  //   clearInterval(this.interval);
+  // }
 
 
   // handling the modal login window
@@ -85,24 +61,20 @@ export default class CommentsBox extends React.Component {
     const payload = {
       email: email,
       password: pwd,
-<<<<<<< Updated upstream
       // remember_me: 1
-=======
 
->>>>>>> Stashed changes
     };
 
-
-    axios.post('/auth/sign_in', payload, {
-        headers: {
-          'Accept':       'application/json',
-          'Content-Type': 'application/json'
-        }
+    axios.post('/users/login', payload, {
+      headers: {
+        'Accept':       'application/json',
+        'Content-Type': 'application/json',
+      }
     })
     .then(response=> {
+      console.log(response.data);
       return response.data;
     })
-<<<<<<< Updated upstream
     .then(data=>{
       this.setState({ user:
                     {id: data.id,
@@ -114,38 +86,7 @@ export default class CommentsBox extends React.Component {
       alert(ex.data.errors);
       console.log(ex);
     });
-=======
-      .then(data=>{
-        this.setState({ user:
-                      {id: data.id,
-                        url: data.url,
-                        username: data.username},
-                       showModal: false });
-      })
-      .catch(ex=>{
-        alert(ex.data.errors);
-        console.log(ex);
-      });
 
-    // post('/users/login', payload, {})
-    // .then(response=> {
-    //   window._token = response.headers.get('X-CSRF-Token');
-    //   console.log(window._token);
-    //   return response.json();
-    // })
-    //   .then(json=>{
-    //     this.setState({ user:
-    //                   {id: json.id,
-    //                     url: json.url,
-    //                     username: json.username},
-    //                    showModal: false });
-    //   })
-    //   .catch(ex=>{
-    //     alert(ex);
-    //     console.log(ex);
-    //   });
-
->>>>>>> Stashed changes
   }
 
   // AJAX comment submission
@@ -173,21 +114,60 @@ export default class CommentsBox extends React.Component {
     });
   }
 
+  // AJAX logout
   submitLogout() {
-    axios.delete('/users/logout',
+    axios.delete('/users/logout', {
+      headers: {
+        'Accept':       'application/json',
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(response=>{
+      if (response.data.success) {
+        this.setState({ user: null });
+      }
+    })
+    .catch(ex=>{
+      console.log(response.status);
+    });
+  }
+  // AJAX comment submission
+  commentSubmit(text) {
+
+    const payload = {
+      comment: {
+        article_id: this.state.article_id,
+        user_id: this.state.user.id,
+        body: text
+      }
+    };
+
+    axios.post(
+      `/articles/${this.props.article_id}/comments`,
+      payload,
       { headers:
         {
           'Accept':       'application/json',
           'Content-Type': 'application/json'
         }
-      }
-                )
-    .then(response=> {
-      return response.data;
-    })
-    .then(data=> {
-      this.setState({user: data.user});
-    })
+      })
+    .then(response=>{
+      this.setState({ comments: response.data })
+    });
+  }
+
+  fetchComments() {
+    axios.get(`/articles/${this.props.article_id}/comments`,
+              { headers:
+                {
+                  'Accept':       'application/json',
+                  'Content-Type': 'application/json'
+                }
+              }
+             )
+             .then(response=>{
+               this.setState({ comments: response.data })
+             });
   }
 
   render() {
