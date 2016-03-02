@@ -22,8 +22,8 @@
 /.envrc
 /config/application.yml
 # React on Rails
-npm-debug.log
+npm-debug.log*
 node_modules
 
 # Generated js bundles
-/app/assets/javascripts/generated/*
+/app/assets/javascripts/generated
