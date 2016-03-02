@@ -21,10 +21,13 @@ class Users::SessionsController < Devise::SessionsController
     return render :json => {:user => false}
   end
 
+<<<<<<< Updated upstream
   def failure
     return render :json => {:success => false, :errors => ["Login failed."]}
   end
 
+=======
+>>>>>>> Stashed changes
   # def configure_sign_in_params
   #   devise_parameter_sanitizer.for(:account_update) << :session
   # end

@@ -1,9 +1,22 @@
 class ApplicationController < ActionController::Base
+<<<<<<< Updated upstream
   # include Pundit
+=======
+  include DeviseTokenAuth::Concerns::SetUserByToken
+  include Pundit
+>>>>>>> Stashed changes
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :clean_session_parameter, if: :devise_controller?
 
+<<<<<<< Updated upstream
   # rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
   protect_from_forgery with: :exception
+=======
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+
+  protect_from_forgery with: :null_session
+>>>>>>> Stashed changes
 
   rescue_from ActionController::InvalidAuthenticityToken do |exception|
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
@@ -28,6 +41,10 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.for(:sign_in) << :username
     devise_parameter_sanitizer.for(:sign_in) << :session
     devise_parameter_sanitizer.for(:account_update) << :username
+  end
+
+  def clean_session_parameter
+    params.delete :session
   end
 
   def verified_request?

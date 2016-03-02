@@ -85,11 +85,15 @@ export default class CommentsBox extends React.Component {
     const payload = {
       email: email,
       password: pwd,
+<<<<<<< Updated upstream
       // remember_me: 1
+=======
+
+>>>>>>> Stashed changes
     };
 
 
-    axios.post('/users/login', payload, {
+    axios.post('/auth/sign_in', payload, {
         headers: {
           'Accept':       'application/json',
           'Content-Type': 'application/json'
@@ -98,6 +102,7 @@ export default class CommentsBox extends React.Component {
     .then(response=> {
       return response.data;
     })
+<<<<<<< Updated upstream
     .then(data=>{
       this.setState({ user:
                     {id: data.id,
@@ -109,6 +114,38 @@ export default class CommentsBox extends React.Component {
       alert(ex.data.errors);
       console.log(ex);
     });
+=======
+      .then(data=>{
+        this.setState({ user:
+                      {id: data.id,
+                        url: data.url,
+                        username: data.username},
+                       showModal: false });
+      })
+      .catch(ex=>{
+        alert(ex.data.errors);
+        console.log(ex);
+      });
+
+    // post('/users/login', payload, {})
+    // .then(response=> {
+    //   window._token = response.headers.get('X-CSRF-Token');
+    //   console.log(window._token);
+    //   return response.json();
+    // })
+    //   .then(json=>{
+    //     this.setState({ user:
+    //                   {id: json.id,
+    //                     url: json.url,
+    //                     username: json.username},
+    //                    showModal: false });
+    //   })
+    //   .catch(ex=>{
+    //     alert(ex);
+    //     console.log(ex);
+    //   });
+
+>>>>>>> Stashed changes
   }
 
   // AJAX comment submission

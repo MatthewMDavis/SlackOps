@@ -42,7 +42,9 @@ gem 'active_model_serializers'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use devise authentication with alternate facebook login/Pundit authorization
+# and token authentication to allow sensible AJAX request processing
 gem 'devise'
+gem 'devise_token_auth'
 gem 'omniauth-facebook'
 gem 'pundit'
 
