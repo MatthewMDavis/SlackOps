@@ -3,6 +3,8 @@ import { Button, ButtonInput, ButtonToolbar, Input, Modal } from 'react-bootstra
 import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
+import SignupModal from '../../Login/components/SignupModal'
+import LoginModal from '../../Login/components/LoginModal'
 import axios from 'axios';
 
 export default class CommentsBox extends React.Component {
@@ -11,79 +13,75 @@ export default class CommentsBox extends React.Component {
     this.state = { comments: props.comments,
       user: props.user,
       article_id: props.article_id,
-      showModal: false
+      showSignupModal: false,
+      showLoginModal: false
     };
 
     this.fetchComments = this.fetchComments.bind(this);
     this.commentSubmit = this.commentSubmit.bind(this);
     this.setState = this.setState.bind(this);
-    this.close = this.close.bind(this);
-    this.open = this.open.bind(this);
-    this.handleModalSubmit = this.handleModalSubmit.bind(this);
+    this.closeLogin = this.closeLogin.bind(this);
+    this.openLogin = this.openLogin.bind(this);
+    this.closeSignup = this.closeSignup.bind(this);
+    this.openSignup = this.openSignup.bind(this);
     this.submitLogout = this.submitLogout.bind(this);
-
+    this.submitSignup = this.submitSignup.bind(this);
+    this.submitLogin = this.submitLogin.bind(this);
   }
 
-  // Set up polling for new comments
-  // componentDidMount() {
-  //   this.interval = setInterval(this.fetchComments, 20 * 1000);
-  // }
-
-  // componentWillUnmount() {
-  //   clearInterval(this.interval);
-  // }
-
-  commentSubmit(text) {
-
-    const payload = {
-      comment: {
-        article_id: this.state.article_id,
-        user_id: this.state.user.id,
-        body: text
-      }
-    };
-
-    post(`/articles/${this.props.article_id}/comments`, payload)
-      .then(json=>{
-        this.fetchComments();
-      });
-
-  }
-
-  fetchComments() {
-    get(`/articles/${this.props.article_id}/comments`)
-    .then(response=>{
-      return response.json();
-    })
-    .then(json=> {
-      this.setState({ comments: json });
-    });
-  }
-
-  // componentWillUnmount() {
-  //   clearInterval(this.interval);
-  // }
 
 
   // handling the modal login window
 
-  close() {
-    this.setState({ showModal: false });
+  openLogin() {
+    this.setState({ showLoginModal: true });
+  }
+  closeLogin() {
+    this.setState({ showLoginModal: false });
   }
 
-  open() {
-    this.setState({ showModal: true });
+  openSignup() {
+    this.setState({ showSignupModal: true });
   }
-  handleModalSubmit(e) {
-    e.preventDefault();
-    let email = this.refs.email.getValue();
-    let pwd = this.refs.pwd.getValue();
-    this.loginSubmit(email, pwd);
+  closeSignup() {
+    this.setState({ showSignupModal: false });
   }
 
+
+  submitSignup(email, username, pwd, pwdConf) {
+    const payload = {
+      user: {
+        email: email,
+        username: username,
+        password: pwd,
+        password_confirmation: pwdConf,
+      }
+    };
+
+    axios.post('/users', payload, {
+      headers: {
+        'Accept':       'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(response=> {
+      return response.data;
+    })
+    .then(data=>{
+      this.setState({ user:
+                    {id: data.id,
+                      url: data.url,
+                      username: data.username},
+                      showSignupModal: false });
+    })
+    .catch(ex=>{
+      alert(ex);
+      console.log(ex);
+    });
+  }
 
   // Process AJAX login
-  loginSubmit(email, pwd) {
+  submitLogin(email, pwd) {
 
     const payload = {
       user: {
@@ -100,7 +98,6 @@ export default class CommentsBox extends React.Component {
       }
     })
     .then(response=> {
-      console.log(response.data);
       return response.data;
     })
     .then(data=>{
@@ -108,7 +105,7 @@ export default class CommentsBox extends React.Component {
                     {id: data.id,
                       url: data.url,
                       username: data.username},
-                      showModal: false });
+                      showLoginModal: false });
     })
     .catch(ex=>{
       alert(ex);
@@ -179,10 +176,13 @@ export default class CommentsBox extends React.Component {
       <CommentForm user={this.state.user} onComment={this.commentSubmit} onLogout={this.submitLogout}/>
         :
           <div>
-            <h4>Log In if you would like to leave your own comments.</h4>
+            <h4>Log in or sign up for an account if you would like to leave your own comments.</h4>
 
-            <Button bsStyle="link" onClick={this.open}>
+            <Button bsStyle="link" onClick={this.openLogin}>
               Log in
+            </Button>
+            <Button bsStyle="link" onClick={this.openSignup}>
+              Sign up
             </Button>
           </div>
         ;
@@ -193,19 +193,8 @@ export default class CommentsBox extends React.Component {
         <h3>Comments</h3>
         <CommentsList comments={comments} />
         {ContextForm}
-        <Modal show={this.state.showModal} onHide={this.close}>
-          <Modal.Header closeButton>
-            <Modal.Title>Log In</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <h4>Form Here</h4>
-            <form>
-              <Input type="email" label="Email Address" ref="email" placeholder="Enter email" />
-              <Input type="password" label="Password" ref="pwd" />
-              <ButtonInput value="Login" bsStyle="primary" onClick={this.handleModalSubmit} />
-            </form>
-          </Modal.Body>
-        </Modal>
+        <LoginModal showLogin={this.state.showLoginModal} closeLogin={this.closeLogin} handleLoginSubmit={this.submitLogin}/>
+        <SignupModal showSignup={this.state.showSignupModal} closeSignup={this.closeSignup} handleSignupSubmit={this.submitSignup}/>
       </div>
     );
   }

@@ -1,5 +1,19 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-# before_filter :configure_sign_up_params, only: [:create]
+  before_filter :configure_sign_up_params, only: [:create]
+  respond_to :json
+
+  after_filter :set_csrf_headers, only: [:create, :destroy]
+
+  protected
+
+  def set_csrf_headers
+    cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
+  end
+
+  def configure_sign_up_params
+    devise_parameter_sanitizer.for(:sign_up) << :username
+  end
+
 # before_filter :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up

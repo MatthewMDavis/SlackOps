@@ -26530,6 +26530,14 @@
 
 	var _CommentForm2 = _interopRequireDefault(_CommentForm);
 
+	var _SignupModal = __webpack_require__(674);
+
+	var _SignupModal2 = _interopRequireDefault(_SignupModal);
+
+	var _LoginModal = __webpack_require__(675);
+
+	var _LoginModal2 = _interopRequireDefault(_LoginModal);
+
 	var _axios = __webpack_require__(657);
 
 	var _axios2 = _interopRequireDefault(_axios);
@@ -26553,89 +26561,83 @@
 	    _this.state = { comments: props.comments,
 	      user: props.user,
 	      article_id: props.article_id,
-	      showModal: false
+	      showSignupModal: false,
+	      showLoginModal: false
 	    };
 
 	    _this.fetchComments = _this.fetchComments.bind(_this);
 	    _this.commentSubmit = _this.commentSubmit.bind(_this);
 	    _this.setState = _this.setState.bind(_this);
-	    _this.close = _this.close.bind(_this);
-	    _this.open = _this.open.bind(_this);
-	    _this.handleModalSubmit = _this.handleModalSubmit.bind(_this);
+	    _this.closeLogin = _this.closeLogin.bind(_this);
+	    _this.openLogin = _this.openLogin.bind(_this);
+	    _this.closeSignup = _this.closeSignup.bind(_this);
+	    _this.openSignup = _this.openSignup.bind(_this);
 	    _this.submitLogout = _this.submitLogout.bind(_this);
-
+	    _this.submitSignup = _this.submitSignup.bind(_this);
+	    _this.submitLogin = _this.submitLogin.bind(_this);
 	    return _this;
 	  }
 
-	  // Set up polling for new comments
-	  // componentDidMount() {
-	  //   this.interval = setInterval(this.fetchComments, 20 * 1000);
-	  // }
-
-	  // componentWillUnmount() {
-	  //   clearInterval(this.interval);
-	  // }
+	  // handling the modal login window
 
 	  _createClass(CommentsBox, [{
-	    key: 'commentSubmit',
-	    value: function commentSubmit(text) {
+	    key: 'openLogin',
+	    value: function openLogin() {
+	      this.setState({ showLoginModal: true });
+	    }
+	  }, {
+	    key: 'closeLogin',
+	    value: function closeLogin() {
+	      this.setState({ showLoginModal: false });
+	    }
+	  }, {
+	    key: 'openSignup',
+	    value: function openSignup() {
+	      this.setState({ showSignupModal: true });
+	    }
+	  }, {
+	    key: 'closeSignup',
+	    value: function closeSignup() {
+	      this.setState({ showSignupModal: false });
+	    }
+	  }, {
+	    key: 'submitSignup',
+	    value: function submitSignup(email, username, pwd, pwdConf) {
 	      var _this2 = this;
 
 	      var payload = {
-	        comment: {
-	          article_id: this.state.article_id,
-	          user_id: this.state.user.id,
-	          body: text
+	        user: {
+	          email: email,
+	          username: username,
+	          password: pwd,
+	          password_confirmation: pwdConf
 	        }
 	      };
 
-	      post('/articles/' + this.props.article_id + '/comments', payload).then(function (json) {
-	        _this2.fetchComments();
+	      _axios2.default.post('/users', payload, {
+	        headers: {
+	          'Accept': 'application/json',
+	          'Content-Type': 'application/json'
+	        }
+	      }).then(function (response) {
+	        return response.data;
+	      }).then(function (data) {
+	        _this2.setState({ user: { id: data.id,
+	            url: data.url,
+	            username: data.username },
+	          showSignupModal: false });
+	      }).catch(function (ex) {
+	        alert(ex);
+	        console.log(ex);
 	      });
-	    }
-	  }, {
-	    key: 'fetchComments',
-	    value: function fetchComments() {
-	      var _this3 = this;
-
-	      get('/articles/' + this.props.article_id + '/comments').then(function (response) {
-	        return response.json();
-	      }).then(function (json) {
-	        _this3.setState({ comments: json });
-	      });
-	    }
-
-	    // componentWillUnmount() {
-	    //   clearInterval(this.interval);
-	    // }
-
-	    // handling the modal login window
-
-	  }, {
-	    key: 'close',
-	    value: function close() {
-	      this.setState({ showModal: false });
-	    }
-	  }, {
-	    key: 'open',
-	    value: function open() {
-	      this.setState({ showModal: true });
-	    }
-	  }, {
-	    key: 'handleModalSubmit',
-	    value: function handleModalSubmit(e) {
-	      e.preventDefault();
-	      var email = this.refs.email.getValue();
-	      var pwd = this.refs.pwd.getValue();
-	      this.loginSubmit(email, pwd);
 	    }
 
 	    // Process AJAX login
 
 	  }, {
-	    key: 'loginSubmit',
-	    value: function loginSubmit(email, pwd) {
-	      var _this4 = this;
+	    key: 'submitLogin',
+	    value: function submitLogin(email, pwd) {
+	      var _this3 = this;
 
 	      var payload = {
 	        user: {
@@ -26651,13 +26653,12 @@
 	          'Content-Type': 'application/json'
 	        }
 	      }).then(function (response) {
-	        console.log(response.data);
 	        return response.data;
 	      }).then(function (data) {
-	        _this4.setState({ user: { id: data.id,
+	        _this3.setState({ user: { id: data.id,
 	            url: data.url,
 	            username: data.username },
-	          showModal: false });
+	          showLoginModal: false });
 	      }).catch(function (ex) {
 	        alert(ex);
 	        console.log(ex);
@@ -26669,7 +26670,7 @@
 	  }, {
 	    key: 'submitLogout',
 	    value: function submitLogout() {
-	      var _this5 = this;
+	      var _this4 = this;
 
 	      _axios2.default.delete('/users/logout', {
 	        headers: {
@@ -26678,7 +26679,7 @@
 	        }
 	      }).then(function (response) {
 	        if (response.data.success) {
-	          _this5.setState({ user: null });
+	          _this4.setState({ user: null });
 	        }
 	      }).catch(function (ex) {
 	        console.log(response.status);
@@ -26689,7 +26690,7 @@
 	  }, {
 	    key: 'commentSubmit',
 	    value: function commentSubmit(text) {
-	      var _this6 = this;
+	      var _this5 = this;
 
 	      var payload = {
 	        comment: {
@@ -26704,20 +26705,20 @@
 	          'Content-Type': 'application/json'
 	        }
 	      }).then(function (response) {
-	        _this6.setState({ comments: response.data });
+	        _this5.setState({ comments: response.data });
 	      });
 	    }
 	  }, {
 	    key: 'fetchComments',
 	    value: function fetchComments() {
-	      var _this7 = this;
+	      var _this6 = this;
 
 	      _axios2.default.get('/articles/' + this.props.article_id + '/comments', { headers: {
 	          'Accept': 'application/json',
 	          'Content-Type': 'application/json'
 	        }
 	      }).then(function (response) {
-	        _this7.setState({ comments: response.data });
+	        _this6.setState({ comments: response.data });
 	      });
 	    }
 	  }, {
@@ -26733,12 +26734,17 @@
 	        _react2.default.createElement(
 	          'h4',
 	          null,
-	          'Log In if you would like to leave your own comments.'
+	          'Log in or sign up for an account if you would like to leave your own comments.'
 	        ),
 	        _react2.default.createElement(
 	          _reactBootstrap.Button,
-	          { bsStyle: 'link', onClick: this.open },
+	          { bsStyle: 'link', onClick: this.openLogin },
 	          'Log in'
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Button,
+	          { bsStyle: 'link', onClick: this.openSignup },
+	          'Sign up'
 	        )
 	      );
 
@@ -26752,35 +26758,8 @@
 	        ),
 	        _react2.default.createElement(_CommentsList2.default, { comments: comments }),
 	        ContextForm,
-	        _react2.default.createElement(
-	          _reactBootstrap.Modal,
-	          { show: this.state.showModal, onHide: this.close },
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Header,
-	            { closeButton: true },
-	            _react2.default.createElement(
-	              _reactBootstrap.Modal.Title,
-	              null,
-	              'Log In'
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _reactBootstrap.Modal.Body,
-	            null,
-	            _react2.default.createElement(
-	              'h4',
-	              null,
-	              'Form Here'
-	            ),
-	            _react2.default.createElement(
-	              'form',
-	              null,
-	              _react2.default.createElement(_reactBootstrap.Input, { type: 'email', label: 'Email Address', ref: 'email', placeholder: 'Enter email' }),
-	              _react2.default.createElement(_reactBootstrap.Input, { type: 'password', label: 'Password', ref: 'pwd' }),
-	              _react2.default.createElement(_reactBootstrap.ButtonInput, { value: 'Login', bsStyle: 'primary', onClick: this.handleModalSubmit })
-	            )
-	          )
-	        )
+	        _react2.default.createElement(_LoginModal2.default, { showLogin: this.state.showLoginModal, closeLogin: this.closeLogin, handleLoginSubmit: this.submitLogin }),
+	        _react2.default.createElement(_SignupModal2.default, { showSignup: this.state.showSignupModal, closeSignup: this.closeSignup, handleSignupSubmit: this.submitSignup })
 	      );
 	    }
 	  }]);
@@ -45696,6 +45675,172 @@
 	  };
 	};
 
+
+/***/ },
+/* 674 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(343);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(420);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var SignupModal = function (_Component) {
+	  _inherits(SignupModal, _Component);
+
+	  function SignupModal(props) {
+	    _classCallCheck(this, SignupModal);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(SignupModal).call(this, props));
+
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(SignupModal, [{
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      var email = this.refs.email.getValue();
+	      var username = this.refs.username.getValue();
+	      var pwd = this.refs.pwd.getValue();
+	      var pwdConf = this.refs.pwdConf.getValue();
+	      this.props.handleSignupSubmit(email, username, pwd, pwdConf);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.props.showSignup, onHide: this.props.closeSignup },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            null,
+	            'Log In'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            null,
+	            _react2.default.createElement(_reactBootstrap.Input, { type: 'email', label: 'Email Address', ref: 'email', placeholder: 'Hidden from other users' }),
+	            _react2.default.createElement(_reactBootstrap.Input, { type: 'text', label: 'User Name', ref: 'username', placeholder: 'Will appear with your posts' }),
+	            _react2.default.createElement(_reactBootstrap.Input, { type: 'password', label: 'Password', ref: 'pwd' }),
+	            _react2.default.createElement(_reactBootstrap.Input, { type: 'password', label: 'Password confirmation', ref: 'pwdConf' }),
+	            _react2.default.createElement(_reactBootstrap.ButtonInput, { value: 'Login', bsStyle: 'primary', onClick: this.handleSubmit })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return SignupModal;
+	}(_react.Component);
+
+	exports.default = SignupModal;
+
+/***/ },
+/* 675 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(343);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactBootstrap = __webpack_require__(420);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var LoginModal = function (_Component) {
+	  _inherits(LoginModal, _Component);
+
+	  function LoginModal(props) {
+	    _classCallCheck(this, LoginModal);
+
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(LoginModal).call(this, props));
+
+	    _this.handleSubmit = _this.handleSubmit.bind(_this);
+	    return _this;
+	  }
+
+	  _createClass(LoginModal, [{
+	    key: 'handleSubmit',
+	    value: function handleSubmit(e) {
+	      e.preventDefault();
+	      var email = this.refs.email.getValue();
+	      var pwd = this.refs.pwd.getValue();
+	      this.props.handleLoginSubmit(email, pwd);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        _reactBootstrap.Modal,
+	        { show: this.props.showLogin, onHide: this.props.closeLogin },
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Header,
+	          { closeButton: true },
+	          _react2.default.createElement(
+	            _reactBootstrap.Modal.Title,
+	            null,
+	            'Log In'
+	          )
+	        ),
+	        _react2.default.createElement(
+	          _reactBootstrap.Modal.Body,
+	          null,
+	          _react2.default.createElement(
+	            'form',
+	            null,
+	            _react2.default.createElement(_reactBootstrap.Input, { type: 'email', label: 'Email Address', ref: 'email', placeholder: 'Email' }),
+	            _react2.default.createElement(_reactBootstrap.Input, { type: 'password', label: 'Password', ref: 'pwd' }),
+	            _react2.default.createElement(_reactBootstrap.ButtonInput, { value: 'Login', bsStyle: 'primary', onClick: this.handleSubmit })
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return LoginModal;
+	}(_react.Component);
+
+	exports.default = LoginModal;
 
 /***/ }
 /******/ ]);
