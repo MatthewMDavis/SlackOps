@@ -26575,12 +26575,38 @@
 	    _this.submitLogout = _this.submitLogout.bind(_this);
 	    _this.submitSignup = _this.submitSignup.bind(_this);
 	    _this.submitLogin = _this.submitLogin.bind(_this);
+	    _this.handleFBLogin = _this.handleFBLogin.bind(_this);
 	    return _this;
 	  }
 
-	  // handling the modal login window
-
 	  _createClass(CommentsBox, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+
+	      window.fbAsyncInit = function () {
+	        FB.init({
+	          appId: '903361249755734',
+	          cookie: true, // enable cookies to allow the server to access
+	          // the session
+	          xfbml: true, // parse social plugins on this page
+	          version: 'v2.1' // use version 2.1
+	        });
+	      }.bind(this);
+
+	      // Load the SDK asynchronously
+	      (function (d, s, id) {
+	        var js,
+	            fjs = d.getElementsByTagName(s)[0];
+	        if (d.getElementById(id)) return;
+	        js = d.createElement(s);js.id = id;
+	        js.src = "//connect.facebook.net/en_US/sdk.js";
+	        fjs.parentNode.insertBefore(js, fjs);
+	      })(document, 'script', 'facebook-jssdk');
+	    }
+
+	    // handling the modal login window
+
+	  }, {
 	    key: 'openLogin',
 	    value: function openLogin() {
 	      this.setState({ showLoginModal: true });
@@ -26665,12 +26691,44 @@
 	      });
 	    }
 
+	    // Process Facebook login
+
+	  }, {
+	    key: 'handleFBLogin',
+	    value: function handleFBLogin(e) {
+	      var _this4 = this;
+
+	      e.preventDefault();
+	      alert('clicked');
+	      FB.login(function (response) {
+	        if (response.authResponse) {
+	          console.log(response);
+	          _axios2.default.get('/users/auth/facebook/callback', {
+	            headers: {
+	              'Accept': 'application/json',
+	              'Content-Type': 'application/json'
+	            }
+	          }).then(function (response) {
+	            return response.data;
+	          }).then(function (data) {
+	            _this4.setState({ user: { id: data.id,
+	                url: data.url,
+	                username: data.username },
+	              showLoginModal: false });
+	          }).catch(function (ex) {
+	            alert(ex);
+	            console.log(ex);
+	          });
+	        }
+	      });
+	    }
+
 	    // AJAX logout
 
 	  }, {
 	    key: 'submitLogout',
 	    value: function submitLogout() {
-	      var _this4 = this;
+	      var _this5 = this;
 
 	      _axios2.default.delete('/users/logout', {
 	        headers: {
@@ -26679,7 +26737,7 @@
 	        }
 	      }).then(function (response) {
 	        if (response.data.success) {
-	          _this4.setState({ user: null });
+	          _this5.setState({ user: null });
 	        }
 	      }).catch(function (ex) {
 	        console.log(response.status);
@@ -26690,7 +26748,7 @@
 	  }, {
 	    key: 'commentSubmit',
 	    value: function commentSubmit(text) {
-	      var _this5 = this;
+	      var _this6 = this;
 
 	      var payload = {
 	        comment: {
@@ -26705,20 +26763,20 @@
 	          'Content-Type': 'application/json'
 	        }
 	      }).then(function (response) {
-	        _this5.setState({ comments: response.data });
+	        _this6.setState({ comments: response.data });
 	      });
 	    }
 	  }, {
 	    key: 'fetchComments',
 	    value: function fetchComments() {
-	      var _this6 = this;
+	      var _this7 = this;
 
 	      _axios2.default.get('/articles/' + this.props.article_id + '/comments', { headers: {
 	          'Accept': 'application/json',
 	          'Content-Type': 'application/json'
 	        }
 	      }).then(function (response) {
-	        _this6.setState({ comments: response.data });
+	        _this7.setState({ comments: response.data });
 	      });
 	    }
 	  }, {
@@ -26737,14 +26795,23 @@
 	          'Log in or sign up for an account if you would like to leave your own comments.'
 	        ),
 	        _react2.default.createElement(
-	          _reactBootstrap.Button,
-	          { bsStyle: 'link', onClick: this.openLogin },
-	          'Log in'
-	        ),
-	        _react2.default.createElement(
-	          _reactBootstrap.Button,
-	          { bsStyle: 'link', onClick: this.openSignup },
-	          'Sign up'
+	          _reactBootstrap.ButtonGroup,
+	          null,
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { onClick: this.openLogin },
+	            'Log in'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { onClick: this.openSignup },
+	            'Sign up'
+	          ),
+	          _react2.default.createElement(
+	            _reactBootstrap.Button,
+	            { onClick: this.handleFBLogin },
+	            'Log in with Facebook'
+	          )
 	        )
 	      );
 

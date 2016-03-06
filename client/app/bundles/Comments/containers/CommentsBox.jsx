@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonInput, ButtonToolbar, Input, Modal } from 'react-bootstrap';
+import { Button, ButtonInput, ButtonGroup, Input, Modal } from 'react-bootstrap';
 import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
@@ -27,8 +27,30 @@ export default class CommentsBox extends React.Component {
     this.submitLogout = this.submitLogout.bind(this);
     this.submitSignup = this.submitSignup.bind(this);
     this.submitLogin = this.submitLogin.bind(this);
+    this.handleFBLogin = this.handleFBLogin.bind(this);
   }
 
+  componentDidMount() {
+
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '903361249755734',
+        cookie     : true,  // enable cookies to allow the server to access
+                            // the session
+        xfbml      : true,  // parse social plugins on this page
+        version    : 'v2.1' // use version 2.1
+      });
+    }.bind(this);
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }
 
 
   // handling the modal login window
@@ -113,6 +135,37 @@ export default class CommentsBox extends React.Component {
     });
   }
 
+  // Process Facebook login
+  handleFBLogin(e) {
+    e.preventDefault();
+    alert('clicked');
+    FB.login((response) => {
+      if (response.authResponse) {
+        console.log(response);
+        axios.get('/users/auth/facebook/callback', {
+          headers: {
+            'Accept':       'application/json',
+            'Content-Type': 'application/json',
+          }
+        })
+        .then(response=> {
+          return response.data;
+        })
+        .then(data=>{
+          this.setState({ user:
+                        {id: data.id,
+                          url: data.url,
+                          username: data.username},
+                          showLoginModal: false });
+        })
+        .catch(ex=>{
+          alert(ex);
+          console.log(ex);
+        });
+      }
+    });
+  }
+
   // AJAX logout
   submitLogout() {
     axios.delete('/users/logout', {
@@ -178,12 +231,17 @@ export default class CommentsBox extends React.Component {
           <div>
             <h4>Log in or sign up for an account if you would like to leave your own comments.</h4>
 
-            <Button bsStyle="link" onClick={this.openLogin}>
-              Log in
-            </Button>
-            <Button bsStyle="link" onClick={this.openSignup}>
-              Sign up
-            </Button>
+            <ButtonGroup>
+              <Button onClick={this.openLogin}>
+                Log in
+              </Button>
+              <Button onClick={this.openSignup}>
+                Sign up
+              </Button>
+              <Button onClick={this.handleFBLogin}>
+                Log in with Facebook
+              </Button>
+            </ButtonGroup>
           </div>
         ;
 
