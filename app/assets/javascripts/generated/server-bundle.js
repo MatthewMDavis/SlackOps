@@ -26538,9 +26538,9 @@
 
 	var _LoginModal2 = _interopRequireDefault(_LoginModal);
 
-	var _axios = __webpack_require__(657);
+	var _login_helpers = __webpack_require__(676);
 
-	var _axios2 = _interopRequireDefault(_axios);
+	var _comment_helpers = __webpack_require__(677);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26629,8 +26629,7 @@
 	  }, {
 	    key: 'submitSignup',
 	    value: function submitSignup(email, username, pwd, pwdConf) {
-	      var _this2 = this;
-
+	      var ajaxSignup = _login_helpers.xhrSignup.bind(this);
 	      var payload = {
 	        user: {
 	          email: email,
@@ -26639,23 +26638,7 @@
 	          password_confirmation: pwdConf
 	        }
 	      };
-
-	      _axios2.default.post('/users', payload, {
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        }
-	      }).then(function (response) {
-	        return response.data;
-	      }).then(function (data) {
-	        _this2.setState({ user: { id: data.id,
-	            url: data.url,
-	            username: data.username },
-	          showSignupModal: false });
-	      }).catch(function (ex) {
-	        alert(ex);
-	        console.log(ex);
-	      });
+	      ajaxSignup('/users', payload, {});
 	    }
 
 	    // Process AJAX login
@@ -26663,8 +26646,7 @@
 	  }, {
 	    key: 'submitLogin',
 	    value: function submitLogin(email, pwd) {
-	      var _this3 = this;
-
+	      var ajaxLogin = _login_helpers.xhrLogin.bind(this);
 	      var payload = {
 	        user: {
 	          email: email,
@@ -26673,22 +26655,7 @@
 	        }
 	      };
 
-	      _axios2.default.post('/users/login', payload, {
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        }
-	      }).then(function (response) {
-	        return response.data;
-	      }).then(function (data) {
-	        _this3.setState({ user: { id: data.id,
-	            url: data.url,
-	            username: data.username },
-	          showLoginModal: false });
-	      }).catch(function (ex) {
-	        alert(ex);
-	        console.log(ex);
-	      });
+	      ajaxLogin('/users/login', payload, {});
 	    }
 
 	    // Process Facebook login
@@ -26696,29 +26663,11 @@
 	  }, {
 	    key: 'handleFBLogin',
 	    value: function handleFBLogin(e) {
-	      var _this4 = this;
-
+	      var ajaxFBCallback = _login_helpers.xhrFBCallback.bind(this);
 	      e.preventDefault();
-	      alert('clicked');
 	      FB.login(function (response) {
 	        if (response.authResponse) {
-	          console.log(response);
-	          _axios2.default.get('/users/auth/facebook/callback', {
-	            headers: {
-	              'Accept': 'application/json',
-	              'Content-Type': 'application/json'
-	            }
-	          }).then(function (response) {
-	            return response.data;
-	          }).then(function (data) {
-	            _this4.setState({ user: { id: data.id,
-	                url: data.url,
-	                username: data.username },
-	              showLoginModal: false });
-	          }).catch(function (ex) {
-	            alert(ex);
-	            console.log(ex);
-	          });
+	          ajaxFBCallback();
 	        }
 	      });
 	    }
@@ -26728,28 +26677,15 @@
 	  }, {
 	    key: 'submitLogout',
 	    value: function submitLogout() {
-	      var _this5 = this;
-
-	      _axios2.default.delete('/users/logout', {
-	        headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        }
-	      }).then(function (response) {
-	        if (response.data.success) {
-	          _this5.setState({ user: null });
-	        }
-	      }).catch(function (ex) {
-	        console.log(response.status);
-	      });
+	      var ajaxLogout = _login_helpers.xhrLogout.bind(this);
+	      ajaxLogout('/users/logout', {});
 	    }
 	    // AJAX comment submission
 
 	  }, {
 	    key: 'commentSubmit',
 	    value: function commentSubmit(text) {
-	      var _this6 = this;
-
+	      var ajaxCommSubmit = _comment_helpers.xhrCommSubmit.bind(this);
 	      var payload = {
 	        comment: {
 	          article_id: this.state.article_id,
@@ -26758,26 +26694,13 @@
 	        }
 	      };
 
-	      _axios2.default.post('/articles/' + this.props.article_id + '/comments', payload, { headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        }
-	      }).then(function (response) {
-	        _this6.setState({ comments: response.data });
-	      });
+	      ajaxCommSubmit('/articles/' + this.props.article_id + '/comments', payload, {});
 	    }
 	  }, {
 	    key: 'fetchComments',
 	    value: function fetchComments() {
-	      var _this7 = this;
-
-	      _axios2.default.get('/articles/' + this.props.article_id + '/comments', { headers: {
-	          'Accept': 'application/json',
-	          'Content-Type': 'application/json'
-	        }
-	      }).then(function (response) {
-	        _this7.setState({ comments: response.data });
-	      });
+	      ajaxCommFetch = _comment_helpers.xhrCommFetch.bind(this);
+	      ajaxCommFetch('/articles/' + this.props.article_id + '/comments', {});
 	    }
 	  }, {
 	    key: 'render',
@@ -45908,6 +45831,134 @@
 	}(_react.Component);
 
 	exports.default = LoginModal;
+
+/***/ },
+/* 676 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.xhrSignup = xhrSignup;
+	exports.xhrLogin = xhrLogin;
+	exports.xhrLogout = xhrLogout;
+	exports.xhrFBCallback = xhrFBCallback;
+
+	var _axios = __webpack_require__(657);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var conn = _axios2.default.create({
+	  headers: {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json'
+	  }
+	});
+
+	function xhrSignup(url, payload, options) {
+	  var _this = this;
+
+	  conn.post(url, payload, options).then(function (response) {
+	    return response.data;
+	  }).then(function (data) {
+	    _this.setState({ user: { id: data.id,
+	        url: data.url,
+	        username: data.username },
+	      showSignupModal: false });
+	  }).catch(function (ex) {
+	    alert(ex);
+	    console.log(ex);
+	  });
+	}
+
+	function xhrLogin(url, payload, options) {
+	  var _this2 = this;
+
+	  conn.post(url, payload, options).then(function (response) {
+	    return response.data;
+	  }).then(function (data) {
+	    _this2.setState({ user: { id: data.id,
+	        url: data.url,
+	        username: data.username },
+	      showLoginModal: false });
+	  }).catch(function (ex) {
+	    alert(ex);
+	    console.log(ex);
+	  });
+	}
+
+	function xhrLogout(url, options) {
+	  var _this3 = this;
+
+	  conn.delete(url, options).then(function (response) {
+	    if (response.data.success) {
+	      _this3.setState({ user: null });
+	    }
+	  }).catch(function (ex) {
+	    console.log(response.status);
+	  });
+	}
+
+	function xhrFBCallback() {
+	  var _this4 = this;
+
+	  conn.get('/users/auth/facebook/callback', {}).then(function (response) {
+	    return response.data;
+	  }).then(function (data) {
+	    _this4.setState({ user: { id: data.id,
+	        url: data.url,
+	        username: data.username },
+	      showLoginModal: false });
+	  }).catch(function (ex) {
+	    alert(ex);
+	    console.log(ex);
+	  });
+	}
+
+/***/ },
+/* 677 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.xhrCommSubmit = xhrCommSubmit;
+	exports.xhrCommFetch = xhrCommFetch;
+
+	var _axios = __webpack_require__(657);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var conn = _axios2.default.create({
+	  headers: {
+	    'Accept': 'application/json',
+	    'Content-Type': 'application/json'
+	  }
+	});
+
+	function xhrCommSubmit(url, payload, options) {
+	  var _this = this;
+
+	  conn.post(url, payload, options).then(function (response) {
+	    _this.setState({ comments: response.data });
+	  });
+	}
+
+	function xhrCommFetch(url, options) {
+	  var _this2 = this;
+
+	  conn.get(url, options).then(function (response) {
+	    _this2.setState({ comments: response.data });
+	  });
+	}
 
 /***/ }
 /******/ ]);

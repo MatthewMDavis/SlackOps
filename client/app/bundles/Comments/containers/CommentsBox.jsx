@@ -5,8 +5,8 @@ import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
 import SignupModal from '../../Login/components/SignupModal'
 import LoginModal from '../../Login/components/LoginModal'
-import axios from 'axios';
-
+import { xhrSignup, xhrLogin, xhrLogout, xhrFBCallback } from 'lib/login_helpers';
+import { xhrCommSubmit, xhrCommFetch } from 'lib/comment_helpers';
 export default class CommentsBox extends React.Component {
   constructor(props) {
     super(props);
@@ -71,6 +71,7 @@ export default class CommentsBox extends React.Component {
 
 
   submitSignup(email, username, pwd, pwdConf) {
+    const ajaxSignup = xhrSignup.bind(this);
     const payload = {
       user: {
         email: email,
@@ -79,32 +80,12 @@ export default class CommentsBox extends React.Component {
         password_confirmation: pwdConf,
       }
     };
-
-    axios.post('/users', payload, {
-      headers: {
-        'Accept':       'application/json',
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response=> {
-      return response.data;
-    })
-    .then(data=>{
-      this.setState({ user:
-                    {id: data.id,
-                      url: data.url,
-                      username: data.username},
-                      showSignupModal: false });
-    })
-    .catch(ex=>{
-      alert(ex);
-      console.log(ex);
-    });
+    ajaxSignup('/users', payload, {});
   }
 
   // Process AJAX login
   submitLogin(email, pwd) {
-
+    const ajaxLogin = xhrLogin.bind(this);
     const payload = {
       user: {
         email: email,
@@ -113,79 +94,28 @@ export default class CommentsBox extends React.Component {
       }
     };
 
-    axios.post('/users/login', payload, {
-      headers: {
-        'Accept':       'application/json',
-        'Content-Type': 'application/json',
-      }
-    })
-    .then(response=> {
-      return response.data;
-    })
-    .then(data=>{
-      this.setState({ user:
-                    {id: data.id,
-                      url: data.url,
-                      username: data.username},
-                      showLoginModal: false });
-    })
-    .catch(ex=>{
-      alert(ex);
-      console.log(ex);
-    });
+    ajaxLogin('/users/login', payload, {});
   }
 
   // Process Facebook login
   handleFBLogin(e) {
+    const ajaxFBCallback = xhrFBCallback.bind(this);
     e.preventDefault();
-    alert('clicked');
     FB.login((response) => {
       if (response.authResponse) {
-        console.log(response);
-        axios.get('/users/auth/facebook/callback', {
-          headers: {
-            'Accept':       'application/json',
-            'Content-Type': 'application/json',
-          }
-        })
-        .then(response=> {
-          return response.data;
-        })
-        .then(data=>{
-          this.setState({ user:
-                        {id: data.id,
-                          url: data.url,
-                          username: data.username},
-                          showLoginModal: false });
-        })
-        .catch(ex=>{
-          alert(ex);
-          console.log(ex);
-        });
+        ajaxFBCallback();
       }
     });
   }
 
   // AJAX logout
   submitLogout() {
-    axios.delete('/users/logout', {
-      headers: {
-        'Accept':       'application/json',
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(response=>{
-      if (response.data.success) {
-        this.setState({ user: null });
-      }
-    })
-    .catch(ex=>{
-      console.log(response.status);
-    });
+    const ajaxLogout = xhrLogout.bind(this);
+    ajaxLogout('/users/logout', {});
   }
   // AJAX comment submission
   commentSubmit(text) {
-
+    const ajaxCommSubmit = xhrCommSubmit.bind(this);
     const payload = {
       comment: {
         article_id: this.state.article_id,
@@ -194,32 +124,12 @@ export default class CommentsBox extends React.Component {
       }
     };
 
-    axios.post(
-      `/articles/${this.props.article_id}/comments`,
-      payload,
-      { headers:
-        {
-          'Accept':       'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-    .then(response=>{
-      this.setState({ comments: response.data })
-    });
+    ajaxCommSubmit(`/articles/${this.props.article_id}/comments`, payload, {})
   }
 
   fetchComments() {
-    axios.get(`/articles/${this.props.article_id}/comments`,
-              { headers:
-                {
-                  'Accept':       'application/json',
-                  'Content-Type': 'application/json'
-                }
-              }
-             )
-             .then(response=>{
-               this.setState({ comments: response.data })
-             });
+    ajaxCommFetch = xhrCommFetch.bind(this);
+    ajaxCommFetch(`/articles/${this.props.article_id}/comments`, {});
   }
 
   render() {
