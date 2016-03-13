@@ -9,8 +9,13 @@
     <%= link_to 'Edit this article', edit_article_path %>
   <% end %>
 </div>
-  <%= react_component('CommentsBox',
-                      props: { comments: comments_list_json(@article.comments),
-                         user: user_json(current_user) || false,
-                         article_id: @article.id }
-                      ) %>
+<%= react_component('CommentsApp',
+                    props: { comments: comments_list_json(@article.comments),
+                             user: user_json(current_user) || false,
+                             article: @article.id }
+                   ) %>
+  <%# <%= react_component('CommentsBox', %>
+  <%#                     props: { comments: comments_list_json(@article.comments), %>
+  <%#                        user: user_json(current_user) || false, %>
+  <%#                        article_id: @article.id } %>
+  <%#                     ) %1> %>

@@ -2,14 +2,14 @@ if %w(development test).include? Rails.env
   namespace :lint do
     desc "eslint"
     task :eslint do
-      cmd = "cd client && npm run eslint . -- --ext .jsx,.js"
+      cmd = "cd client && npm run eslint"
       puts "Running eslint via `#{cmd}`"
       sh cmd
     end
 
     desc "jscs"
     task :jscs do
-      cmd = "cd client && npm run jscs ."
+      cmd = "cd client && npm run jscs"
       puts "Running jscs via `#{cmd}`"
       sh cmd
     end

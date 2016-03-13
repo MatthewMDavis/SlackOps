@@ -3,8 +3,8 @@ import { Button, ButtonInput, ButtonGroup, Input, Modal } from 'react-bootstrap'
 import CommentsList from '../components/CommentsList';
 import Comment from '../components/Comment';
 import CommentForm from '../components/CommentForm';
-import SignupModal from '../../Login/components/SignupModal'
-import LoginModal from '../../Login/components/LoginModal'
+import SignupModal from 'lib/components/SignupModal'
+import LoginModal from 'lib/components/LoginModal'
 import { xhrSignup, xhrLogin, xhrLogout, xhrFBCallback } from 'lib/login_helpers';
 import { xhrCommSubmit, xhrCommFetch } from 'lib/comment_helpers';
 export default class CommentsBox extends React.Component {
@@ -32,6 +32,7 @@ export default class CommentsBox extends React.Component {
 
   componentDidMount() {
 
+    // initialize the Facebook Oauth2 for the app
     window.fbAsyncInit = function() {
       FB.init({
         appId      : '903361249755734',

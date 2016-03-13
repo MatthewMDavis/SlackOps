@@ -1,5 +1,5 @@
 import ReactOnRails from 'react-on-rails';
-import CommentsBox from './CommentsBoxClient';
+import CommentsApp from './CommentsAppClient';
 
 // This is how react_on_rails can see the CommentsBox in the browser.
-ReactOnRails.register({ CommentsBox });
+ReactOnRails.register({ CommentsApp });
