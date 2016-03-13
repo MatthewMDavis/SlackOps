@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react';
+import { Button, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Immutable from 'immutable';
 import * as commentsActionCreators from '../actions/commentsActionCreators';
+import * as authActionCreators from 'lib/actions/authActionCreators';
 import CommentsList from '../components/CommentsList'
 import CommentForm from '../components/CommentForm';
 
@@ -29,14 +31,16 @@ class CommentsContainer extends React.Component {
 
   render() {
     const { dispatch, $$commentsStore, $$authStore } = this.props;
-    const actions = bindActionCreators(commentsActionCreators, dispatch);
-    const { updateComments } = actions;
+    const commentActions = bindActionCreators(commentsActionCreators, dispatch);
+    const { updateComments } = commentActions;
+    const authActions = bindActionCreators(authActionCreators, dispatch);
+    const { logout } = authActions;
     const comments = $$commentsStore.get('$$comments').toJS();
     const article = $$commentsStore.get('$$article');
-    const user = $$authStore.get('$$user').toJS();
+    const user = $$authStore.get('$$user') ? $$authStore.get('$$user').toJS() : null;
 
     let ContextForm = user ?
-      <CommentForm user={user} onComment={updateComments} article={article}/>
+      <CommentForm user={user} article={article} onComment={updateComments} onLogout={logout} />
         :
           <div>
             <h4>Log in or sign up for an account if you would like to leave your own comments.</h4>
@@ -57,7 +61,7 @@ class CommentsContainer extends React.Component {
     return (
       <div className="commentsBox">
         <h3>Comments</h3>
-        <CommentsList comments={comments} onComment={updateComments} />
+        <CommentsList comments={comments} />
         {ContextForm}
       </div>
     );

@@ -4,19 +4,20 @@ import axios from 'axios';
 export default class CommentForm extends React.Component {
   static propTypes = {
     onComment: PropTypes.func.isRequired,
+    onLogout: PropTypes.func.isRequired,
     user: PropTypes.object,
     article: PropTypes.number.isRequired
   }
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    // this.handleLogout = this.handleLogout.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
-  // handleLogout(e) {
-  //   e.preventDefault();
-  //   this.props.onLogout();
-  // }
+  handleLogout(e) {
+    e.preventDefault();
+    this.props.onLogout();
+  }
 
   handleSubmit(e) {
     e.preventDefault();

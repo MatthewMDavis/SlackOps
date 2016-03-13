@@ -17,7 +17,7 @@ export default function commentsReducer($$state = $$initialState, action) {
       return { ...$$state, $$user: payload.data };
 
     case actionTypes.SUBMIT_LOGOUT:
-      return { ...$$state, $$user: payload.data };
+      return $$state.set('$$user', null);
 
     default:
       return $$state;
