@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import { Button, ButtonGroup } from 'react-bootstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Immutable from 'immutable';
@@ -7,6 +6,7 @@ import * as commentsActionCreators from '../actions/commentsActionCreators';
 import * as authActionCreators from 'lib/actions/authActionCreators';
 import CommentsList from '../components/CommentsList'
 import CommentForm from '../components/CommentForm';
+import CommentLoginPrompt from '../components/CommentLoginPrompt';
 
 function select(state) {
   // Which part of the Redux global state does our component want to receive as props?
@@ -42,21 +42,7 @@ class CommentsContainer extends React.Component {
     let ContextForm = user ?
       <CommentForm user={user} article={article} onComment={updateComments} onLogout={logout} />
         :
-          <div>
-            <h4>Log in or sign up for an account if you would like to leave your own comments.</h4>
-
-            <ButtonGroup>
-              <Button onClick={(e)=>{console.log(e)}}>
-                Log in
-              </Button>
-              <Button onClick={(e)=>{console.log(e)}}>
-                Sign up
-              </Button>
-              <Button onClick={(e)=>{console.log(e)}}>
-                Log in with Facebook
-              </Button>
-            </ButtonGroup>
-          </div>
+      <CommentLoginPrompt />
         ;
     return (
       <div className="commentsBox">
