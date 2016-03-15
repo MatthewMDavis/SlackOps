@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
+import Immutable from 'immutable';
 import axios from 'axios';
 
 export default class CommentForm extends React.Component {
   static propTypes = {
     onComment: PropTypes.func.isRequired,
     onLogout: PropTypes.func.isRequired,
-    user: PropTypes.object,
+    $$user: PropTypes.instanceOf(Immutable.Map),
     article: PropTypes.number.isRequired
   }
   constructor(props) {
@@ -36,7 +37,7 @@ export default class CommentForm extends React.Component {
       <button className="btn btn-primary pull-right" onClick={this.handleSubmit}>Submit</button>
       <br />
       <div>
-        Posting as {this.props.user.username}.
+        Posting as {this.props.$$user.get('username')}.
         <button className="btn btn-link" onClick={this.handleLogout}>
           Logout
         </button>

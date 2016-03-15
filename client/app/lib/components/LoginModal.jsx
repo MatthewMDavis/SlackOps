@@ -1,23 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import Immutable from 'immutable';
 import { Input, Modal, ButtonInput } from 'react-bootstrap';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as authActionCreators from 'lib/actions/authActionCreators';
-
-
-function select(state) {
-  // Which part of the Redux global state does our component want to receive as props?
-  // Note the use of `$$` to prefix the property name because the value is of type Immutable.js
-  return (
-    { $$authStore: state.$$authStore }
-  );
-}
 
 export default class LoginModal extends Component {
   static propTypes = {
-    dispatch: PropTypes.func.isRequired,
-    $$authStore: PropTypes.instanceOf(Immutable.Map)
+    show: PropTypes.bool.isRequired,
+    onHide: PropTypes.func.isRequired,
+    onLogin: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -29,15 +17,11 @@ export default class LoginModal extends Component {
     e.preventDefault();
     let email = this.refs.email.getValue();
     let pwd = this.refs.pwd.getValue();
-    this.props.handleLoginSubmit(email, pwd);
+    this.props.onLogin(email, pwd);
   }
   render(){
-    const { dispatch, $$authStore } = this.props;
-    const authActions = bindActionCreators(authActionCreators, dispatch);
-    const { hideLoginModal } = authActions;
-    const displayState = $$authStore.get('$$showLoginModal');
     return (
-      <Modal show={displayState} onHide={hideLoginModal}>
+      <Modal show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>
           <Modal.Title>Log In</Modal.Title>
         </Modal.Header>
@@ -53,4 +37,3 @@ export default class LoginModal extends Component {
   }
 }
 
-export default connect(select)(LoginModal);

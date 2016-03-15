@@ -16,7 +16,8 @@ export default function commentsReducer($$state = $$initialState, action) {
       return { ...$$state, $$user: payload.data };
 
     case actionTypes.SUBMIT_LOGIN:
-      return { ...$$state, $$user: payload.data };
+      const $$newUser = Immutable.fromJS(payload.data);
+      return $$state.setIn(['$$user'], $$newUser).set('$$showLoginModal', false);
 
     case actionTypes.SUBMIT_LOGOUT:
       return $$state.set('$$user', null);

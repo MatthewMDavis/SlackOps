@@ -4,12 +4,19 @@ export default class CommentLoginPrompt extends React.Component {
   constructor(props) {
     super(props);
     this.showLoginModal = this.showLoginModal.bind(this);
+    this.showRegistrationModal = this.showRegistrationModal.bind(this);
   }
+
   showLoginModal(e) {
     e.preventDefault();
     this.props.onLogin();
-    alert('clicked');
   }
+
+  showRegistrationModal(e) {
+    e.preventDefault();
+    this.props.onSignup();
+  }
+
   render() {
     return (
       <div id="comment-login-prompt">
@@ -19,7 +26,7 @@ export default class CommentLoginPrompt extends React.Component {
           <Button onClick={this.showLoginModal}>
             Log in
           </Button>
-          <Button onClick={(e)=>{console.log(e)}}>
+          <Button onClick={this.showRegistrationModal}>
             Sign up
           </Button>
           <Button onClick={(e)=>{console.log(e)}}>

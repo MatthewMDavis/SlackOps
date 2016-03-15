@@ -16,6 +16,20 @@ export function logout() {
   };
 }
 
+export function login(email, password) {
+    const credentials = {
+      user: {
+        email,
+        password
+      }
+    };
+  const submission = conn.post('/users/login', credentials);
+  return {
+    type: actionTypes.SUBMIT_LOGIN,
+    payload: submission
+  };
+}
+
 export function showLoginModal() {
   return {
     type: actionTypes.SHOW_LOGIN_MODAL

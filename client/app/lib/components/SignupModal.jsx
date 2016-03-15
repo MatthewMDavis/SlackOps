@@ -17,7 +17,7 @@ export default class SignupModal extends Component {
   }
   render(){
     return (
-      <Modal show={this.props.showSignup} onHide={this.props.closeSignup}>
+      <Modal {...this.props}>
         <Modal.Header closeButton>
           <Modal.Title>Log In</Modal.Title>
         </Modal.Header>
@@ -30,7 +30,7 @@ export default class SignupModal extends Component {
             <ButtonInput value="Login" bsStyle="primary" onClick={this.handleSubmit} />
           </form>
         </Modal.Body>
-        </Modal>
+      </Modal>
     );
   }
 }
