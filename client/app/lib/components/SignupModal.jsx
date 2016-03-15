@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Input, Modal, ButtonInput } from 'react-bootstrap';
 
 
 export default class SignupModal extends Component {
+  static propTypes = {
+    show: PropTypes.bool.isRequired,
+    onHide: PropTypes.func.isRequired,
+    onSignup: PropTypes.func.isRequired
+  };
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -13,13 +18,13 @@ export default class SignupModal extends Component {
     let username = this.refs.username.getValue();
     let pwd = this.refs.pwd.getValue();
     let pwdConf = this.refs.pwdConf.getValue();
-    this.props.handleSignupSubmit(email, username, pwd, pwdConf);
+    this.props.onSignup(email, username, pwd, pwdConf);
   }
   render(){
     return (
-      <Modal {...this.props}>
+      <Modal show={this.props.show} onHide={this.props.onHide}>
         <Modal.Header closeButton>
-          <Modal.Title>Log In</Modal.Title>
+          <Modal.Title>Sign Up for an Account</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <form>
@@ -27,7 +32,7 @@ export default class SignupModal extends Component {
             <Input type="text" label="User Name" ref="username" placeholder="Will appear with your posts" />
             <Input type="password" label="Password" ref="pwd" />
             <Input type="password" label="Password confirmation" ref="pwdConf" />
-            <ButtonInput value="Login" bsStyle="primary" onClick={this.handleSubmit} />
+            <ButtonInput value="Sign Up" bsStyle="primary" onClick={this.handleSubmit} />
           </form>
         </Modal.Body>
       </Modal>

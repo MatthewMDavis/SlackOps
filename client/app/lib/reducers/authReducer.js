@@ -8,16 +8,18 @@ export const $$initialState = Immutable.fromJS({
   $$showRegistrationModal: false
 });
 
+
 export default function commentsReducer($$state = $$initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
     case actionTypes.SUBMIT_REGISTRATION:
-      return { ...$$state, $$user: payload.data };
+      const $$newSignup = Immutable.fromJS(payload.data);
+      return $$state.setIn(['$$user'], $$newSignup).set('$$showRegistrationModal', false);
 
     case actionTypes.SUBMIT_LOGIN:
-      const $$newUser = Immutable.fromJS(payload.data);
-      return $$state.setIn(['$$user'], $$newUser).set('$$showLoginModal', false);
+      const $$newLogin = Immutable.fromJS(payload.data);
+      return $$state.setIn(['$$user'], $$newLogin).set('$$showLoginModal', false);
 
     case actionTypes.SUBMIT_LOGOUT:
       return $$state.set('$$user', null);

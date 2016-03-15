@@ -30,6 +30,22 @@ export function login(email, password) {
   };
 }
 
+export function signup(email, username, password, password_confirmation) {
+  const credentials = {
+    user: {
+      email,
+      username,
+      password,
+      password_confirmation
+    }
+  };
+  const submission = conn.post('/users', credentials);
+  return {
+    type: actionTypes.SUBMIT_REGISTRATION,
+    payload: submission
+  };
+}
+
 export function showLoginModal() {
   return {
     type: actionTypes.SHOW_LOGIN_MODAL
