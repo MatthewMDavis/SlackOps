@@ -16,17 +16,44 @@ export function logout() {
   };
 }
 
-export function login(email, password) {
+export function loginPending() {
+  return {
+    type: actionTypes.LOGIN_PENDING
+  };
+}
+
+ export function loginSuccess(payload) {
+   return {
+     type: actionTypes.LOGIN_SUCCESS,
+     payload
+   }
+ }
+
+ export function loginError(payload) {
+   return {
+     type: actionTypes.LOGIN_ERROR,
+     payload
+   }
+ }
+
+export function xhrLogin(email, password) {
     const credentials = {
       user: {
         email,
         password
       }
     };
-  const submission = conn.post('/users/login', credentials);
-  return {
-    type: actionTypes.SUBMIT_LOGIN,
-    payload: submission
+    return conn.post('/users/login', credentials);
+}
+
+export function login(email, password) {
+  return dispatch => {
+    dispatch(loginPending());
+    return (
+      xhrLogin(email, password)
+      .then(response => dispatch(loginSuccess(response)))
+      .catch(response => dispatch(loginError(response)))
+    );
   };
 }
 
