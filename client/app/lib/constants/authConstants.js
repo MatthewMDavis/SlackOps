@@ -4,13 +4,9 @@
 import mirrorCreator from 'mirror-creator';
 
 const actionTypes = mirrorCreator([
-  'LOGIN_PENDING',
-  'REGISTRATION_PENDING',
-  'SUBMIT_REGISTRATION',
-  'LOGIN_SUCCESS',
-  'REGISTRATION_SUCCESS',
-  'LOGIN_ERROR',
-  'REGISTRATION_ERROR',
+  'AUTH_PENDING',
+  'AUTH_SUCCESS',
+  'AUTH_ERROR',
   'SUBMIT_LOGOUT',
   'SHOW_LOGIN_MODAL',
   'SHOW_REGISTRATION_MODAL',

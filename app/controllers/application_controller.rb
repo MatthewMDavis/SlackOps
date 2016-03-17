@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   after_filter :set_csrf_cookie_for_ng
+  after_filter :flash_to_http_header
 
   def set_csrf_cookie_for_ng
     cookies['XSRF-TOKEN'] = form_authenticity_token if protect_against_forgery?
@@ -26,13 +27,19 @@ class ApplicationController < ActionController::Base
   end
 
 
-  protected
+protected
 
   def verified_request?
     super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
   end
 
-  private
+private
+  def flash_to_http_header
+    return unless request.xhr?
+    return if flash.empty?
+    response.headers['X-FlashMessages'] = flash.to_hash.to_json
+    flash.discard  # don't want the flash to appear when you reload page
+  end
 
   def user_not_authorized
     flash[:alert] = "Access denied."

@@ -16,22 +16,22 @@ export function logout() {
   };
 }
 
-export function loginPending() {
+export function authPending() {
   return {
-    type: actionTypes.LOGIN_PENDING
+    type: actionTypes.AUTH_PENDING
   };
 }
 
- export function loginSuccess(payload) {
+ export function authSuccess(payload) {
    return {
-     type: actionTypes.LOGIN_SUCCESS,
+     type: actionTypes.AUTH_SUCCESS,
      payload
    }
  }
 
- export function loginError(payload) {
+ export function authError(payload) {
    return {
-     type: actionTypes.LOGIN_ERROR,
+     type: actionTypes.AUTH_ERROR,
      payload
    }
  }
@@ -48,28 +48,35 @@ export function xhrLogin(email, password) {
 
 export function login(email, password) {
   return dispatch => {
-    dispatch(loginPending());
+    dispatch(authPending());
     return (
       xhrLogin(email, password)
-      .then(response => dispatch(loginSuccess(response)))
-      .catch(response => dispatch(loginError(response)))
+      .then(response => dispatch(authSuccess(response)))
+      .catch(response => dispatch(authError(response)))
     );
   };
 }
 
+export function xhrSignup(email, username, password, password_confirmation) {
+    const credentials = {
+      user: {
+        email,
+        username,
+        password,
+        password_confirmation
+      }
+    };
+    return conn.post('/users', credentials);
+}
+
 export function signup(email, username, password, password_confirmation) {
-  const credentials = {
-    user: {
-      email,
-      username,
-      password,
-      password_confirmation
-    }
-  };
-  const submission = conn.post('/users', credentials);
-  return {
-    type: actionTypes.SUBMIT_REGISTRATION,
-    payload: submission
+  return dispatch => {
+    dispatch(authPending());
+    return (
+      xhrSignup(...arguments)
+      .then(response => dispatch(authSuccess(response)))
+      .catch(response => dispatch(authError(response)))
+    );
   };
 }
 
