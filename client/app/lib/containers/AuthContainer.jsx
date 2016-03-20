@@ -24,26 +24,20 @@ export default class AuthContainer extends Component {
 
   constructor(props) {
     super(props);
-    // this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // handleSubmit(e) {
-  //   e.preventDefault();
-  //   let email = this.refs.email.getValue();
-  //   let pwd = this.refs.pwd.getValue();
-  //   this.props.handleLoginSubmit(email, pwd);
-  // }
   render(){
     const { dispatch, $$authStore } = this.props;
     const authActions = bindActionCreators(authActionCreators, dispatch);
     const { login, signup, hideLoginModal, hideRegistrationModal } = authActions;
     const loginDisplayState = $$authStore.get('$$showLoginModal');
     const signupDisplayState = $$authStore.get('$$showRegistrationModal');
+    const authErrorState = $$authStore.get('$$authError');
 
     return (
       <div>
-        <LoginModal show={loginDisplayState} onHide={hideLoginModal} onLogin={login} />
-        <SignupModal show={signupDisplayState} onHide={hideRegistrationModal} onSignup={signup} />
+        <LoginModal show={loginDisplayState} onHide={hideLoginModal} error={authErrorState} onLogin={login} />
+        <SignupModal show={signupDisplayState} onHide={hideRegistrationModal} error={authErrorState} onSignup={signup} />
       </div>
     );
   }

@@ -1,12 +1,15 @@
 import React, { Component, PropTypes } from 'react';
+import Immutable from 'immutable';
 import { Input, Modal, ButtonInput } from 'react-bootstrap';
+import AuthAlert from './Alert.jsx';
 
 
 export default class SignupModal extends Component {
   static propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
-    onSignup: PropTypes.func.isRequired
+    onSignup: PropTypes.func.isRequired,
+    error: PropTypes.instanceOf(Immutable.Map)
   };
   constructor(props) {
     super(props);
@@ -20,6 +23,17 @@ export default class SignupModal extends Component {
     let pwdConf = this.refs.pwdConf.getValue();
     this.props.onSignup(email, username, pwd, pwdConf);
   }
+
+
+  errorAlert() {
+    if (this.props.error){
+      return (
+        <AuthAlert errorCollection={this.props.error} />
+      );
+    }
+  }
+
+
   render(){
     return (
       <Modal show={this.props.show} onHide={this.props.onHide}>
@@ -27,6 +41,7 @@ export default class SignupModal extends Component {
           <Modal.Title>Sign Up for an Account</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {this.errorAlert()}
           <form>
             <Input type="email" label="Email Address" ref="email" placeholder="Hidden from other users" />
             <Input type="text" label="User Name" ref="username" placeholder="Will appear with your posts" />

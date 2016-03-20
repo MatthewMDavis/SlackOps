@@ -27,15 +27,15 @@ class ApplicationController < ActionController::Base
   end
 
 
-protected
+  protected
 
   def verified_request?
     super || valid_authenticity_token?(session, request.headers['X-XSRF-TOKEN'])
   end
 
-private
+  private
   def flash_to_http_header
-    return unless request.xhr?
+    # return unless request.xhr?
     return if flash.empty?
     response.headers['X-FlashMessages'] = flash.to_hash.to_json
     flash.discard  # don't want the flash to appear when you reload page

@@ -17,7 +17,7 @@ export default function commentsReducer($$state = $$initialState, action) {
   switch (type) {
     case actionTypes.AUTH_SUCCESS:
       const $$newUser = Immutable.fromJS(payload.data);
-      return $$state.merge({
+      return $$state.mergeDeep({
         $$user: $$newUser,
         $$authError: null,
         $$authPending: false,
@@ -31,8 +31,9 @@ export default function commentsReducer($$state = $$initialState, action) {
       });
 
     case actionTypes.AUTH_ERROR:
+      const xhrErrors = payload.data.error ? { error: [payload.data.error] } : payload.data.errors;
       return $$state.merge({
-        $$authError: payload.data.error,
+        $$authError: xhrErrors,
         $$authPending: false
       });
 
@@ -46,10 +47,18 @@ export default function commentsReducer($$state = $$initialState, action) {
       return $$state.set('$$showRegistrationModal', true);
 
     case actionTypes.HIDE_LOGIN_MODAL:
-      return $$state.set('$$showLoginModal', false);
+      return $$state.merge({
+        $$showLoginModal: false,
+        $$authError: null,
+        $$authPending: false
+      });
 
     case actionTypes.HIDE_REGISTRATION_MODAL:
-      return $$state.set('$$showRegistrationModal', false);
+      return $$state.merge({
+        $$showRegistrationModal: false,
+        $$authError: null,
+        $$authPending: false
+        });
 
     default:
       return $$state;

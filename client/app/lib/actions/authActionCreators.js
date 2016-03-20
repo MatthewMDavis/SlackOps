@@ -51,7 +51,12 @@ export function login(email, password) {
     dispatch(authPending());
     return (
       xhrLogin(email, password)
-      .then(response => dispatch(authSuccess(response)))
+      .then(response =>
+            {
+              console.log(response);
+              dispatch(authSuccess(response));
+            }
+           )
       .catch(response => dispatch(authError(response)))
     );
   };

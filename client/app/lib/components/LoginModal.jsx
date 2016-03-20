@@ -1,11 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { Input, Modal, ButtonInput } from 'react-bootstrap';
+import Immutable from 'immutable';
+import AuthAlert from './Alert';
 
 export default class LoginModal extends Component {
   static propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
-    onLogin: PropTypes.func.isRequired
+    onLogin: PropTypes.func.isRequired,
+    error: PropTypes.instanceOf(Immutable.Map)
   };
 
   constructor(props) {
@@ -19,6 +22,15 @@ export default class LoginModal extends Component {
     let pwd = this.refs.pwd.getValue();
     this.props.onLogin(email, pwd);
   }
+
+  errorAlert() {
+    if (this.props.error) {
+      return (
+        <AuthAlert errorCollection={this.props.error} />
+      )
+    }
+  }
+
   render(){
     return (
       <Modal show={this.props.show} onHide={this.props.onHide}>
@@ -26,6 +38,7 @@ export default class LoginModal extends Component {
           <Modal.Title>Log In</Modal.Title>
         </Modal.Header>
         <Modal.Body>
+          {this.errorAlert()}
           <form>
             <Input type="email" label="Email Address" ref="email" placeholder="Email" />
             <Input type="password" label="Password" ref="pwd" />
