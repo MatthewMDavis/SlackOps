@@ -34,7 +34,7 @@ class CommentsContainer extends React.Component {
     const commentActions = bindActionCreators(commentsActionCreators, dispatch);
     const { updateComments } = commentActions;
     const authActions = bindActionCreators(authActionCreators, dispatch);
-    const { logout, showLoginModal, showRegistrationModal } = authActions;
+    const { logout, showLoginModal, showRegistrationModal, showFBLogin } = authActions;
     const comments = $$commentsStore.getIn(['$$comments']).toJS();
     const article = $$commentsStore.get('$$article');
     const $$user = $$authStore.get('$$user', null);
@@ -42,7 +42,7 @@ class CommentsContainer extends React.Component {
     let ContextForm = $$user ?
       <CommentForm $$user={$$user} article={article} onComment={updateComments} onLogout={logout} />
         :
-      <CommentLoginPrompt onLogin={showLoginModal} onSignup={showRegistrationModal}/>
+      <CommentLoginPrompt onLogin={showLoginModal} onSignup={showRegistrationModal} onFBLogin={showFBLogin} />
         ;
     return (
       <div className="commentsBox">

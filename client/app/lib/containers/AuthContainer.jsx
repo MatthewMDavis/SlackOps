@@ -26,6 +26,26 @@ export default class AuthContainer extends Component {
     super(props);
   }
 
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '903361249755734',
+        cookie     : true,  // enable cookies to allow the server to access
+                            // the session
+        xfbml      : true,  // parse social plugins on this page
+        version    : 'v2.1' // use version 2.1
+      });
+    }.bind(this);
+
+    // Load the SDK asynchronously
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "//connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  }
+
   render(){
     const { dispatch, $$authStore } = this.props;
     const authActions = bindActionCreators(authActionCreators, dispatch);
@@ -33,11 +53,12 @@ export default class AuthContainer extends Component {
     const loginDisplayState = $$authStore.get('$$showLoginModal');
     const signupDisplayState = $$authStore.get('$$showRegistrationModal');
     const authErrorState = $$authStore.get('$$authError');
+    const authPendingState = $$authStore.get('$$authPending');
 
     return (
       <div>
-        <LoginModal show={loginDisplayState} onHide={hideLoginModal} error={authErrorState} onLogin={login} />
-        <SignupModal show={signupDisplayState} onHide={hideRegistrationModal} error={authErrorState} onSignup={signup} />
+        <LoginModal show={loginDisplayState} onHide={hideLoginModal} error={authErrorState} onLogin={login} authPending={authPendingState}/>
+        <SignupModal show={signupDisplayState} onHide={hideRegistrationModal} error={authErrorState} onSignup={signup} authPending={authPendingState} />
       </div>
     );
   }

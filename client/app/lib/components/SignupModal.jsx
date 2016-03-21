@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import Immutable from 'immutable';
 import { Input, Modal, ButtonInput } from 'react-bootstrap';
+import Loader from 'react-loader';
 import AuthAlert from './Alert.jsx';
-
 
 export default class SignupModal extends Component {
   static propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
     onSignup: PropTypes.func.isRequired,
-    error: PropTypes.instanceOf(Immutable.Map)
+    error: PropTypes.instanceOf(Immutable.Map),
+    authPending: PropTypes.bool
   };
   constructor(props) {
     super(props);
@@ -40,6 +41,7 @@ export default class SignupModal extends Component {
         <Modal.Header closeButton>
           <Modal.Title>Sign Up for an Account</Modal.Title>
         </Modal.Header>
+        <span><Loader loaded={!this.props.authPending}>&nbsp;</Loader></span>
         <Modal.Body>
           {this.errorAlert()}
           <form>

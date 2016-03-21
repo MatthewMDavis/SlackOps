@@ -1,14 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { Input, Modal, ButtonInput } from 'react-bootstrap';
 import Immutable from 'immutable';
+import Loader from 'react-loader';
 import AuthAlert from './Alert';
+
 
 export default class LoginModal extends Component {
   static propTypes = {
     show: PropTypes.bool.isRequired,
     onHide: PropTypes.func.isRequired,
     onLogin: PropTypes.func.isRequired,
-    error: PropTypes.instanceOf(Immutable.Map)
+    error: PropTypes.instanceOf(Immutable.Map),
+    authPending: PropTypes.bool.isRequired
   };
 
   constructor(props) {
@@ -27,9 +30,21 @@ export default class LoginModal extends Component {
     if (this.props.error) {
       return (
         <AuthAlert errorCollection={this.props.error} />
-      )
+      );
     }
   }
+
+  // pendingStatus() {
+  //   if (this.props.authPending) {
+  //     const spinCfg = {
+  //       width: 12,
+  //       radius: 35
+  //     };
+  //     return (
+  //       <Spinner config={spinCfg} />
+  //     );
+  //   }
+  // }
 
   render(){
     return (
@@ -37,15 +52,16 @@ export default class LoginModal extends Component {
         <Modal.Header closeButton>
           <Modal.Title>Log In</Modal.Title>
         </Modal.Header>
+        <span className="pull-right"><Loader loaded={!this.props.authPending}>&nbsp;</Loader></span>
         <Modal.Body>
           {this.errorAlert()}
           <form>
             <Input type="email" label="Email Address" ref="email" placeholder="Email" />
             <Input type="password" label="Password" ref="pwd" />
-            <ButtonInput value="Login" bsStyle="primary" onClick={this.handleSubmit} />
+            <span><ButtonInput value="Login" bsStyle="primary" onClick={this.handleSubmit} /></span>
           </form>
         </Modal.Body>
-        </Modal>
+      </Modal>
     );
   }
 }

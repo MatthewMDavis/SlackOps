@@ -17,6 +17,11 @@ export default class CommentLoginPrompt extends React.Component {
     this.props.onSignup();
   }
 
+  showFBModal(e) {
+    e.preventDefault();
+    this.props.onFBLogin();
+  }
+
   render() {
     return (
       <div id="comment-login-prompt">
@@ -29,7 +34,7 @@ export default class CommentLoginPrompt extends React.Component {
           <Button onClick={this.showRegistrationModal}>
             Sign up
           </Button>
-          <Button onClick={(e)=>{console.log(e)}}>
+          <Button onClick={this.showFBModal}>
             Log in with Facebook
           </Button>
         </ButtonGroup>

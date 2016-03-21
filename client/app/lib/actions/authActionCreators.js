@@ -36,53 +36,37 @@ export function authPending() {
    }
  }
 
-export function xhrLogin(email, password) {
-    const credentials = {
-      user: {
-        email,
-        password
-      }
-    };
-    return conn.post('/users/login', credentials);
-}
-
-export function login(email, password) {
+export function authTransmit(url, credentials) {
   return dispatch => {
     dispatch(authPending());
     return (
-      xhrLogin(email, password)
-      .then(response =>
-            {
-              console.log(response);
-              dispatch(authSuccess(response));
-            }
-           )
-      .catch(response => dispatch(authError(response)))
-    );
-  };
-}
-
-export function xhrSignup(email, username, password, password_confirmation) {
-    const credentials = {
-      user: {
-        email,
-        username,
-        password,
-        password_confirmation
-      }
-    };
-    return conn.post('/users', credentials);
-}
-
-export function signup(email, username, password, password_confirmation) {
-  return dispatch => {
-    dispatch(authPending());
-    return (
-      xhrSignup(...arguments)
+      conn.post(url, credentials)
       .then(response => dispatch(authSuccess(response)))
       .catch(response => dispatch(authError(response)))
     );
   };
+}
+
+export function login(email, password) {
+  const credentials = {
+    user: {
+      email,
+      password
+    }
+  };
+  return authTransmit('/users/login', credentials);
+}
+
+export function signup(email, username, password, password_confirmation) {
+  const credentials = {
+    user: {
+      email,
+      username,
+      password,
+      password_confirmation
+    }
+  };
+  return authTransmit('/users', credentials)
 }
 
 export function showLoginModal() {
@@ -107,4 +91,35 @@ export function hideRegistrationModal() {
   return {
     type: actionTypes.HIDE_REGISTRATION_MODAL
   };
+}
+
+
+export function xhrFBCallback() {
+        conn.get('/users/auth/facebook/callback', {})
+        .then(response=> {
+          return response.data;
+        })
+        .then(data=>{
+          this.setState({ user:
+                        {id: data.id,
+                          url: data.url,
+                          username: data.username},
+                          showLoginModal: false });
+        })
+        .catch(ex=>{
+          alert(ex);
+          console.log(ex);
+        });
+
+}
+
+// Process Facebook login
+handleFBLogin(e) {
+  const ajaxFBCallback = xhrFBCallback.bind(this);
+  e.preventDefault();
+  FB.login((response) => {
+    if (response.authResponse) {
+      ajaxFBCallback();
+    }
+  });
 }
