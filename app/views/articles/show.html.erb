@@ -9,11 +9,5 @@
     <%= link_to 'Edit this article', edit_article_path %>
   <% end %>
 </div>
-<%= redux_store('RGBlog',
-                    { comments: comments_list_json(@article.comments),
-                             user: user_json(current_user) || false,
-                             article: @article.id }
-                   ) %>
 <%= react_component('CommentsApp') %>
-<%= react_component('AuthApp') %>
 

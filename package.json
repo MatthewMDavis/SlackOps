@@ -29,5 +29,7 @@
     "url": "https://github.com/shakacode/react-webpack-rails-tutorial/issues"
   },
   "homepage": "https://github.com/shakacode/react-webpack-rails-tutorial",
-  "dependencies": {}
+  "dependencies": {
+    "rdx-ui-spinner": "0.0.1"
+  }
 }
