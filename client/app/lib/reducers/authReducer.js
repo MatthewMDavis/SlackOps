@@ -40,15 +40,19 @@ export default function commentsReducer($$state = $$initialState, action) {
     case actionTypes.SUBMIT_LOGOUT:
       return $$state.set('$$user', null);
 
-    case actionTypes.SUBMIT_FB_LOGIN:
-      const $$facebookUser = { username: 'facebook_user' }
-      return $$state.merge({ '$$user': $$facebookUser });
-
     case actionTypes.SHOW_LOGIN_MODAL:
-      return $$state.set('$$showLoginModal', true);
+      return $$state.merge({
+        $$showLoginModal: true,
+        $$authError: null,
+        $$authPending: false
+      });
 
     case actionTypes.SHOW_REGISTRATION_MODAL:
-      return $$state.set('$$showRegistrationModal', true);
+      return $$state.merge({
+        $$showRegistrationModal: true,
+        $$authError: null,
+        $$authPending: false
+      });
 
     case actionTypes.HIDE_LOGIN_MODAL:
       return $$state.merge({

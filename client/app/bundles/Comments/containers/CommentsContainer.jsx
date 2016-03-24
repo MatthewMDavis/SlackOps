@@ -6,19 +6,16 @@ import * as commentsActionCreators from '../actions/commentsActionCreators';
 import * as authActionCreators from 'lib/actions/authActionCreators';
 import CommentsList from '../components/CommentsList'
 import CommentForm from '../components/CommentForm';
-// import CommentLoginPrompt from '../components/CommentLoginPrompt';
 import CommentAuthPrompt from '../containers/CommentAuthPrompt';
 
 function select(state) {
-  // Which part of the Redux global state does our component want to receive as props?
-  // Note the use of `$$` to prefix the property name because the value is of type Immutable.js
+  // `$$` to prefix the property name because the value is of type Immutable.js
   return (
     { $$commentsStore: state.$$commentsStore,
       $$authStore: state.$$authStore}
   );
 }
 
-// Simple example of a React "smart" component
 class CommentsContainer extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
@@ -35,7 +32,7 @@ class CommentsContainer extends React.Component {
     const commentActions = bindActionCreators(commentsActionCreators, dispatch);
     const { updateComments } = commentActions;
     const authActions = bindActionCreators(authActionCreators, dispatch);
-    const { logout, showLoginModal, showRegistrationModal, showFBLogin, xhrFBCallback } = authActions;
+    const { logout } = authActions;
     const comments = $$commentsStore.getIn(['$$comments']).toJS();
     const article = $$commentsStore.get('$$article');
     const $$user = $$authStore.get('$$user', null);
@@ -45,6 +42,7 @@ class CommentsContainer extends React.Component {
         :
       <CommentAuthPrompt />
         ;
+
     return (
       <div className="commentsBox">
         <h3>Comments</h3>

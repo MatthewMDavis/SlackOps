@@ -93,10 +93,24 @@ export function hideRegistrationModal() {
   };
 }
 
+export function FBOauthCallback(FBresponse) {
+  if (FBresponse.status === 'connected') {
+    return dispatch => {
+        conn.get('/users/auth/facebook/callback', {})
+        .then(response => dispatch(authSuccess(response)))
+        .catch(response => dispatch(authError(response)))
+    }
+  } else if (FBresponse.status === 'not_authorized') {
+    alert('You need to authorize to sign in with facebook');
+  } else {
+    console.log('not logged into facebook');
+  }
+}
+
 export function facebookLogin() {
-  return {
-    type: actionTypes.SUBMIT_FB_LOGIN
-  };
+  FB.login(function(response) {
+    FBOauthCallback(response);
+  });
 }
 
 

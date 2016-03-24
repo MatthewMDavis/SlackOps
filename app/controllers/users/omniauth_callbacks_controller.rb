@@ -5,7 +5,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
       if @user.persisted?
         respond_to do |format|
-          format.json { return render :json => @user }
+          format.json do
+            sign_in @user
+            return render :json => @user
+          end
           format.html do
             sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
             set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
