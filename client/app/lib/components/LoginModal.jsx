@@ -34,17 +34,6 @@ export default class LoginModal extends Component {
     }
   }
 
-  // pendingStatus() {
-  //   if (this.props.authPending) {
-  //     const spinCfg = {
-  //       width: 12,
-  //       radius: 35
-  //     };
-  //     return (
-  //       <Spinner config={spinCfg} />
-  //     );
-  //   }
-  // }
 
   render(){
     return (
@@ -52,7 +41,7 @@ export default class LoginModal extends Component {
         <Modal.Header closeButton>
           <Modal.Title>Log In</Modal.Title>
         </Modal.Header>
-        <span className="pull-right"><Loader loaded={!this.props.authPending}>&nbsp;</Loader></span>
+        <span><Loader loaded={!this.props.authPending}>&nbsp;</Loader></span>
         <Modal.Body>
           {this.errorAlert()}
           <form>

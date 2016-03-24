@@ -6,7 +6,8 @@ import * as commentsActionCreators from '../actions/commentsActionCreators';
 import * as authActionCreators from 'lib/actions/authActionCreators';
 import CommentsList from '../components/CommentsList'
 import CommentForm from '../components/CommentForm';
-import CommentLoginPrompt from '../components/CommentLoginPrompt';
+// import CommentLoginPrompt from '../components/CommentLoginPrompt';
+import CommentAuthPrompt from '../containers/CommentAuthPrompt';
 
 function select(state) {
   // Which part of the Redux global state does our component want to receive as props?
@@ -22,7 +23,7 @@ class CommentsContainer extends React.Component {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     $$commentsStore: PropTypes.instanceOf(Immutable.Map).isRequired,
-    $$authStore: PropTypes.instanceOf(Immutable.Map)
+    $$authStore: PropTypes.instanceOf(Immutable.Map).isRequired
   };
 
   constructor(props, context) {
@@ -34,7 +35,7 @@ class CommentsContainer extends React.Component {
     const commentActions = bindActionCreators(commentsActionCreators, dispatch);
     const { updateComments } = commentActions;
     const authActions = bindActionCreators(authActionCreators, dispatch);
-    const { logout, showLoginModal, showRegistrationModal, showFBLogin } = authActions;
+    const { logout, showLoginModal, showRegistrationModal, showFBLogin, xhrFBCallback } = authActions;
     const comments = $$commentsStore.getIn(['$$comments']).toJS();
     const article = $$commentsStore.get('$$article');
     const $$user = $$authStore.get('$$user', null);
@@ -42,7 +43,7 @@ class CommentsContainer extends React.Component {
     let ContextForm = $$user ?
       <CommentForm $$user={$$user} article={article} onComment={updateComments} onLogout={logout} />
         :
-      <CommentLoginPrompt onLogin={showLoginModal} onSignup={showRegistrationModal} onFBLogin={showFBLogin} />
+      <CommentAuthPrompt />
         ;
     return (
       <div className="commentsBox">

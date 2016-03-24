@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
+
 export default class CommentLoginPrompt extends React.Component {
+  // static propTypes = {
+  //   onLogin: PropTypes.func.isRequired,
+  //   onSignup: PropTypes.func.isRequired,
+  //   onFBLogin: PropTypes.func.isRequired,
+  // };
+
   constructor(props) {
     super(props);
     this.showLoginModal = this.showLoginModal.bind(this);
     this.showRegistrationModal = this.showRegistrationModal.bind(this);
+    this.showFBModal = this.showFBModal.bind(this);
   }
 
   showLoginModal(e) {

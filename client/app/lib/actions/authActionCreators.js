@@ -93,33 +93,10 @@ export function hideRegistrationModal() {
   };
 }
 
-
-export function xhrFBCallback() {
-        conn.get('/users/auth/facebook/callback', {})
-        .then(response=> {
-          return response.data;
-        })
-        .then(data=>{
-          this.setState({ user:
-                        {id: data.id,
-                          url: data.url,
-                          username: data.username},
-                          showLoginModal: false });
-        })
-        .catch(ex=>{
-          alert(ex);
-          console.log(ex);
-        });
-
+export function facebookLogin() {
+  return {
+    type: actionTypes.SUBMIT_FB_LOGIN
+  };
 }
 
-// Process Facebook login
-handleFBLogin(e) {
-  const ajaxFBCallback = xhrFBCallback.bind(this);
-  e.preventDefault();
-  FB.login((response) => {
-    if (response.authResponse) {
-      ajaxFBCallback();
-    }
-  });
-}
+
