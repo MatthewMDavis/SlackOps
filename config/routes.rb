@@ -6,10 +6,11 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
   root 'articles#index'
-
-  get 'users/' => 'users#index'
-  get 'users/:id' => 'users#show', as: :user
-  patch 'users/:id' => 'users#update'
+  resources :users
+  # get 'users/' => 'users#index'
+  # get 'users/:id' => 'users#show', as: :user
+  # patch 'users/:id' => 'users#update'
+  # delete 'users/:id' => 'users#destroy'
 
   resources :articles do
     resources :comments

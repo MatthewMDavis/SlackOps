@@ -11,7 +11,7 @@ export const $$initialState = Immutable.fromJS({
 });
 
 
-export default function commentsReducer($$state = $$initialState, action) {
+export default function authReducer($$state = $$initialState, action) {
   const { type, payload, error } = action;
 
   switch (type) {

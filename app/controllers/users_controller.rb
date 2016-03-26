@@ -14,8 +14,12 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find(params[:id])
-    user.destroy
-    redirect_to users_path, :notice => 'User deleted'
+    authorize user
+    if user.destroy
+      redirect_to users_path, :notice => 'User deleted'
+    else
+      redirect_to users_path, :alert => 'Problem deleting user'
+    end
   end
 
   def update
@@ -30,6 +34,10 @@ class UsersController < ApplicationController
   end
 
   private
+
+  def secure_destroy_params
+    params.require(:user).permit(:_destroy)
+  end
 
   def secure_role_params
     params.require(:user).permit(:role)

@@ -28,7 +28,7 @@ class CommentAuthPrompt extends React.Component {
 render() {
   const { dispatch, $$authStore } = this.props;
   const authActions = bindActionCreators(authActionCreators, dispatch);
-  const { logout, showLoginModal, showRegistrationModal, facebookLogin, FBOauthCallback } = authActions;
+  const { logout, showLoginModal, showRegistrationModal, FBOauthCallback } = authActions;
   const startFBLogin = function() {
     FB.login(response => {FBOauthCallback(response)});
   }

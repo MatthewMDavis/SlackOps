@@ -42,9 +42,4 @@ module ApplicationHelper
     (record.user == current_user) || current_user.admin?
   end
 
-  # Locates Gravatar image, if any, for a user's login email
-  def gravatar_for(user, size)
-    gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
-    "http://gravatar.com/avatar/#{gravatar_id}.png?s=#{size}"
-  end
 end
