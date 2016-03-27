@@ -1,21 +1,5 @@
 <%= form_for @article, html: { :class => "form" } do |f| %>
-  <% if @article.errors.any? %>
-  <!-- Error Messages -->
-    <div class="alert alert-danger alert-dismissable">
-      <button aria-hidden="true" class="close" data-dismiss="alert" type="button">&times;</button>
-      <h4>
-        <%= "#{pluralize(@article.errors.count, "error")} prohibited this article from being saved:" %>
-      </h4>
-      <ul>
-        <% @article.errors.full_messages.each do |msg| %>
-          <li>
-            <%= msg %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+  <%= render 'partials/error_messages', object: resource %>
   <div>
     <%= f.hidden_field :user_id %>
     <%= f.label :title %><br>

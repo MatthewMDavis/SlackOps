@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :url, :username, :img, :role, :provider
+  attributes :id, :url, :username, :img, :role, :provider, :email
 
   def url
     user_path(object)

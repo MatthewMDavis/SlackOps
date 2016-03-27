@@ -34,7 +34,7 @@ class NavContainer extends React.Component {
         return <AuthenticatedUserNav user={$$user.toJS()} onLogout={logout} />;
       }
       else {
-        return <AnonUserNav onLogin={showLoginModal} onSignup={showRegistrationModal} />;
+        return <AnonUserNav onLogin={showLoginModal} onSignup={showRegistrationModal} onFBLogin={FBOauthCallback}/>;
       }
     }
     return (

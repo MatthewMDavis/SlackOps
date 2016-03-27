@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Nav, NavItem, NavDropdown, MenuItem } from 'react-bootstrap';
 
 export default class AnonUserNav extends React.Component {
 
@@ -25,20 +25,23 @@ export default class AnonUserNav extends React.Component {
   render() {
     let profileLink, editLink, adminLink;
     if (!this.props.user.provider) {
-      profileLink = (<NavItem eventKey={4.2} href="/users/edit">Edit username/pwd</NavItem>);
+      profileLink = (<MenuItem eventKey={3.2} href="/users/edit">Edit username/pwd</MenuItem>);
     }
     if (this.userMayEdit()) {
-      editLink = (<NavItem eventKey={4.3} href="/articles/new">Write an article</NavItem>);
+      editLink = (<NavItem eventKey={1} href="/articles/new">Write an article</NavItem>);
     }
     if (this.props.user.role === 'admin') {
-      adminLink = (<NavItem eventKey={4.4} href="/users">Manage users</NavItem>)
+      adminLink = (<NavItem eventKey={2} href="/users">Manage users</NavItem>)
     }
     return (
       <Nav pullRight>
         {editLink}
         {adminLink}
-        {profileLink}
-        <NavItem eventKey={4.1} href="#" onClick={this.handleLogout}>Log out</NavItem>
+        <NavDropdown eventyKey={3} title={`Logged in as ${this.props.user.username} (${this.props.user.email}) `} id="nav-user-menu">
+          {profileLink}
+          <MenuItem eventKey={4.1} href="#" onClick={this.handleLogout}>Log out</MenuItem>
+        </NavDropdown>
+        <img className="hidden-xs hidden-sm" src={this.props.user.img} alt={this.props.user.username} />
       </Nav>
     );
   }
