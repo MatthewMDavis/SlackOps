@@ -5,6 +5,7 @@ import mirrorCreator from 'mirror-creator';
 
 const actionTypes = mirrorCreator([
   'COMMENTS_UPDATE',
+  'USER_COMMENT_CHANGE'
 ]);
 
 export default actionTypes;

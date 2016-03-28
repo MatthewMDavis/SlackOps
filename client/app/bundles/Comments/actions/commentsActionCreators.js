@@ -23,3 +23,10 @@ export function updateComments(article_id, user_id, body) {
     payload: submission,
   };
 }
+
+export function userCommentChange(text) {
+  return {
+    type: actionTypes.USER_COMMENT_CHANGE,
+    payload: text
+  }
+}

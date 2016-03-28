@@ -30,15 +30,21 @@ class CommentsContainer extends React.Component {
   render() {
     const { dispatch, $$commentsStore, $$authStore } = this.props;
     const commentActions = bindActionCreators(commentsActionCreators, dispatch);
-    const { updateComments } = commentActions;
+    const { updateComments, userCommentChange } = commentActions;
     const authActions = bindActionCreators(authActionCreators, dispatch);
     const { logout } = authActions;
     const comments = $$commentsStore.getIn(['$$comments']).toJS();
     const article = $$commentsStore.get('$$article');
+    const currentCommentText = $$commentsStore.get('$$userComment');
     const $$user = $$authStore.get('$$user', null);
 
     let ContextForm = $$user ?
-      <CommentForm $$user={$$user} article={article} onComment={updateComments} onLogout={logout} />
+      <CommentForm $$user={$$user}
+        article={article}
+        currentCommentText={currentCommentText}
+        userCommentChange={userCommentChange}
+        onComment={updateComments}
+        onLogout={logout} />
         :
       <CommentAuthPrompt />
         ;

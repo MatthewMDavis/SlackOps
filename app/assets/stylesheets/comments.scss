@@ -12,6 +12,16 @@
   padding-bottom: 210px;
 }
 
+.comment-body {
+  // margin-top: 35px;
+  // margin-bottom: 12px;
+}
+
+.user-comment {
+  @extend .comment-body;
+  background-color: lightgrey;
+}
+
 .comment-enter {
   background-color: #ffeebb;
 }
