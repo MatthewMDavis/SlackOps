@@ -12,10 +12,12 @@ export default class SignupModal extends Component {
     error: PropTypes.instanceOf(Immutable.Map),
     authPending: PropTypes.bool
   };
+
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
   handleSubmit(e) {
     e.preventDefault();
     let email = this.refs.email.getValue();
@@ -25,7 +27,6 @@ export default class SignupModal extends Component {
     this.props.onSignup(email, username, pwd, pwdConf);
   }
 
-
   errorAlert() {
     if (this.props.error){
       return (
@@ -33,7 +34,6 @@ export default class SignupModal extends Component {
       );
     }
   }
-
 
   render(){
     return (

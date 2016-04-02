@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { AutoAffix } from 'react-bootstrap/node_modules/react-overlays';
 import Immutable from 'immutable';
 import axios from 'axios';
@@ -17,6 +18,19 @@ export default class CommentForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLogout = this.handleLogout.bind(this);
     this.handleCommentChange = this.handleCommentChange.bind(this);
+    this.componentDidUpdate = this.componentDidUpdate.bind(this);
+  }
+
+  componentWillUpdate() {
+    var node = ReactDOM.findDOMNode(this);
+    this.shouldScrollBottom = node.scrollTop + node.offsetHeight >= node.scrollHeight;
+  }
+
+  componentDidUpdate() {
+    if (this.shouldScrollBottom) {
+      var node = ReactDOM.findDOMNode(this);
+      node.scrollTop = node.scrollHeight - node.offsetHeight
+    }
   }
 
   handleLogout(e) {
@@ -36,22 +50,7 @@ export default class CommentForm extends React.Component {
 
   render() {
     const { currentCommentText } = this.props;
-    let userCommentDiv;
-    function commentDiv(currentCommentText) {
-        return (
-        <div className="user-comment">
-          {currentCommentText}
-        </div>
-      );
-    }
-
-    if (currentCommentText) {
-      userCommentDiv = commentDiv(currentCommentText);
-    }
     return (
-      <div>
-        {userCommentDiv}
-        <AutoAffix>
           <div id="comment-form">
             <h4>Your Comment</h4>
             <form>
@@ -59,16 +58,14 @@ export default class CommentForm extends React.Component {
               <br/>
               <button className="btn btn-primary pull-right" onClick={this.handleSubmit}>Submit</button>
               <br />
-              <div>
-                Posting as {this.props.$$user.get('username')}.
-                <button className="btn btn-link" onClick={this.handleLogout}>
-                  Logout
-                </button>
-              </div>
+                <div>
+                  Posting as {this.props.$$user.get('username')}.
+                  <button className="btn btn-link" onClick={this.handleLogout}>
+                    Logout
+                  </button>
+                </div>
             </form>
           </div>
-        </AutoAffix>
-      </div>
     );
   }
 }

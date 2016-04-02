@@ -1,5 +1,6 @@
 import actionTypes from '../constants/commentsConstants';
 import axios from 'axios';
+import _ from 'lodash';
 
 const conn = axios.create({
   headers: {
@@ -7,6 +8,26 @@ const conn = axios.create({
     'Content-Type': 'application/json',
   }
 });
+
+export function commentPending() {
+  return {
+    type: actionTypes.COMMENT_PENDING
+  };
+}
+
+ export function commentSuccess(payload) {
+   return {
+     type: actionTypes.COMMENT_SUCCESS,
+     payload
+   }
+ }
+
+ export function commentError(payload) {
+   return {
+     type: actionTypes.COMMENT_ERROR,
+     payload
+   }
+ }
 
 export function updateComments(article_id, user_id, body) {
   const url = `/articles/${article_id}/comments`;
@@ -17,10 +38,15 @@ export function updateComments(article_id, user_id, body) {
       body: body
     }
   };
-  const submission = conn.post(url, contents);
-  return {
-    type: actionTypes.COMMENTS_UPDATE,
-    payload: submission,
+  return dispatch => {
+    dispatch(commentPending());
+    _.delay(() => {
+    return (
+      conn.post(url, contents)
+      .then(response => dispatch(commentSuccess(response)))
+      .catch(response => dispatch(commentError(response)))
+    );
+    }, 5000)
   };
 }
 

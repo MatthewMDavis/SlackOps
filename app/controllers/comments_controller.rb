@@ -1,11 +1,17 @@
 class CommentsController < ApplicationController
   def create
     @article = Article.find(params[:article_id])
-    @comment = @article.comments.create(comment_params)
+    @comment = @article.comments.build(comment_params)
 
     respond_to do |format|
-      format.html { redirect_to article_path(@article) }
-      format.json { render json: @article.comments }
+      # format.html { redirect_to article_path(@article) }
+      format.json do
+        if @comment.save
+          render json: @article.comments
+        else
+          render json: { message: "Validation failed", errors: @comment.errors }, status: 400
+        end
+      end
     end
   end
 

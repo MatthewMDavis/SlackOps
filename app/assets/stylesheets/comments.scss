@@ -3,8 +3,8 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 #comment-form {
-  padding-top: 35px;
-  padding-bottom: 20px;
+  padding-top: 18px;
+  padding-bottom: 24px;
 }
 
 #comment-login-prompt {
@@ -13,12 +13,19 @@
 }
 
 .comment-body {
-  // margin-top: 35px;
-  // margin-bottom: 12px;
+  margin-top: 36px;
+  margin-bottom: 12px;
+}
+
+.comment-alert {
+  @extend .alert;
+  text-align: left;
+  margin-top: 24px;
+  margin-bottom: 12px;
 }
 
 .user-comment {
-  @extend .comment-body;
+  @extend .comment-body !optional;
   background-color: lightgrey;
 }
 
@@ -37,4 +44,5 @@
 
 .comment-byline {
   font-size: smaller;
+  margin-bottom: 12;
 }

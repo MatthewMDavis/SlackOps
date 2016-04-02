@@ -1,5 +1,5 @@
 <%= form_for @article, html: { :class => "form" } do |f| %>
-  <%= render 'partials/error_messages', object: resource %>
+  <%= render 'partials/error_messages', object: @article %>
   <div>
     <%= f.hidden_field :user_id %>
     <%= f.label :title %><br>

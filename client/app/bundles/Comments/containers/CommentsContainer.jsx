@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import Immutable from 'immutable';
 import * as commentsActionCreators from '../actions/commentsActionCreators';
 import * as authActionCreators from 'lib/actions/authActionCreators';
-import CommentsList from '../components/CommentsList'
+import CommentsList from '../components/CommentsList';
+import CommentPreview from '../components/CommentPreview';
 import CommentForm from '../components/CommentForm';
 import CommentAuthPrompt from '../containers/CommentAuthPrompt';
 
@@ -36,6 +37,8 @@ class CommentsContainer extends React.Component {
     const comments = $$commentsStore.getIn(['$$comments']).toJS();
     const article = $$commentsStore.get('$$article');
     const currentCommentText = $$commentsStore.get('$$userComment');
+    const commentPending = $$commentsStore.get('$$commentPending');
+    const commentError = $$commentsStore.get('$$commentError', null);
     const $$user = $$authStore.get('$$user', null);
 
     let ContextForm = $$user ?
@@ -53,6 +56,7 @@ class CommentsContainer extends React.Component {
       <div className="commentsBox">
         <h3>Comments</h3>
         <CommentsList comments={comments} />
+        <CommentPreview currentCommentText={currentCommentText} commentPending={commentPending} commentError={commentError}/>
         {ContextForm}
       </div>
     );
