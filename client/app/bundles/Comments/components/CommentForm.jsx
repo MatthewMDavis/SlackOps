@@ -27,12 +27,11 @@ export default class CommentForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.onComment(this.props.article, this.props.$$user.get('id'), this.refs.description.value);
-    this.refs.description.value = '';
+    this.props.onComment(this.props.article, this.props.$$user.get('id'), this.refs.description.getValue());
   }
 
   handleCommentChange() {
-    this.props.userCommentChange(this.refs.description.value);
+    this.props.userCommentChange(this.refs.description.getValue());
   }
 
   render() {

@@ -15,7 +15,7 @@
 <%= redux_store('RGBlog',
                     { comments: @article ? comments_list_json(@article.comments) : false,
                              user: user_json(current_user) || false,
-                             article: @article ? @article.id : false }
+                             article: @article ? {author: @article.author, article_id: @article.id } : false }
                    ) %>
 <%= react_component('AuthApp') %>
 <%= react_component('NavApp') %>

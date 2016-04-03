@@ -6,7 +6,8 @@ export const $$initialState = Immutable.fromJS({
   $$comments: [],
   $$commentError: null,
   $$commentPending: false,
-  $$userComment: ''
+  $$userComment: '',
+  $$article: null
 });
 
 export default function commentsReducer($$state = $$initialState, action) {
