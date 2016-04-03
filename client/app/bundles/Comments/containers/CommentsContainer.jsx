@@ -35,7 +35,7 @@ class CommentsContainer extends React.Component {
     const authActions = bindActionCreators(authActionCreators, dispatch);
     const { logout } = authActions;
     const comments = $$commentsStore.getIn(['$$comments']).toJS();
-    const article = $$commentsStore.get('$$article');
+    const { article_id, author } = $$commentsStore.getIn(['$$article']).toJS();
     const currentCommentText = $$commentsStore.get('$$userComment');
     const commentPending = $$commentsStore.get('$$commentPending');
     const commentError = $$commentsStore.get('$$commentError', null);
@@ -43,7 +43,7 @@ class CommentsContainer extends React.Component {
 
     let ContextForm = $$user ?
       <CommentForm $$user={$$user}
-        article={article}
+        article={article_id}
         currentCommentText={currentCommentText}
         userCommentChange={userCommentChange}
         onComment={updateComments}
