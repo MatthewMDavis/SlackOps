@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Alert } from 'react-bootstrap';
 import Immutable from 'immutable';
-import Loader from 'react-loader';
+import marked from 'marked';
 
 export default class CommentPreview extends Component {
   static propTypes = {
@@ -33,9 +33,10 @@ export default class CommentPreview extends Component {
         );
       }
       else if (item.props.currentCommentText) {
+        const rawMarkdown = marked(item.props.currentCommentText, { gfm: true, sanitize: true })
         return (
           <div className="comment-alert alert-info">
-            {item.props.currentCommentText}
+            <span dangerouslySetInnerHTML={{ __html: rawMarkdown }} />
           </div>
         );
       }

@@ -40,13 +40,11 @@ export function updateComments(article_id, user_id, body) {
   };
   return dispatch => {
     dispatch(commentPending());
-    _.delay(() => {
     return (
       conn.post(url, contents)
       .then(response => dispatch(commentSuccess(response)))
       .catch(response => dispatch(commentError(response)))
     );
-    }, 5000)
   };
 }
 
