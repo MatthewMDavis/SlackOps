@@ -1,16 +1,17 @@
 import React from 'react';
 import marked from 'marked';
+import userMayDelete from 'lib/components/policies';
 
-export default (props) => {
-  const rawMarkdown = marked(props.comment.body, { gfm: true, sanitize: true })
+export default ({ comment, user, articleAuthor }) => {
+  const rawMarkdown = marked(comment.body, { gfm: true, sanitize: true })
   return (
-    <div id={`comment-${props.comment.id}`} className="comment">
+    <div id={`comment-${comment.id}`} className="comment">
       <div className="comment-body">
         <span dangerouslySetInnerHTML={{__html: rawMarkdown}} />
       </div>
       <div className="comment-byline">
-        By <a href={props.comment.commenter_url}>{props.comment.commenter}</a>
-        -- {props.comment.timestamp}
+        By <a href={comment.commenter_url}>{comment.commenter}</a>
+        -- {comment.timestamp} {user ? userMayDelete(user, comment, articleAuthor) : ''}
       </div>
     </div>
   );

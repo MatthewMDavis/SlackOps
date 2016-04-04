@@ -55,8 +55,8 @@ class CommentsContainer extends React.Component {
     return (
       <div className="commentsBox">
         <h3>Comments</h3>
-        <CommentsList comments={comments} />
-        <CommentPreview currentCommentText={currentCommentText} commentPending={commentPending} commentError={commentError}/>
+        <CommentsList comments={comments} $$user={$$user} articleAuthor={author} />
+        <CommentPreview currentCommentText={currentCommentText} commentPending={commentPending} commentError={commentError} />
         {ContextForm}
       </div>
     );
