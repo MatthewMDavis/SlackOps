@@ -1,7 +1,8 @@
 import mirrorCreator from 'mirror-creator';
 
 const actionTypes = mirrorCreator([
-  'COMMENTS_UPDATE',
+  'UPDATE_COMMENTS',
+  'FETCHING_COMMENTS',
   'COMMENT_PENDING',
   'COMMENT_SUCCESS',
   'COMMENT_ERROR',

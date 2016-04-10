@@ -28,10 +28,23 @@ class CommentsContainer extends React.Component {
     super(props, context);
   }
 
+  componentDidMount() {
+    // polls the server every 20 secs for updates to the comments list
+    const { dispatch, $$commentsStore } = this.props;
+    const commentActions = bindActionCreators(commentsActionCreators, dispatch);
+    const { fetchComments } = commentActions;
+    const  article_id  = $$commentsStore.getIn(['$$article', 'article_id']);
+    this.interval = setInterval(() => fetchComments(article_id), 20 * 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.interval);
+  }
+
   render() {
     const { dispatch, $$commentsStore, $$authStore } = this.props;
     const commentActions = bindActionCreators(commentsActionCreators, dispatch);
-    const { updateComments, userCommentChange } = commentActions;
+    const { submitComment, deleteComment, userCommentChange } = commentActions;
     const authActions = bindActionCreators(authActionCreators, dispatch);
     const { logout } = authActions;
     const comments = $$commentsStore.getIn(['$$comments']).toJS();
@@ -42,29 +55,39 @@ class CommentsContainer extends React.Component {
     const $$user = $$authStore.get('$$user', null);
 
     let ContextForm = $$user ?
+      // if there's a user, loads the form for comments
       <CommentForm $$user={$$user}
         article={article_id}
         currentCommentText={currentCommentText}
         userCommentChange={userCommentChange}
-        onComment={updateComments}
-        onLogout={logout} />
+        onComment={submitComment}
+        onLogout={logout}
+      />
         :
+      //if there's no user, loads button bar with login/registration options
       <CommentAuthPrompt />
         ;
 
     return (
       <div className="commentsBox">
         <h3>Comments</h3>
-        <CommentsList comments={comments} $$user={$$user} articleAuthor={author} />
-        <CommentPreview currentCommentText={currentCommentText} commentPending={commentPending} commentError={commentError} />
+        <CommentsList
+          comments={comments}
+          $$user={$$user}
+          article={article_id}
+          articleAuthor={author}
+          deleteCallback={deleteComment}
+        />
+        <CommentPreview
+          currentCommentText={currentCommentText}
+          commentPending={commentPending}
+          commentError={commentError}
+        />
         {ContextForm}
       </div>
     );
   }
 }
 
-// Don't forget to actually use connect!
-// Note that we don't export HelloWorld, but the redux "connected" version of it.
-// See https://github.com/reactjs/react-redux/blob/master/docs/api.md#examples
 export default connect(select)(CommentsContainer);
 

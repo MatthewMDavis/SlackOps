@@ -10,8 +10,19 @@ export function userOwnsArticle(user, articleAuthor) {
   return user.role === 'editor' && user.username === articleAuthor;
 }
 
-export default function userMayDelete(user, comment, articleAuthor) {
-  if (userOwnsComment(user, comment) || userOwnsArticle(user, articleAuthor) || userIsAdmin(user)) {
-    return 'You may delete this comment.'
+export function commentIsFresh(comment) {
+  const createdAt = Date.parse(comment.timestamp);
+  const currTime = new Date();
+  if (currTime - createdAt <= 300000) return true;
+}
+
+export function coolingOff(user, comment) {
+  if (userOwnsComment(user, comment) && commentIsFresh(comment)) return true;
+}
+
+export function userMayDelete(user, comment, articleAuthor) {
+  if (!user) return false;
+  if (coolingOff(user, comment) || userOwnsArticle(user, articleAuthor) || userIsAdmin(user)) {
+    return true;
   }
 }

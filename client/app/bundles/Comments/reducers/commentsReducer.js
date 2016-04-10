@@ -6,6 +6,7 @@ export const $$initialState = Immutable.fromJS({
   $$comments: [],
   $$commentError: null,
   $$commentPending: false,
+  $$fetchingComments: false,
   $$userComment: ''
 });
 
@@ -21,12 +22,24 @@ export default function commentsReducer($$state = $$initialState, action) {
          $$userComment: ''
       });
 
+    case actionTypes.UPDATE_COMMENTS:
+      return $$state.merge({
+         $$comments: payload.data,
+         $$fetchingComments: false,
+         $$commentError: null,
+      });
+
     case actionTypes.USER_COMMENT_CHANGE:
       return $$state.setIn(['$$userComment'], payload)
 
     case actionTypes.COMMENT_PENDING:
       return $$state.merge({
         $$commentPending: true
+      })
+
+    case actionTypes.FETCHING_COMMENTS:
+      return $$state.merge({
+        $$fetchingComments: true
       })
 
     case actionTypes.COMMENT_ERROR:
