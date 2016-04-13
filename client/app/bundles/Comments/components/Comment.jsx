@@ -7,16 +7,24 @@ export default class Comment extends Component {
   static propTypes = {
     comment: PropTypes.object.isRequired,
     user: PropTypes.object,
-    articleAuthor: PropTypes.string.isRequired
+    article: PropTypes.number.isRequired,
+    articleAuthor: PropTypes.string.isRequired,
+    deleteCallback: PropTypes.func.isRequired
   }
 
   constructor(props) {
     super(props);
-    this.displayDate = moment(props.comment.timestamp).format("MMM Do, Y HH:mm")
+    this.deleteLink = this.deleteLink.bind(this);
+    this.handleDelete = this.handleDelete.bind(this);
   }
 
-  deleteLink(user, comment, articleAuthor) {
+  handleDelete() {
+    const { article, comment, deleteCallback } = this.props;
+    return ;
+  }
 
+  deleteLink() {
+    const { user, comment, article, articleAuthor, deleteCallback } = this.props;
     if (userMayDelete(user, comment, articleAuthor)) {
     // standard users have 5 minutes to delete their own comment (cooling
     // off period); the article's author or site admins may delete at all times
@@ -25,16 +33,17 @@ export default class Comment extends Component {
 
       switch (user.role) {
         case 'user':
-          return <a href="#">Delete (until {expires})</a>;
+          return <a href="#" onClick={() =>  deleteCallback(article, comment) }>Delete (until {expires})</a>;
         default:
-          return <a href="#">Delete</a>;
+          return <a href="#" onClick={() =>  deleteCallback(article, comment) }>Delete</a>;
       }
     }
   }
 
   render() {
-    const { user, comment, articleAuthor } = this.props;
+    const { comment } = this.props;
     const rawMarkdown = marked(comment.body, { gfm: true, sanitize: true })
+    const displayDate = moment(comment.timestamp).format("MMM Do, Y HH:mm")
 
     return (
       <div id={`comment-${comment.id}`} className="comment">
@@ -45,7 +54,7 @@ export default class Comment extends Component {
           By <a href={comment.commenter_url}>
             {comment.commenter}
           </a>&nbsp;
-              {this.displayDate} {this.deleteLink(user, comment, articleAuthor)}
+              {displayDate} {this.deleteLink(...this.props)}
         </div>
       </div>
     );

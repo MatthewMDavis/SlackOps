@@ -1,6 +1,5 @@
 import actionTypes from '../constants/commentsConstants';
 import axios from 'axios';
-import _ from 'lodash';
 
 const conn = axios.create({
   headers: {

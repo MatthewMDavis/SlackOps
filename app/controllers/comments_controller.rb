@@ -19,10 +19,7 @@ class CommentsController < ApplicationController
     @article = Article.find(params[:article_id])
     @comment = @article.comments.find(params[:id])
     @comment.destroy
-    respond_to do
-      format.json { render json: @comments }
-      format.html { redirect_to request.referrer }
-    end
+    render json: @article.comments
   end
 
   def index
