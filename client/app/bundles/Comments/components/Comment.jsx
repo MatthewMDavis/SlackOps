@@ -24,19 +24,21 @@ export default class Comment extends Component {
   }
 
   deleteLink() {
-    const { user, comment, article, articleAuthor, deleteCallback } = this.props;
+    const {user, comment, article, articleAuthor, deleteCallback} = this.props;
+
     if (userMayDelete(user, comment, articleAuthor)) {
     // standard users have 5 minutes to delete their own comment (cooling
     // off period); the article's author or site admins may delete at all times
 
-    const expires = moment(comment.timestamp).add(5, 'minutes').format('HH:mm');
+      const expires = moment(comment.timestamp).add(5, 'minutes')
+                      .format('HH:mm');
+      let linkText = user.role === 'user' ? `Delete (until ${expires})` : 'Delete';
 
-      switch (user.role) {
-        case 'user':
-          return <a href="#" onClick={() =>  deleteCallback(article, comment) }>Delete (until {expires})</a>;
-        default:
-          return <a href="#" onClick={() =>  deleteCallback(article, comment) }>Delete</a>;
-      }
+      return (
+        <a href="#" onClick={() =>  deleteCallback(article, comment) }>
+          {deleteLinkText}
+        </a>
+      );
     }
   }
 
