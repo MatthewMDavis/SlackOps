@@ -3,7 +3,7 @@
     <h2>Sign up</h2>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-      <%= devise_error_messages! %>
+      <%= render 'partials/error_messages', object: resource %>
 
       <div class="field">
         <%= f.label :email %><i> For authentication only. Will not appear with your comments.</i><br />
@@ -19,7 +19,8 @@
         <%= f.label :password %>
         <% if @minimum_password_length %>
           <em>(<%= @minimum_password_length %> characters minimum)</em>
-        <% end %><br />
+        <% end %>
+        <br />
         <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
       </div>
       <br />

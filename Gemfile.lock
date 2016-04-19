@@ -94,6 +94,7 @@ GEM
     globalid (0.3.6)
       activesupport (>= 4.1.0)
     hashie (3.4.3)
+    high_voltage (3.0.0)
     i18n (0.7.0)
     jquery-rails (4.0.5)
       rails-dom-testing (~> 1.0)
@@ -255,10 +256,10 @@ DEPENDENCIES
   capybara
   capybara-webkit
   coderay
-  coffee-rails (~> 4.1.0)
   database_cleaner
   devise
   factory_girl_rails
+  high_voltage (~> 3.0.0)
   jquery-rails
   omniauth-facebook
   pg

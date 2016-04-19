@@ -5,11 +5,11 @@ RSpec.feature describe "devise authentication", :devise do
     context "without authentication" do
 
       it 'has a login link' do
-        expect(page).to have_link('Log in')
+        expect(page).to have_link('Log In')
       end
 
       it 'has a signup link' do
-        expect(page).to have_link('Sign up')
+        expect(page).to have_link('Sign Up')
       end
     end
 

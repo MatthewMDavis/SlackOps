@@ -45,6 +45,7 @@ class NavContainer extends React.Component {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
+        <Nav><NavItem href="/about">About</NavItem></Nav>
         <Navbar.Collapse>
           {authState()}
         </Navbar.Collapse>
@@ -52,8 +53,6 @@ class NavContainer extends React.Component {
     );
   }
 }
-  // Don't forget to actually use connect!
-  // Note that we don't export HelloWorld, but the redux "connected" version of it.
-  // See https://github.com/reactjs/react-redux/blob/master/docs/api.md#examples
+
 export default connect(select)(NavContainer);
 

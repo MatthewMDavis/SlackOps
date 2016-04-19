@@ -49,6 +49,7 @@ export default class LoginModal extends Component {
             <Input type="password" label="Password" ref="pwd" />
             <span><ButtonInput value="Login" bsStyle="primary" onClick={this.handleSubmit} /></span>
           </form>
+          <a href="/users/password/new">Forgot your password?</a>
         </Modal.Body>
       </Modal>
     );
