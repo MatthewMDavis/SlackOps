@@ -1,10 +1,11 @@
 class CommentsController < ApplicationController
+  before_filter :authenticate_user!, :except => [:index, :show]
+
   def create
     @article = Article.find(params[:article_id])
     @comment = @article.comments.build(comment_params)
 
     respond_to do |format|
-      # format.html { redirect_to article_path(@article) }
       format.json do
         if @comment.save
           render json: @article.comments
@@ -30,6 +31,7 @@ class CommentsController < ApplicationController
       format.json { render json: @comments }
     end
   end
+
   private
 
   def comment_params

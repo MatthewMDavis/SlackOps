@@ -8,7 +8,10 @@ export default ({ comments, $$user, article, articleAuthor, deleteCallback }) =>
   const CSSTransitionGroup = require('react-addons-css-transition-group')
   return (
     <div id="comments-list">
-      <ReactCSSTransitionGroup transitionName="comment" transitionEnterTimeout={1000} transitionLeaveTimeout={300} >
+      <ReactCSSTransitionGroup
+        transitionName="comment"
+        transitionEnterTimeout={1000}
+        transitionLeaveTimeout={300} >
         {comments.map(comment => {
           return (
                   <Comment

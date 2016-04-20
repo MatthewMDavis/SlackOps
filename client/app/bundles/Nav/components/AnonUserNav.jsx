@@ -33,9 +33,24 @@ export default class AnonUserNav extends React.Component {
   render() {
     return (
       <Nav pullRight>
-        <NavItem eventKey={1} href="#" onClick={this.showLoginModal}>Log In</NavItem>
-        <NavItem eventKey={2} href="#" onClick={this.showRegistrationModal}>Sign Up</NavItem>
-        <NavItem eventKey={3} href="#" onClick={this.startFBLogin}>Log In with Facebook</NavItem>
+        <NavItem
+          eventKey={1}
+          href="#"
+          onClick={this.showLoginModal}>
+          Log In
+        </NavItem>
+        <NavItem
+          eventKey={2}
+          href="#"
+          onClick={this.showRegistrationModal}>
+        Sign Up
+        </NavItem>
+        <NavItem
+          eventKey={3}
+          href="#"
+          onClick={this.startFBLogin}>
+          Log In with Facebook
+        </NavItem>
       </Nav>
     );
   }

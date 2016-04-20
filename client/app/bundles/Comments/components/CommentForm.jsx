@@ -27,7 +27,8 @@ export default class CommentForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.props.onComment(this.props.article, this.props.$$user.get('id'), this.refs.description.getValue());
+    this.props.onComment(this.props.article, this.props.$$user.get('id'),
+                         this.refs.description.getValue());
     this.refs.description.value = '';
   }
 
@@ -37,12 +38,25 @@ export default class CommentForm extends React.Component {
 
   render() {
     const { currentCommentText } = this.props;
+
     return (
           <div id="comment-form">
             <h4>Your Comment</h4>
             <form>
-              <Input type="textarea" className="form-control" rows="10" help="Accepts Github Flavored Markdown for formatting." ref="description" value={this.props.currentCommentText} onChange={this.handleCommentChange}/>
-              <ButtonInput className="btn btn-primary" onClick={this.handleSubmit}>Submit</ButtonInput>
+              <Input
+                type="textarea"
+                className="form-control"
+                rows="10"
+                help="Accepts Markdown: bold, ital, link, code, ul, ol"
+                ref="description"
+                value={this.props.currentCommentText}
+                onChange={this.handleCommentChange}
+              />
+              <ButtonInput
+                className="btn btn-primary"
+                onClick={this.handleSubmit}>
+                Submit
+              </ButtonInput>
               <div>
                 Posting as {this.props.$$user.get('username')}. &nbsp;
                 <a href="#" onClick={this.handleLogout} title="Logout">
