@@ -42,8 +42,15 @@ class ApplicationController < ActionController::Base
   end
 
   def user_not_authorized
-    flash[:alert] = "Access denied."
-    redirect_to(request.referrer || root_path)
+    respond_to do |format|
+      format.html do
+        flash[:alert] = "Access denied."
+        redirect_to(request.referrer || root_path)
+      end
+      format.json do
+        render json: { 'Error': 'Access denied.'}
+      end
+    end
   end
 end
 

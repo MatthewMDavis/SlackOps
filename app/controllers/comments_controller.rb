@@ -19,6 +19,7 @@ class CommentsController < ApplicationController
   def destroy
     @article = Article.find(params[:article_id])
     @comment = @article.comments.find(params[:id])
+    authorize @comment
     @comment.destroy
     render json: @article.comments
   end
