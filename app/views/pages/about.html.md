@@ -33,19 +33,22 @@ end
 I've hung around on my fair share of blogs, and I know that you can't just
 represent a commenter as a simple text string. I had witnessed
 [a blog](http://eschatonblog.com) with a blowhard who went by 'Al', who spawned
-satiric imitators, and after a while, comment threads would degenerate into
+satiric imitators: after a while, comment threads would degenerate into
 speculation over whether a comment came from the Real Al or the Fake Al -- and
 eventually whether it was The Real Fake Al or a Fake Fake Al. You have to have a
 way to allow people to put a stamp on their commentary.
 
 ## The plot thickens
-A clean, simple authentication system was called for, and Plataformatec's
-Devise gem filled the bill. In combination with the outstanding authorization
-software Pundit, I soon had a fully functional set of roles for my blog: users
-who could own their own comments, editors who could clean up the comment threads
-of their own stories and edit those stories, and admins who could do whatever
-they wanted.
+A clean, simple authentication system was called for, and [Plataformatec's
+Devise gem](https://github.com/plataformatec/devise) filled the bill. Devise
+provides very close to a turnkey authentication system that integrates easily
+with an existing Rails user model, and in combination with the outstanding
+authorization software [Pundit](https://github.com/elabs/pundit), I soon had a
+fully functional set of roles for my blog: users who could own their own
+comments, editors who could clean up the comment threads of their own stories
+and edit those stories, and admins who could do whatever they wanted.
 
 I could have stopped there, but then I just would have had to find yet another
 'Getting Started' project, so instead I went looking for ways to make SlackOps
 more comfortable to use.
+

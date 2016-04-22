@@ -53,13 +53,13 @@ class NavContainer extends React.Component {
       <Navbar fluid staticTop inverse>
         <Navbar.Header>
           <Navbar.Brand>
-            <a href="/">MMDBlog</a>
+            <a href="/">SlackOps</a>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
         <Nav>
           <NavItem href="/about">About</NavItem>
-          <NavItem href="http"
+          <NavItem href="https://github.com/MatthewMDavis/SlackOps">Github Repo</NavItem>
         </Nav>
         <Navbar.Collapse>
           {authState()}
