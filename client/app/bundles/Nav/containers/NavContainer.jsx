@@ -57,7 +57,10 @@ class NavContainer extends React.Component {
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
-        <Nav><NavItem href="/about">About</NavItem></Nav>
+        <Nav>
+          <NavItem href="/about">About</NavItem>
+          <NavItem href="http"
+        </Nav>
         <Navbar.Collapse>
           {authState()}
         </Navbar.Collapse>
