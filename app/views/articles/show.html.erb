@@ -8,6 +8,12 @@
   <% if user_signed_in? && current_user.owns?(@article) %> |
     <%= link_to 'Edit this article', edit_article_path %>
   <% end %>
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
 </div>
 <%= react_component('CommentsApp') %>
 
