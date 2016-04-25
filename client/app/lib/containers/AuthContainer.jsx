@@ -33,7 +33,7 @@ export default class AuthContainer extends Component {
       appId      : '1609870452669846',
       cookie     : true,
       xfbml      : true,
-      version    : 'v2.6'
+      version    : 'v2.1'
     });
   };
 
