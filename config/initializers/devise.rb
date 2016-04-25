@@ -99,9 +99,6 @@ Devise.setup do |config|
   # :html, should redirect to the sign in page when the user does not have
   # access, but formats like :xml or :json, should return 401.
   #
-  # If you have any extra navigational formats, like :iphone or :mobile, you
-  # should add them to the navigational formats lists.
-  #
   # The "*/*" below is required to match Internet Explorer requests.
   config.navigational_formats = ['*/*', :html]
 
@@ -109,9 +106,6 @@ Devise.setup do |config|
   config.sign_out_via = :delete
 
   # ==> OmniAuth
-  # Add a new OmniAuth provider. Check the wiki for more information on setting
-  # up on your models and hooks.
-  # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_SECRET'], \
     scope: 'email', info_fields: 'email,name', :display => :popup, \
     secure_image_url: true
