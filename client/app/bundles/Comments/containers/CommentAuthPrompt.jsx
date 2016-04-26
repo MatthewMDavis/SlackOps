@@ -30,7 +30,7 @@ render() {
   const authActions = bindActionCreators(authActionCreators, dispatch);
   const { logout, showLoginModal, showRegistrationModal, FBOauthCallback } = authActions;
   const startFBLogin = function() {
-    FB.login(response => {FBOauthCallback(response)});
+    FB.login(response => {FBOauthCallback(response)}, {scope: 'email'});
   }
   return (
     <div id="comment-login-prompt">

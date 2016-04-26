@@ -28,25 +28,26 @@ export default class AuthContainer extends Component {
 
 
   componentDidMount() {
-  window.fbAsyncInit = function() {
+  /* Production
+   * window.fbAsyncInit = function() {
+   *   FB.init({
+   *     appId      : '1609870452669846',
+   *     cookie     : true,
+   *     xfbml      : true,
+   *     version    : 'v2.6'
+   *   });
+   * };
+   */
+
+window.fbAsyncInit = function() {
     FB.init({
-      appId      : '1609870452669846',
+      appId      : '1611095332547358',
       cookie     : true,
       xfbml      : true,
-      version    : 'v2.1'
+      version    : 'v2.6'
     });
   };
 
-  /* // the dev version
-     * window.fbAsyncInit = function() {
-     *   FB.init({
-     *     appId      : '903361249755734',
-     *     cookie: true,
-     *     xfbml      : true,
-     *     version    : 'v2.1'
-     *   });
-     * }
-     */
   }
 
   componentWillMount() {
