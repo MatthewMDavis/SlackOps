@@ -37,7 +37,7 @@ export default class AuthContainer extends Component {
     });
   };
 
-/* Development
+/* Development instance
  * window.fbAsyncInit = function() {
  *     FB.init({
  *       appId      : '1611095332547358',
@@ -46,9 +46,9 @@ export default class AuthContainer extends Component {
  *       version    : 'v2.6'
  *     });
  *   };
- * 
- *   }
  */
+
+  }
 
   componentWillMount() {
     (function(d, s, id){
