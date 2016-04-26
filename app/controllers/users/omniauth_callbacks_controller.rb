@@ -1,10 +1,12 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     def facebook
+      fbhash = request.env["omniauth.auth"]
+        puts fbhash.birthday
+        puts fbhash.info.email
+        puts fbhash.email
       @user = User.from_omniauth(request.env["omniauth.auth"])
         puts "start before persist debug"
-        puts @user.birthday
-        puts @user.persisted?
         puts "end before persist debug"
 
       if @user.persisted?
