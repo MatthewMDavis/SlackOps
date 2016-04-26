@@ -12,12 +12,6 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
-  def create
-    auth_hash = request.env['omniauth.auth']
-
-    render :text => auth_hash.inspect
-  end
-
   def respond_to_on_destroy
     puts "DELETE /resource/sign_out"
     respond_to do |format|
