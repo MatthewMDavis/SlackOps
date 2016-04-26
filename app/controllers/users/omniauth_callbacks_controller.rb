@@ -2,12 +2,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
     def facebook
       fbhash = request.env["omniauth.auth"]
-        puts fbhash.birthday
-        puts fbhash.info.email
-        puts fbhash.email
       @user = User.from_omniauth(request.env["omniauth.auth"])
-        puts "start before persist debug"
-        puts "end before persist debug"
 
       if @user.persisted?
         respond_to do |format|
@@ -15,17 +10,17 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
             sign_in @user
             return render :json => @user
           end
+
           format.html do
             sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
             set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
           end
         end
+
       else
 
+        puts request.env["omniauth.auth"]
         session["devise.facebook_data"] = request.env["omniauth.auth"]
-            puts "Start unpersisted debug"
-            puts request.env["omniauth.auth"]
-            puts "End debug"
         redirect_to new_user_registration_url
       end
 
