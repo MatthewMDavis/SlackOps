@@ -108,6 +108,5 @@ Devise.setup do |config|
   # ==> OmniAuth
   config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_SECRET'], \
     scope: 'email', info_fields: 'email,name', :display => :popup, \
-    secure_image_url: true
 
 end

@@ -110,7 +110,7 @@ export function FBOauthCallback(FBresponse) {
 export function facebookLogin() {
   FB.login(function(response) {
     FBOauthCallback(response);
-  }, {scope: 'public_profile,email'});
+  }, {scope: 'email'});
 }
 
 
