@@ -3455,9 +3455,9 @@
           "resolved": "https://registry.npmjs.org/process/-/process-0.11.2.tgz"
         },
         "readable-stream": {
-          "version": "1.1.13",
+          "version": "1.1.14",
           "from": "readable-stream@>=1.1.13 <2.0.0",
-          "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz"
+          "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.14.tgz"
         }
       }
     },
@@ -3933,9 +3933,9 @@
       "resolved": "https://registry.npmjs.org/pseudomap/-/pseudomap-1.0.2.tgz"
     },
     "punycode": {
-      "version": "1.4.0",
+      "version": "1.4.1",
       "from": "punycode@>=1.2.4 <2.0.0",
-      "resolved": "https://registry.npmjs.org/punycode/-/punycode-1.4.0.tgz"
+      "resolved": "https://registry.npmjs.org/punycode/-/punycode-1.4.1.tgz"
     },
     "q": {
       "version": "1.4.1",
@@ -4490,9 +4490,8 @@
       "resolved": "https://registry.npmjs.org/stream-browserify/-/stream-browserify-1.0.0.tgz",
       "dependencies": {
         "readable-stream": {
-          "version": "1.1.13",
-          "from": "readable-stream@>=1.0.27-1 <2.0.0",
-          "resolved": "https://registry.npmjs.org/readable-stream/-/readable-stream-1.1.13.tgz"
+          "version": "1.1.14",
+          "from": "readable-stream@>=1.0.27-1 <2.0.0"
         }
       }
     },
@@ -4881,13 +4880,14 @@
       }
     },
     "webpack": {
-      "version": "1.12.14",
-      "from": "webpack@1.12.14",
-      "resolved": "https://registry.npmjs.org/webpack/-/webpack-1.12.14.tgz",
+      "version": "1.13.0",
+      "from": "webpack@1.13.0",
+      "resolved": "https://registry.npmjs.org/webpack/-/webpack-1.13.0.tgz",
       "dependencies": {
-        "esprima": {
-          "version": "2.7.2",
-          "from": "esprima@>=2.5.0 <3.0.0"
+        "acorn": {
+          "version": "3.1.0",
+          "from": "acorn@>=3.0.0 <4.0.0",
+          "resolved": "https://registry.npmjs.org/acorn/-/acorn-3.1.0.tgz"
         },
         "supports-color": {
           "version": "3.1.2",

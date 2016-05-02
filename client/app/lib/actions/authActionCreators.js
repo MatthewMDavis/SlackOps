@@ -107,12 +107,17 @@ export function FBOauthCallback(FBresponse) {
   }
 }
 
-/*
- * export function facebookLogin() {
- *   FB.login(function(response) {
- *     FBOauthCallback(response);
- *   }, {scope: 'email'});
- * }
- */
+export function facebookLogin() {
+  return(dispatch) => {
+  FB.getLoginStatus(response =>{
+    console.log(response);
+  })
+}
+  /*
+   * FB.login(function(response) {
+   *   FBOauthCallback(response);
+   * }, {scope: 'email'});
+   */
+}
 
 

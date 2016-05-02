@@ -17,8 +17,8 @@
                              user: user_json(current_user) || false,
                              article: @article ? { article_id: @article.id, author: @article.author } : false }
                    ) %>
-<%= react_component('AuthApp') %>
-<%= react_component('NavApp') %>
+                 <%= react_component('AuthApp', props: {}) %>
+                 <%= react_component('NavApp', props: {}) %>
     <div id="container" class="container-fluid">
       <div class="row">
         <div class="centered content_column">

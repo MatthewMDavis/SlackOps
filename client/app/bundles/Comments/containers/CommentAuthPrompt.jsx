@@ -6,8 +6,6 @@ import * as authActionCreators from 'lib/actions/authActionCreators';
 import { Button, ButtonGroup } from 'react-bootstrap';
 
 function select(state) {
-  // Which part of the Redux global state does our component want to receive as props?
-  // Note the use of `$$` to prefix the property name because the value is of type Immutable.js
   return (
     { $$authStore: state.$$authStore }
   );
@@ -28,7 +26,11 @@ class CommentAuthPrompt extends React.Component {
 render() {
   const { dispatch, $$authStore } = this.props;
   const authActions = bindActionCreators(authActionCreators, dispatch);
-  const { logout, showLoginModal, showRegistrationModal, FBOauthCallback } = authActions;
+  const { logout, showLoginModal, showRegistrationModal, facebookLogin, FBOauthCallback } = authActions;
+  // const startFBLogin = () => {
+    // FB.getLoginStatus(response => { console.log(response) } );
+// }
+
   const startFBLogin = function() {
     FB.login(response => {FBOauthCallback(response)}, {scope: 'email'});
   }
