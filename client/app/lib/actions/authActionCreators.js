@@ -97,24 +97,19 @@ export function hideRegistrationModal() {
 }
 
 export function FBOauthCallback(FBresponse) {
-    return dispatch => {
-        conn.get('/users/auth/facebook/callback', {})
-        .then(response => dispatch(authSuccess(response)))
-        .catch(response => dispatch(authError(response)))
-    }
+  return dispatch => {
+    conn.get('/users/auth/facebook/callback', {})
+    .then(response => dispatch(authSuccess(response)))
+    .catch(response => dispatch(authError(response)))
+  }
 }
 
 export function facebookLogin() {
   return(dispatch) => {
-  FB.getLoginStatus(response =>{
-    console.log(response);
-  })
-}
-  /*
-   * FB.login(function(response) {
-   *   FBOauthCallback(response);
-   * }, {scope: 'email'});
-   */
+    FB.getLoginStatus(response =>{
+      console.log(response);
+    })
+  }
 }
 
 
