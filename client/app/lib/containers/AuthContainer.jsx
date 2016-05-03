@@ -33,7 +33,6 @@ export default class AuthContainer extends Component {
         xfbml      : true,
         version    : 'v2.6'
       });
-    };
 
 
     /* Development instance of facebook auth app
