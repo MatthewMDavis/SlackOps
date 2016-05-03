@@ -10,6 +10,9 @@ const conn = axios.create({
 
 export function logout() {
   const submission = conn.delete('/users/logout');
+  if (FB.getAccessToken() !== null) {
+    FB.logout();
+  }
   return {
     type: actionTypes.SUBMIT_LOGOUT,
     payload: submission
@@ -94,17 +97,11 @@ export function hideRegistrationModal() {
 }
 
 export function FBOauthCallback(FBresponse) {
-  if (FBresponse.status === 'connected') {
     return dispatch => {
         conn.get('/users/auth/facebook/callback', {})
         .then(response => dispatch(authSuccess(response)))
         .catch(response => dispatch(authError(response)))
     }
-  } else if (FBresponse.status === 'not_authorized') {
-    alert('You need to authorize to sign in with facebook');
-  } else {
-    console.log('not logged into facebook');
-  }
 }
 
 export function facebookLogin() {

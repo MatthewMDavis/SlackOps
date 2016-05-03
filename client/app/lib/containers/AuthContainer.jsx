@@ -9,8 +9,6 @@ import SignupModal from '../components/SignupModal';
 
 
 function select(state) {
-  // Which part of the Redux global state does our component want to receive as props?
-  // Note the use of `$$` to prefix the property name because the value is of type Immutable.js
   return (
     { $$authStore: state.$$authStore }
   );
@@ -28,26 +26,29 @@ export default class AuthContainer extends Component {
 
 
   componentDidMount() {
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1609870452669846',
-      cookie     : true,
-      xfbml      : true,
-      version    : 'v2.6'
-    });
-  };
+  // window.fbAsyncInit = function() {
+    // FB.init({
+      // appId      : '1609870452669846',
+      // cookie     : true,
+      // xfbml      : true,
+      // version    : 'v2.6'
+    // });
+  // };
 
-/* Development instance
- * window.fbAsyncInit = function() {
- *     FB.init({
- *       appId      : '1611095332547358',
- *       cookie     : true,
- *       xfbml      : true,
- *       version    : 'v2.6'
- *     });
- *   };
- */
 
+    window.fbAsyncInit = function() {
+      FB.init({
+        appId      : '1611095332547358',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.6',
+        // status    : true
+      });
+
+      FB.getLoginStatus(function(response) {
+        console.log(response);
+      });
+    }
   }
 
   componentWillMount() {

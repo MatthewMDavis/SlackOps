@@ -27,7 +27,11 @@ export default class AnonUserNav extends React.Component {
   }
 
   startFBLogin() {
-    FB.login(response => {this.props.onFBLogin(response)}, {scope: 'email'});
+    FB.login(response => {
+      if(response.authResponse) {
+        this.props.onFBLogin(response);
+      }
+    }, {scope: 'email'});
   }
 
   render() {

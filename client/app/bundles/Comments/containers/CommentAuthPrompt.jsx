@@ -22,17 +22,28 @@ class CommentAuthPrompt extends React.Component {
   }
 
 
+  startFBLogin() {
+    FB.login(response => {
+      if(response.authResponse) {
+        this.props.onFBLogin(response);
+      }
+    }, {scope: 'email'});
+  }
 
 render() {
   const { dispatch, $$authStore } = this.props;
   const authActions = bindActionCreators(authActionCreators, dispatch);
   const { logout, showLoginModal, showRegistrationModal, facebookLogin, FBOauthCallback } = authActions;
-  // const startFBLogin = () => {
-    // FB.getLoginStatus(response => { console.log(response) } );
-// }
 
-  const startFBLogin = function() {
-    FB.login(response => {FBOauthCallback(response)}, {scope: 'email'});
+  // const startFBLogin = function() {
+    // FB.login(response => {FBOauthCallback(response)}, {scope: 'email'});
+  // }
+  const startFBLogin = function () {
+    FB.login(response => {
+      if(response.authResponse) {
+        FBOauthCallback(response);
+      }
+    }, {scope: 'email'});
   }
   return (
     <div id="comment-login-prompt">
