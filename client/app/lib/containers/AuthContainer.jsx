@@ -29,7 +29,6 @@ export default class AuthContainer extends Component {
     window.fbAsyncInit = function() {
       FB.init({
         appId      : '1609870452669846',
-        status     : true,
         cookie     : true,
         xfbml      : true,
         version    : 'v2.6'
