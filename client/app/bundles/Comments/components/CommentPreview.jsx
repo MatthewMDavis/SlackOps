@@ -34,6 +34,8 @@ export default class CommentPreview extends Component {
       }
       else if (item.props.currentCommentText) {
         const rawMarkdown = marked(item.props.currentCommentText, { gfm: true, sanitize: true })
+        const tokens = marked.lexer(rawMarkdown);
+        console.log(marked.parser(tokens));
         return (
           <div className="comment-alert alert-info">
             <span dangerouslySetInnerHTML={{ __html: rawMarkdown }} />
