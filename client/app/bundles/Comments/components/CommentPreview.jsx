@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Alert } from 'react-bootstrap';
 import Immutable from 'immutable';
-import marked from 'marked';
+import ReactMarkdown from '../lib/markdown_handler';
 
 export default class CommentPreview extends Component {
   static propTypes = {
@@ -23,24 +23,25 @@ export default class CommentPreview extends Component {
 
   render() {
     let commPreview;
+
     function buildPreview(item) {
-      if (item.props.commentError) {
+      if (item.props.currentCommentText) {
+        return (
+          <div className="comment-alert alert-info">
+            <ReactMarkdown source={item.props.currentCommentText} />
+          </div>
+        );
+      } else if (item.props.commentError) {
         return (
           <div className="comment-alert alert-danger">
             There was a problem posting your comment. If you spent a lot of time on it, you might want to copy it so it's safe while you try again:
             {item.props.currentCommentText}
           </div>
         );
-      }
-      else if (item.props.currentCommentText) {
-        const rawMarkdown = marked(item.props.currentCommentText, { gfm: true, sanitize: true })
-        const tokens = marked.lexer(rawMarkdown);
-        console.log(marked.parser(tokens));
-        return (
-          <div className="comment-alert alert-info">
-            <span dangerouslySetInnerHTML={{ __html: rawMarkdown }} />
-          </div>
-        );
+      } else {
+        <div className="comment-alert alert-danger">
+          Sorry, there was a problem posting your comment.
+        </div>
       }
     }
 

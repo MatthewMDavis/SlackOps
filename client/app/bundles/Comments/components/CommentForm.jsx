@@ -13,6 +13,7 @@ export default class CommentForm extends React.Component {
     $$user: PropTypes.instanceOf(Immutable.Map),
     article: PropTypes.number.isRequired
   }
+
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,6 +48,7 @@ export default class CommentForm extends React.Component {
                 type="textarea"
                 className="form-control"
                 rows="10"
+                autoFocus={true}
                 help="Accepts Markdown: bold, ital, link, code, ul, ol"
                 ref="description"
                 value={this.props.currentCommentText}

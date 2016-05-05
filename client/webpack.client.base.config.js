@@ -62,6 +62,7 @@ module.exports = {
       // bootstrap js
       { test: require.resolve('jquery'), loader: 'expose?jQuery' },
       { test: require.resolve('jquery'), loader: 'expose?$' },
+      { test: /\.json$/, loader: 'json' }
     ],
   },
 };

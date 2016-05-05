@@ -1085,6 +1085,40 @@
       "from": "commoner@>=0.10.3 <0.11.0",
       "resolved": "https://registry.npmjs.org/commoner/-/commoner-0.10.4.tgz"
     },
+    "commonmark": {
+      "version": "0.24.0",
+      "from": "commonmark@>=0.24.0 <0.25.0",
+      "resolved": "https://registry.npmjs.org/commonmark/-/commonmark-0.24.0.tgz",
+      "dependencies": {
+        "entities": {
+          "version": "1.1.1",
+          "from": "entities@>=1.1.1 <1.2.0",
+          "resolved": "https://registry.npmjs.org/entities/-/entities-1.1.1.tgz"
+        }
+      }
+    },
+    "commonmark-react-renderer": {
+      "version": "4.1.4",
+      "from": "commonmark-react-renderer@>=4.1.1 <5.0.0",
+      "resolved": "https://registry.npmjs.org/commonmark-react-renderer/-/commonmark-react-renderer-4.1.4.tgz",
+      "dependencies": {
+        "lodash.assign": {
+          "version": "4.0.8",
+          "from": "lodash.assign@>=4.0.1 <5.0.0",
+          "resolved": "https://registry.npmjs.org/lodash.assign/-/lodash.assign-4.0.8.tgz"
+        },
+        "lodash.isplainobject": {
+          "version": "4.0.4",
+          "from": "lodash.isplainobject@>=4.0.0 <5.0.0",
+          "resolved": "https://registry.npmjs.org/lodash.isplainobject/-/lodash.isplainobject-4.0.4.tgz"
+        },
+        "lodash.keys": {
+          "version": "4.0.6",
+          "from": "lodash.keys@>=4.0.0 <5.0.0",
+          "resolved": "https://registry.npmjs.org/lodash.keys/-/lodash.keys-4.0.6.tgz"
+        }
+      }
+    },
     "compressible": {
       "version": "2.0.7",
       "from": "compressible@>=2.0.7 <2.1.0",
@@ -2616,6 +2650,11 @@
         }
       }
     },
+    "in-publish": {
+      "version": "2.0.0",
+      "from": "in-publish@>=2.0.0 <3.0.0",
+      "resolved": "https://registry.npmjs.org/in-publish/-/in-publish-2.0.0.tgz"
+    },
     "indent-string": {
       "version": "2.1.0",
       "from": "indent-string@>=2.1.0 <3.0.0",
@@ -2919,6 +2958,11 @@
       "version": "0.5.0",
       "from": "jsesc@>=0.5.0 <0.6.0",
       "resolved": "https://registry.npmjs.org/jsesc/-/jsesc-0.5.0.tgz"
+    },
+    "json-loader": {
+      "version": "0.5.4",
+      "from": "json-loader@latest",
+      "resolved": "https://registry.npmjs.org/json-loader/-/json-loader-0.5.4.tgz"
     },
     "json-schema": {
       "version": "0.2.2",
@@ -3254,6 +3298,11 @@
       "from": "lodash.repeat@>=3.0.0 <4.0.0",
       "resolved": "https://registry.npmjs.org/lodash.repeat/-/lodash.repeat-3.1.1.tgz"
     },
+    "lodash.rest": {
+      "version": "4.0.2",
+      "from": "lodash.rest@>=4.0.0 <5.0.0",
+      "resolved": "https://registry.npmjs.org/lodash.rest/-/lodash.rest-4.0.2.tgz"
+    },
     "lodash.restparam": {
       "version": "3.6.1",
       "from": "lodash.restparam@>=3.0.0 <4.0.0",
@@ -3303,6 +3352,11 @@
       "version": "0.3.5",
       "from": "marked@latest",
       "resolved": "https://registry.npmjs.org/marked/-/marked-0.3.5.tgz"
+    },
+    "mdurl": {
+      "version": "1.0.1",
+      "from": "mdurl@>=1.0.1 <1.1.0",
+      "resolved": "https://registry.npmjs.org/mdurl/-/mdurl-1.0.1.tgz"
     },
     "media-typer": {
       "version": "0.3.0",
@@ -4019,7 +4073,19 @@
     "react-loader": {
       "version": "2.2.0",
       "from": "react-loader@latest",
-      "resolved": "https://registry.npmjs.org/react-loader/-/react-loader-2.2.0.tgz"
+      "resolved": "https://registry.npmjs.org/react-loader/-/react-loader-2.2.0.tgz",
+      "dependencies": {
+        "spin.js": {
+          "version": "2.3.2",
+          "from": "spin.js@>=2.0.0 <3.0.0",
+          "resolved": "https://registry.npmjs.org/spin.js/-/spin.js-2.3.2.tgz"
+        }
+      }
+    },
+    "react-markdown": {
+      "version": "2.2.0",
+      "from": "react-markdown@latest",
+      "resolved": "https://registry.npmjs.org/react-markdown/-/react-markdown-2.2.0.tgz"
     },
     "react-on-rails": {
       "version": "3.0.5",
@@ -4047,21 +4113,6 @@
       "version": "4.4.0",
       "from": "react-redux@>=4.4.0 <5.0.0",
       "resolved": "https://registry.npmjs.org/react-redux/-/react-redux-4.4.0.tgz"
-    },
-    "react-spin": {
-      "version": "0.6.0",
-      "from": "react-spin@latest",
-      "resolved": "https://registry.npmjs.org/react-spin/-/react-spin-0.6.0.tgz"
-    },
-    "react-spinjs": {
-      "version": "2.0.1",
-      "from": "react-spinjs@latest",
-      "resolved": "https://registry.npmjs.org/react-spinjs/-/react-spinjs-2.0.1.tgz"
-    },
-    "react-spinner": {
-      "version": "0.2.6",
-      "from": "react-spinner@>=0.2.3 <0.3.0",
-      "resolved": "https://registry.npmjs.org/react-spinner/-/react-spinner-0.2.6.tgz"
     },
     "read": {
       "version": "1.0.7",
@@ -4456,7 +4507,7 @@
     },
     "spin.js": {
       "version": "2.3.2",
-      "from": "spin.js@latest",
+      "from": "spin.js@>=2.3.2 <3.0.0",
       "resolved": "https://registry.npmjs.org/spin.js/-/spin.js-2.3.2.tgz"
     },
     "sprintf-js": {
@@ -4519,6 +4570,11 @@
       "version": "1.0.1",
       "from": "string-width@>=1.0.1 <2.0.0",
       "resolved": "https://registry.npmjs.org/string-width/-/string-width-1.0.1.tgz"
+    },
+    "string.prototype.repeat": {
+      "version": "0.2.0",
+      "from": "string.prototype.repeat@>=0.2.0 <0.3.0",
+      "resolved": "https://registry.npmjs.org/string.prototype.repeat/-/string.prototype.repeat-0.2.0.tgz"
     },
     "stringmap": {
       "version": "0.2.2",
@@ -5003,6 +5059,11 @@
           "resolved": "https://registry.npmjs.org/lodash/-/lodash-3.10.1.tgz"
         }
       }
+    },
+    "xss-filters": {
+      "version": "1.2.6",
+      "from": "xss-filters@>=1.2.6 <2.0.0",
+      "resolved": "https://registry.npmjs.org/xss-filters/-/xss-filters-1.2.6.tgz"
     },
     "xtend": {
       "version": "4.0.1",

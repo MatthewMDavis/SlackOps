@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import marked from 'marked';
+import ReactMarkdown from '../lib/markdown_handler.js';
 import moment from 'moment';
 import { userMayDelete, commentIsFresh } from 'lib/components/policies';
 
@@ -31,7 +31,6 @@ export default class Comment extends Component {
      * off period); the article's author or site admins may delete at all times
      */
     if (userMayDelete(user, comment, articleAuthor)) {
-
       const exp = moment(comment.timestamp).add(5, 'minutes')
                       .format('HH:mm');
       let linkText = user.role === 'user' ? `Delete (until ${exp})` : 'Delete';
@@ -46,19 +45,15 @@ export default class Comment extends Component {
 
   render() {
     const { comment } = this.props;
-    const rawMarkdown = marked(comment.body, { gfm: true, sanitize: true })
     const displayDate = moment(comment.timestamp).format("MMM Do, Y HH:mm")
 
     return (
       <div id={`comment-${comment.id}`} className="comment">
         <div className="comment-body">
-          <span dangerouslySetInnerHTML={{__html: rawMarkdown}} />
+          <ReactMarkdown source={comment.body} />
         </div>
         <div className="comment-byline">
-          By <a href={comment.commenter_url}>
-            {comment.commenter}
-          </a>&nbsp;
-              {displayDate} {this.deleteLink(...this.props)}
+          By {comment.commenter} {displayDate} {this.deleteLink(...this.props)}
         </div>
       </div>
     );
