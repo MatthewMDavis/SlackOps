@@ -61,7 +61,13 @@ export function submitComment(article_id, user_id, body) {
     return (
       conn.post(url, contents)
       .then(response => dispatch(commentSuccess(response)))
-      .catch(response => dispatch(commentError(response)))
+      .catch(() => {
+        if (response) {
+          (response) => { dispatch(commentError(response)) }
+        } else {
+          () => { dispatch(commentError({ error: 'Unsuccessful submission' })) }
+        }
+      })
     );
   };
 }

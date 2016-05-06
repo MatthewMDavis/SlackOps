@@ -36,7 +36,9 @@ export default class Comment extends Component {
       let linkText = user.role === 'user' ? `Delete (until ${exp})` : 'Delete';
 
       return (
-        <a href="#" onClick={() =>  deleteCallback(article, comment) }>
+        <a
+          href="javascript:void(0)"
+          onClick={() =>  deleteCallback(article, comment)}>
           {linkText}
         </a>
       );
