@@ -35,7 +35,7 @@ export default class AuthContainer extends Component {
       });
 
 
-    /*
+    /*  -- Development instance
      * window.fbAsyncInit = function() {
      *   FB.init({
      *     appId      : '1611095332547358',
@@ -46,9 +46,6 @@ export default class AuthContainer extends Component {
      *   });
      */
 
-      // FB.getLoginStatus(function(response) {
-        // console.log(response);
-      // });
     }
   }
 

@@ -12,19 +12,19 @@ export default ({ comments, $$user, article, articleAuthor, deleteCallback }) =>
         transitionName="comment"
         transitionEnterTimeout={1000}
         transitionLeaveTimeout={300} >
-        {comments.map(comment => {
-          return (
-                  <Comment
-                    key={comment.id}
-                    comment={comment}
-                    user={user}
-                    article={article}
-                    articleAuthor={articleAuthor}
-                    deleteCallback={deleteCallback}
-                  />
-                 );
-          }
-         )}
+          {comments.map(comment => {
+            return (
+              <Comment
+                key={comment.id}
+                comment={comment}
+                user={user}
+                article={article}
+                articleAuthor={articleAuthor}
+                deleteCallback={deleteCallback}
+              />
+              );
+            }
+          )}
       </ReactCSSTransitionGroup>
     </div>
   );
