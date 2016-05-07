@@ -1,8 +1,9 @@
 <h1><%= @article.title %></h1>
+By <%= link_to "#{@article.author}", user_path(@article.user) %>
 
-<p>
+<div>
   <%= markdown(@article.text) %>
-</p>
+</div>
 <div id="article_nav">
   <%= link_to '< Back to Blog Index', articles_path %>
   <% if user_signed_in? && current_user.owns?(@article) %> |

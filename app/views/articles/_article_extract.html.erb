@@ -3,7 +3,7 @@
 </h3>
 By <%= link_to "#{art.author}", user_path(art.user) %>
 <p>
-  <%= art.text %>
+  <%= markdown(art.text) %>
 </p>
 <p>
   <%= link_to 'Go to article', article_path(art) %>
