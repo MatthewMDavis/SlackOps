@@ -34,6 +34,7 @@ export default class AuthContainer extends Component {
         version    : 'v2.6'
       });
 
+      FB.getLoginStatus();
 
     /*  -- Development instance
      * window.fbAsyncInit = function() {
