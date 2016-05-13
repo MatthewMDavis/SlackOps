@@ -14,12 +14,13 @@ export default class AuthAlert extends Component {
 
   errCollection(errObject) {
     const errList = [];
-    for (let [category, details] of errObject){
+    for (let [category, details] of errObject)         {
       const detailArray = details.toArray();
       errList.push(
         <div key={category}>
           {startCase(category)}: {detailArray.join(', ')}
-          </div>);
+        </div>
+      );
     }
     return errList;
   }

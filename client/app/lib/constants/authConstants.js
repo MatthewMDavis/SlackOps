@@ -7,12 +7,13 @@ const actionTypes = mirrorCreator([
   'AUTH_PENDING',
   'AUTH_SUCCESS',
   'AUTH_ERROR',
-  'SUBMIT_FB_LOGIN',
+  'FB_AUTH_ERROR',
   'SUBMIT_LOGOUT',
   'SHOW_LOGIN_MODAL',
   'SHOW_REGISTRATION_MODAL',
   'HIDE_LOGIN_MODAL',
-  'HIDE_REGISTRATION_MODAL'
+  'HIDE_REGISTRATION_MODAL',
+  'HIDE_FB_MODAL'
 ]);
 
 export default actionTypes;

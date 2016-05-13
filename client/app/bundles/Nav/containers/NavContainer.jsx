@@ -27,13 +27,7 @@ class NavContainer extends React.Component {
   render() {
     const { dispatch, $$authStore } = this.props;
     const authActions = bindActionCreators(authActionCreators, dispatch);
-    const {
-      logout,
-      login,
-      signup,
-      showLoginModal,
-      showRegistrationModal,
-      FBOauthCallback } = authActions;
+    const { logout, login, signup, showLoginModal, showRegistrationModal, FBOauthCallback } = authActions;
     const $$user = $$authStore.get('$$user', null);
     function authState() {
       if ($$user) {

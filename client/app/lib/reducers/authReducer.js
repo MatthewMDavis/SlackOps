@@ -7,7 +7,8 @@ export const $$initialState = Immutable.fromJS({
   $$authError: null,
   $$authPending: false,
   $$showLoginModal: false,
-  $$showRegistrationModal: false
+  $$showRegistrationModal: false,
+  $$showFBModal: false
 });
 
 
@@ -37,6 +38,13 @@ export default function authReducer($$state = $$initialState, action) {
         $$authPending: false
       });
 
+    case actionTypes.FB_AUTH_ERROR:
+      const fbErrors = payload.data.error ? { error: [payload.data.error] } : payload.data.errors;
+      return $$state.merge({
+        $$authError: fbErrors,
+        $$showFBModal: true
+      });
+
     case actionTypes.SUBMIT_LOGOUT:
       return $$state.set('$$user', null);
 
@@ -64,6 +72,13 @@ export default function authReducer($$state = $$initialState, action) {
     case actionTypes.HIDE_REGISTRATION_MODAL:
       return $$state.merge({
         $$showRegistrationModal: false,
+        $$authError: null,
+        $$authPending: false
+        });
+
+    case actionTypes.HIDE_FB_MODAL:
+      return $$state.merge({
+        $$showFBModal: false,
         $$authError: null,
         $$authPending: false
         });

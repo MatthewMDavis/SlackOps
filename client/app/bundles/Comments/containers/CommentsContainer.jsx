@@ -41,15 +41,6 @@ class CommentsContainer extends React.Component {
     clearInterval(this.interval);
   }
 
-  componentWillUpdate() {
-    this.xpos = window.scrollX;
-    this.ypos = window.scrollY;
-  }
-
-  componentDidUpdate() {
-    window.scrollTo(this.xpos, this.ypos);
-  }
-
   render() {
     const { dispatch, $$commentsStore, $$authStore } = this.props;
     const commentActions = bindActionCreators(commentsActionCreators, dispatch);

@@ -39,6 +39,13 @@ export function authPending() {
    }
  }
 
+ export function fbAuthError(payload) {
+   return {
+     type: actionTypes.FB_AUTH_ERROR,
+     payload
+   }
+ }
+
 export function authTransmit(url, credentials) {
   return dispatch => {
     dispatch(authPending());
@@ -96,20 +103,35 @@ export function hideRegistrationModal() {
   };
 }
 
+export function hideFBModal() {
+  return {
+    type: actionTypes.HIDE_FB_MODAL
+  };
+}
+
 export function FBOauthCallback(FBresponse) {
   return dispatch => {
     conn.get('/users/auth/facebook/callback', {})
-    .then(response => dispatch(authSuccess(response)))
-    .catch(response => dispatch(authError(response)))
+      .then(response => {
+          dispatch(authSuccess(response));
+      })
+      .catch(response => {
+        // When FB logs user in, but Devise can't create a record, kill the FB
+        // session
+        if (FB.getAccessToken() !== null) {
+          FB.logout();
+        }
+
+        dispatch(fbAuthError(response));
+      });
+
+      // .catch(() => dispatch({
+        // type: authError,
+        // payload: {
+          // data: {
+            // error: 'Unable to log in to Slackops'
+          // }
+        // }
+      // }));
   }
 }
-
-export function facebookLogin() {
-  return(dispatch) => {
-    FB.getLoginStatus(response =>{
-      console.log(response);
-    })
-  }
-}
-
-

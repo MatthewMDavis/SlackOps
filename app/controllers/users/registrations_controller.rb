@@ -4,6 +4,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   after_filter :set_csrf_headers, only: [:create, :destroy]
 
+  def failure
+    respond_to do |format|
+      format.json do
+        resource.devise_json_error_messages!
+      end
+    end
+  end
+
   protected
 
   def set_csrf_headers
