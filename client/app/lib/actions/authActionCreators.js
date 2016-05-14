@@ -10,9 +10,11 @@ const conn = axios.create({
 
 export function logout() {
   const submission = conn.delete('/users/logout');
-  if (FB.getAccessToken() !== null) {
-    FB.logout();
-  }
+  FB.getLoginStatus(response => {
+    if (response.status === 'connected') {
+      FB.logout();
+    }
+  }, true);
   return {
     type: actionTypes.SUBMIT_LOGOUT,
     payload: submission
@@ -116,11 +118,13 @@ export function FBOauthCallback(FBresponse) {
           dispatch(authSuccess(response));
       })
       .catch(response => {
-        // When FB logs user in, but Devise can't create a record, kill the FB
+        // When FB logs user in, but Devise omniauth callback fails, kill the FB
         // session
-        if (FB.getAccessToken() !== null) {
+      FB.getLoginStatus(response => {
+        if (response.status === 'connected') {
           FB.logout();
         }
+      }, true);
 
         dispatch(fbAuthError(response));
       });
