@@ -33,29 +33,31 @@ export default class AuthContainer extends Component {
     const { logout } = authActions;
 
     window.fbAsyncInit = function() {
-      FB.init({
-        appId      : '1609870452669846',
-        cookie     : true,
-        xfbml      : true,
-        version    : 'v2.6',
-        status     : true
-      });
-      // -- Dev instance
       // FB.init({
-        // appId      : '1611095332547358',
+        // appId      : '1609870452669846',
         // cookie     : true,
         // xfbml      : true,
         // version    : 'v2.6',
-        // status    : true
+        // status     : true
       // });
+      // -- Dev instance
 
-      // If Facebook still has a live session, but there is no current user in
-      // redux state, we need to clean up.
-      FB.getLoginStatus(response => {
+      FB.Event.subscribe('auth.statusChange', (response) => {
         if (response.status === 'connected' && !curr_user) {
           logout();
         }
       });
+
+      FB.init({
+        appId      : '1611095332547358',
+        cookie     : true,
+        xfbml      : true,
+        version    : 'v2.6',
+        status    : true
+      });
+
+      // If Facebook still has a live session, but there is no current user in
+      // redux state, we need to clean up.
     }
   }
 
