@@ -9,6 +9,10 @@ By <%= link_to "#{@article.author}", user_path(@article.user) %>
   <% if user_signed_in? && current_user.owns?(@article) %> |
     <%= link_to 'Edit this article', edit_article_path %>
   <% end %>
+  <br>
+  <% if current_user %>
+    Currently viewing: <%= current_user.username %>
+<% end %>
 </div>
 <%= react_component('CommentsApp', props: {}) %>
 
