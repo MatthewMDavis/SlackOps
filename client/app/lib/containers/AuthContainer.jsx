@@ -51,12 +51,12 @@ export default class AuthContainer extends Component {
 
       // If Facebook still has a live session, but there is no current user in
       // redux state, we need to clean up.
-      FB.getLoginStatus(response => {
-        if (response.authResponse && !curr_user) {
-          logout();
-        }
-      }, true);
     }
+    FB.Event.subscribe('auth.statusChange', response => {
+      if (response.authResponse && !curr_user) {
+        logout();
+      }
+    })
   }
 
   componentWillMount() {
