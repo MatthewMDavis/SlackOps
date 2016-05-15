@@ -53,7 +53,7 @@ export default class AuthContainer extends Component {
       // redux state, we need to clean up.
       FB.Event.subscribe('auth.authResponseChange', response => {
         if (response.authResponse && !curr_user) {
-          logout();
+          console.log(response.authResponse);
         }
       })
     }
