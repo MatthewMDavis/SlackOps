@@ -1,13 +1,18 @@
 window.fbAsyncInit = function() {
   FB.init({
     appId      : '<%= ENV["FACEBOOK_APP_ID"] %>',
-    cookie     : true,
-    xfbml      : true,
-    version    : 'v2.6',
-    status    : true
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v2.6',
+      status    : true
   });
 
-}
+  FB.Event.subscribe('auth.authResponseChange', (response) => {
+    if (response.status === "connected") {
+      console.log('Connected')
+    }
+  })
+};
 
 // Insert the Facebook JS sdk into the page headers
 (function(d, s, id){
@@ -17,4 +22,3 @@ window.fbAsyncInit = function() {
   js.src = '//connect.facebook.net/en_US/sdk.js';
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
-

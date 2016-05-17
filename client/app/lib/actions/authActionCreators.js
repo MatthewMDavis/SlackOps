@@ -10,11 +10,6 @@ const conn = axios.create({
 
 export function logout() {
   const submission = conn.delete('/users/logout');
-  FB.getLoginStatus(response => {
-    if (response.status === 'connected') {
-      FB.logout();
-    }
-  }, true);
   return {
     type: actionTypes.SUBMIT_LOGOUT,
     payload: submission
